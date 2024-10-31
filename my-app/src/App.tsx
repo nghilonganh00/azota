@@ -4,10 +4,8 @@ import { Outlet, useNavigate } from "react-router";
 import UserAPI from "./API/userAPI";
 
 function App() {
- 
- 
   return (
-    <div className="min-h-screen bg-slate-100 font-[roboto] text-gray-800">
+    <div className="bg-slate-100 font-[roboto] text-sm text-gray-800">
       <Outlet />
     </div>
   );

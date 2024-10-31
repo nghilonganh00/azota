@@ -5,6 +5,7 @@ import {
   EllipsisVertical,
   Paperclip,
 } from "lucide-react";
+import EnterMark from "./enterMark";
 
 interface QuestionBoxProps {
   partKey: string;
@@ -51,9 +52,12 @@ const QuestionBox: React.FC<QuestionBoxProps> = (props) => {
           </div>
         </div>
 
-        <div className="border-r border-gray-400 pr-3 text-sm text-blue-700">
-          Nhập điểm
-        </div>
+        <EnterMark
+          partKey={partKey}
+          questionKey={questionKey}
+          examJSON={examJSON}
+          setExamJSON={setExamJSON}
+        />
 
         <div className="flex items-center border-r border-gray-400 pr-3 text-blue-800">
           <Paperclip strokeWidth={1.5} className="size-4" />

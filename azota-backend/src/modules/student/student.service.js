@@ -130,6 +130,40 @@ const studentService = {
       return [];
     }
   },
+
+  // Truy vấn danh sách sinh viên của 1 lớp và kiểm tra sinh viên có được giao bài kiểm tra không
+  // Nếu sinh viên được giao bài đó thì isAssigned = 1. Ngược lại isAssigned = 0
+  getExamAssignment: async (classId, examId) => {
+    try {
+      const studentAssignmentRecords = await db.sequelize.query(
+        `
+            SELECT
+              s.*,
+              CASE 
+                WHEN es.id IS NOT NULL THEN 1 
+                ELSE 0 
+              END AS isAssigned
+            FROM
+              Students AS s
+            LEFT JOIN 
+              ExamByStudents as es 
+            ON 
+              es.studentId = s.id AND es.examId = :examId
+            WHERE
+              s.classId = :classId
+          `,
+        {
+          replacements: { classId: classId, examId: examId },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+
+      return studentAssignmentRecords;
+    } catch (error) {
+      throw new Error(`Error in getAssignedExam: ${error}`);
+    }
+  },
+
   getConfigById: async (id) => {
     try {
       const student = await db.Student.findByPk(id, {

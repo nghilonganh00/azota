@@ -14,6 +14,7 @@ import HomeworkFileRouter from "../modules/homeworkfile/homeworkfile.route";
 import ExamRouter from "../modules/exam/exam.route";
 import ExamResultRouter from "../modules/examResult/examResult.route";
 import OptionRouter from "../modules/option/option.route";
+import ExamByStudentRouter from "../modules/examByStudent/examByStudent.route";
 
 import FrontHomeworkRouter from "../modules/frontHomework/frontHomework.route";
 import StudentProfileRouter from "../modules/studentProfile/studentProfile.route";
@@ -33,6 +34,7 @@ let initWebRoutes = (app) => {
   router.use("/api/homework-file", HomeworkFileRouter);
   router.use("/api/exam", ExamRouter);
   router.use("/api/exam-result", ExamResultRouter);
+  router.use("/api/exam-by-student", ExamByStudentRouter);
   router.use("/api/option", OptionRouter);
 
   router.use("/api/front-homework", FrontHomeworkRouter);

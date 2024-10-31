@@ -15,6 +15,7 @@ const classGroupController = {
       data: classgroups,
     });
   },
+  
   handleCreate: async (req, res) => {
     const { classGroupName } = req.body;
     const teacherId = req.user.id;

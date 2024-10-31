@@ -5,7 +5,7 @@ const UserAPI = {
     try {
       if (!accessToken) {
         console.error("Access Token isn't in LocalStorage");
-        return {};
+        return new Error("ACCESS_TOKEN_NOT_IN_LOCALSTORAGE");
       }
 
       const url = new URL(`http://localhost:8080/api/user/info`);
@@ -43,7 +43,7 @@ const UserAPI = {
 
       return response;
     } catch (error) {
-      console.error("Error in removeTeacherRole of UserAPI: ", error);
+      console.log("Error in removeTeacherRole of UserAPI: ", error);
       return {};
     }
   },

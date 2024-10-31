@@ -6,11 +6,11 @@ import ConfigGeneral from "./Layouts/configGeneral";
 import ConfigFee from "./Layouts/configFee";
 import ConfigMixed from "./Layouts/configMixed";
 import ExamAPI from "../../../../API/examAPI";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useState } from "react";
 import {
-  Class,
   ExamByClass,
+  ExamByStudent,
   ExamConfig,
 } from "../../../../Globals/Interfaces/interface";
 import ConfigOther from "./Layouts/configOther";
@@ -18,10 +18,12 @@ import ConfigSecurity from "./Layouts/configSecurity";
 import ConfigAnswerAndQuestion from "./Layouts/configAnswerAndQuestion";
 
 const ConfigExamOnline = () => {
+  const navigate = useNavigate();
   const { hashId } = useParams();
 
   const [examConfig, setExamConfig] = useState<ExamConfig>({} as ExamConfig);
-  const [assignedClasses, setAssignedClasses] = useState<number[]>([]);
+  const [assignedClassIds, setAssignedClassIds] = useState<number[]>([]);
+  const [assignedStudentIds, setAssignedStudentIds] = useState<number[]>([]);
 
   const handleChangeConfig = (
     name: string,
@@ -31,27 +33,37 @@ const ConfigExamOnline = () => {
   };
 
   const handlePublish = async () => {
-    const response = await ExamAPI.updatedConfigByHashId(examConfig);
-    console.log("response: ", response);
+    console.log("examConfig: ", examConfig);
+
+    const response: any = await ExamAPI.updatedConfigByHashId({
+      ...examConfig,
+      assignedStudentIds,
+      assignedClassIds,
+    });
+
+    if (response.ok) {
+      const responseObj = await response.json();
+      const updatedExam: ExamConfig = responseObj.data;
+      navigate(`/teacher/exam/publish-exam/${updatedExam.hashId}`);
+    }
+  };
+
+  const fetchExamData = async () => {
+    if (hashId) {
+      const data = await ExamAPI.getConfigByHashId(hashId);
+      setExamConfig(data.examObj);
+      setAssignedClassIds(data.assignedClassIds);
+      setAssignedStudentIds(() =>
+        data.assignedStudentObjs.map(
+          (student: ExamByStudent) => student.studentId,
+        ),
+      );
+    }
   };
 
   useEffect(() => {
-    if (hashId) {
-      const fetchExamData = async () => {
-        const data = await ExamAPI.getConfigByHashId(hashId);
-        setExamConfig(data.examObj);
-        setAssignedClasses(
-          data.assignedClassObjs.map(
-            (assignedClass: ExamByClass) => assignedClass.classId,
-          ),
-        );
-      };
-
-      fetchExamData();
-    }
+    fetchExamData();
   }, []);
-
-  console.log("assigned class obj: ", assignedClasses);
 
   return (
     <div className="w-full px-5">
@@ -68,8 +80,10 @@ const ConfigExamOnline = () => {
           <ConfigGeneral
             examConfig={examConfig}
             setExamConfig={setExamConfig}
-            assignedClasses={assignedClasses}
-            setAssignedClasses={setAssignedClasses}
+            assignedClasses={assignedClassIds}
+            setAssignedClasses={setAssignedClassIds}
+            assignedStudentIds={assignedStudentIds}
+            setAssignedStudentIds={setAssignedStudentIds}
             handleChangeConfig={handleChangeConfig}
           />
 

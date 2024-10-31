@@ -3,10 +3,12 @@ import ClassroomPopup from "./classPopup";
 
 interface ClassGroupStudentItemProps {
   classGroup: ClassGroup;
+  assignedStudentIds: number[];
+  setAssignedStudentIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 const ClassGroupStudentItem: React.FC<ClassGroupStudentItemProps> = (props) => {
-  const { classGroup } = props;
+  const { classGroup, assignedStudentIds, setAssignedStudentIds } = props;
   const { classGroupName, Classes } = classGroup;
 
   return (
@@ -19,7 +21,12 @@ const ClassGroupStudentItem: React.FC<ClassGroupStudentItemProps> = (props) => {
 
       <div className="mt-4 grid grid-cols-12">
         {Classes.map((classroom, key) => (
-          <ClassroomPopup classroom={classroom} key={key} />
+          <ClassroomPopup
+            key={key}
+            classroom={classroom}
+            assignedStudentIds={assignedStudentIds}
+            setAssignedStudentIds={setAssignedStudentIds}
+          />
         ))}
       </div>
     </div>

@@ -45,7 +45,7 @@ const MenuDropdown: React.FC<DropdownProps> & {
 
   return (
     <DropdownContext.Provider value={{ isOpen, toggle }}>
-      <div className="relative z-10">{children}</div>
+      <div className="relative">{children}</div>
     </DropdownContext.Provider>
   );
 };
@@ -79,12 +79,11 @@ const Panel: React.FC<DropdownPanelProps> = ({ children }) => {
     <Fragment>
       {context.isOpen && (
         <Fragment>
-          {children}
-
           <div
-            className="fixed left-0 top-0 z-0 h-screen w-screen"
+            className="fixed inset-0 z-0 h-screen w-screen"
             onClick={context.toggle}
           ></div>
+          <div className="relative z-10"> {children}</div>
         </Fragment>
       )}
     </Fragment>

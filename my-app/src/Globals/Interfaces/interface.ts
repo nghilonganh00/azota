@@ -74,7 +74,7 @@ interface ExamConfig {
   subjectId: number;
   purposeId: number;
   examDuration: number;
-  examType: string;
+  examType: "TEST" | "PRACTICE";
   examStart: string | null;
   examEnd: string | null;
   isPublish: boolean;
@@ -82,14 +82,16 @@ interface ExamConfig {
   isRandomQuestion: boolean;
   isHideGroupQuestionTitle: boolean;
   isSectionsStartingFromQuestion1: boolean;
-  showResult: string;
-  showAnswer: string;
+  showResult: "NO" | "SUBMITTED" | "ALL_SUBMITTED";
+  showAnswer: "NO" | "SUBMITTED" | "ALL_SUBMITTED" | "REACHED_POINT";
   fee: string;
   header: string | null;
   createdAt: string;
   updatedAt: string;
   questionTotal: number;
   submitTotal: number;
+  assignedStudentIds: number[];
+  assignedClassIds: number[];
 }
 
 export interface ExamByClass {
@@ -112,6 +114,12 @@ export interface ExamResult {
   examresAnswers: string;
   mark: number;
   createdAt: string;
+}
+
+export interface ExamByStudent {
+  id: number;
+  examId: number;
+  studentId: number;
 }
 
 export type { Class, HomeworkFile, HomeworkResult, Assignment, ExamConfig };

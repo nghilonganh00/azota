@@ -11,7 +11,7 @@ const PublishExam = () => {
 
   const [examConfig, setExamConfig] = useState<ExamConfig>();
   const [isOpenCopyNoti, setOpenCopyNoti] = useState<boolean>(false);
-  const examURL = `http://localhost:3000/exam/${examConfig?.hashId}`;
+  const examURL = `http://localhost:3000/exam/${hashId}`;
 
   const handleCopyHomeworkURL = (homeworkURL: string) => {
     navigator.clipboard.writeText(homeworkURL);
@@ -22,7 +22,7 @@ const PublishExam = () => {
     const fetchExamConfig = async () => {
       if (hashId) {
         const data = await ExamAPI.getConfigByHashId(hashId);
-        setExamConfig(data);
+        setExamConfig(data.examObj);
       }
     };
 
@@ -43,7 +43,7 @@ const PublishExam = () => {
           </div>
         </div>
 
-        <div className="rounded-md bg-white py-3 px-3 text-left shadow-sm">
+        <div className="rounded-md bg-white px-3 py-3 text-left shadow-sm">
           {/* <div className="text-sm font-semibold">{homework.homeworkName}</div> */}
 
           <div className="space-y-1">

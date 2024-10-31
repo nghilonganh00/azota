@@ -18,6 +18,7 @@ const SubmitExam = () => {
   const { examResultId } = useParams();
 
   const [examResult, setExamResult] = useState<ExamResult>();
+
   const {
     examResult: {
       mark = 0,
@@ -44,6 +45,8 @@ const SubmitExam = () => {
     };
     fetchExamResultData();
   }, []);
+
+  console.log("exam result: ", examResult);
 
   return (
     <div className="w-full pt-10 text-sm">
@@ -120,8 +123,8 @@ const SubmitExam = () => {
             </div>
           </div>
 
-          <div className="mt-5 grid grid-cols-12 gap-3">
-            <div className="col-span-4">
+          <div className="mt-5 flex items-center justify-between gap-3">
+            <div className="flex-1">
               <div className="flex items-center justify-center rounded bg-[#68cc0033] py-2 hover:cursor-pointer">
                 <div className="font-medium text-[rgb(var(--color-success))]">
                   Xem thống kê năng lực
@@ -129,18 +132,20 @@ const SubmitExam = () => {
               </div>
             </div>
 
-            <div className="col-span-4">
-              <div
-                onClick={handlePraticeAgain}
-                className="flex items-center justify-center gap-1 rounded border border-orange-600 py-2 text-orange-600 hover:cursor-pointer"
-              >
-                <div className="font-medium">Luyện tập tiếp</div>
+            {examResult?.examObj?.examType === "TEST" && (
+              <div className="flex-1">
+                <div
+                  onClick={handlePraticeAgain}
+                  className="flex items-center justify-center gap-1 rounded border border-orange-600 py-2 text-orange-600 hover:cursor-pointer"
+                >
+                  <div className="font-medium">Luyện tập tiếp</div>
 
-                <ClipboardPenLine strokeWidth={1.5} className="size-4" />
+                  <ClipboardPenLine strokeWidth={1.5} className="size-4" />
+                </div>
               </div>
-            </div>
+            )}
 
-            <div className="col-span-4">
+            <div className="flex-1">
               <div className="gap flex items-center justify-center rounded border border-blue-800 py-2 text-blue-800 hover:cursor-pointer">
                 <div className="font-medium">Xem đáp án</div>
 

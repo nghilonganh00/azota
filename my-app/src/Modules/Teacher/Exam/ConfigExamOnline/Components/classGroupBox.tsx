@@ -2,13 +2,15 @@ import { ClassGroup } from "../../../Homework/AddHomework/libs/interfaces";
 
 interface ClassGroupBoxProps {
   classGroup: ClassGroup;
-  initValue: number[];
+  assignedClassIds: number[];
   onChange: (assignClass: number) => void;
 }
 
 const ClassGroupBox: React.FC<ClassGroupBoxProps> = (props) => {
-  const { classGroup, initValue, onChange } = props;
+  const { classGroup, assignedClassIds, onChange } = props;
   const { id, classGroupName, teacherId, Classes } = classGroup;
+
+  console.log("assigned class ids: ", assignedClassIds);
 
   return (
     <div className="p-2">
@@ -24,7 +26,7 @@ const ClassGroupBox: React.FC<ClassGroupBoxProps> = (props) => {
             <input
               type="checkbox"
               className="size-4 accent-blue-800"
-              defaultChecked={initValue?.includes(classroom.id)}
+              defaultChecked={assignedClassIds?.includes(classroom.id)}
               onChange={() => onChange(classroom.id)}
             />
             <div className="text-sm">{classroom.className}(0)</div>

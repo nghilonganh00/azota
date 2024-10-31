@@ -1,15 +1,22 @@
 import { File, FileCheck } from "lucide-react";
 import { ExamConfig } from "../../../../../Globals/Interfaces/interface";
 import { isoDateUtil } from "../../../../../Utils/date";
+import { Link, useNavigate } from "react-router-dom";
 
 interface ExamRowProps {
   examConfig: ExamConfig;
 }
 
 const ExamRow: React.FC<ExamRowProps> = (props) => {
+  const navigate = useNavigate();
+
   const { examConfig } = props;
   const { examName, examSubmitCount, examAssignType, isPublish, updatedAt } =
     examConfig;
+
+  const handleRowClick = () => {
+    navigate(`/teacher/exam/exam-results-list/${examConfig.hashId}`);
+  };
 
   const getAssignType = () => {
     switch (examAssignType) {
@@ -25,7 +32,10 @@ const ExamRow: React.FC<ExamRowProps> = (props) => {
   };
 
   return (
-    <tr className="border-b text-slate-700 hover:cursor-pointer hover:shadow-md">
+    <tr
+      className="border-b text-slate-700 hover:cursor-pointer hover:shadow-md"
+      onClick={handleRowClick}
+    >
       <th scope="row" className="px-6 py-4">
         <input type="checkbox" className="size-4" />
       </th>

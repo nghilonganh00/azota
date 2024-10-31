@@ -15,10 +15,15 @@ export interface ResultLog {
   [key: string]: boolean;
 }
 
+export interface AnswerOption {
+  Index: number;
+  Content: string;
+}
+
 export interface ExamAnswer {
   Answered: number;
   QuestionId: number;
-  AnswerContent: [{ Index: number; Content: string }];
+  AnswerContent: AnswerOption[];
 }
 
 export interface Exam extends ExamConfig {

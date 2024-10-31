@@ -33,7 +33,11 @@ const Login = () => {
       console.log("response: ", responseObj);
 
       localStorage.setItem("userId", responseObj.data.accessToken);
-      navigate("/teacher/dashboard");
+      if (responseObj.data.userRole === "TEACHER") {
+        navigate("/teacher/dashboard");
+      } else {
+        navigate("/student/classroom");
+      }
     }
   };
 

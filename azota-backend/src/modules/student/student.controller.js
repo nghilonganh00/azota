@@ -64,6 +64,29 @@ const studentController = {
       });
     }
   },
+
+  //Lấy danh sách sinh viên và trạng thái giao bài kiểm tra trong lớp.
+  getExamAssignments: async (req, res) => {
+    try {
+      const { classId, examId } = req.params;
+      const studentAssignments = await studentService.getExamAssignment(
+        classId,
+        examId
+      );
+
+      return res.status(200).json({
+        data: studentAssignments,
+        message: `Get list of students with exam ${examId} assignment status in class ${classId}`,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        data: [],
+        message: `Interval Server Error: ${error}`,
+      });
+    }
+  },
+
   handleCreate: async (req, res) => {
     try {
       const {

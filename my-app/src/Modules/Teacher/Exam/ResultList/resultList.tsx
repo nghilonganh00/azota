@@ -1,35 +1,52 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import ExamAPI from "../../../../API/examAPI";
-import { ExamInfo } from "./libs/interface";
+import { ExamInfo, StudentResult } from "./libs/interface";
 import ExamInfoArea from "./Layouts/examConfigArea";
+import ExamResultAPI from "../../../../API/examResultAPI";
 import ResultListArea from "./Layouts/resultListArea";
-import StudentAPI from "../../../../API/studentAPI";
+import { Exam } from "../../../General/Exam/TakeTraining/libs/interface";
 
 const ResultsList = () => {
   const { hashId } = useParams();
   const [examInfo, setExamInfo] = useState<ExamInfo>({} as ExamInfo);
+  const [studentResults, setStudentResults] = useState<StudentResult[]>([]);
 
   useEffect(() => {
-    const fetchExamConfigData = async () => {
+    const fetchData = async () => {
       if (hashId) {
-        const data = await ExamAPI.getConfigByHashId(hashId);
-        setExamInfo(data);
-        console.log("data: ", data);
-        sessionStorage.setItem("examId", data.examObj.id);
+        const examInfoData = await ExamAPI.getConfigByHashId(hashId);
+        setExamInfo(examInfoData);
+
+        const examObj: Exam = examInfoData.examObj;
+        sessionStorage.setItem("examId", examObj.id.toString());
+
+        switch (examObj.examAssignType) {
+          case "ALL":
+            const examResultdata = await ExamResultAPI.getLatest(examObj.id);
+            setStudentResults(examResultdata.examResults);
+            break;
+
+          case "CLASS":
+            
+            break;
+
+          default:
+            // Optional: Handle unexpected values
+            break;
+        }
       }
     };
 
-    fetchExamConfigData();
+    fetchData();
   }, []);
-  console.log("exam config: ", examInfo);
 
   return (
     <div className="p-5">
       <div className="grid grid-cols-12 gap-6">
         <ExamInfoArea examInfo={examInfo} setExamInfo={setExamInfo} />
 
-        <ResultListArea classgroups={examInfo.classGroupObjs} />
+        <ResultListArea examInfo={examInfo} studentResults={studentResults} />
       </div>
     </div>
   );

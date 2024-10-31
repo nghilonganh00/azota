@@ -12,7 +12,11 @@ const StartExam = () => {
   const { examName, examDuration, questionTotal } = examConfig ?? {};
 
   const handleStartExam = () => {
-    navigate(`/exam/take-training/${hashId}`);
+    if (examConfig?.examType === "PRACTICE") {
+      navigate(`/exam/take-training/${hashId}`);
+    } else {
+      navigate(`/exam/take-exam/${hashId}`);
+    }
   };
 
   useEffect(() => {

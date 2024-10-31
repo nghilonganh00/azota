@@ -1,11 +1,17 @@
 import {
-  Class,
+  Class as IClass,
   ExamConfig,
   ExamResult,
   Teacher,
+  Class,
 } from "../../../../../Globals/Interfaces/interface";
-import { ClassGroup } from "../../../Homework/AddHomework/libs/interfaces";
 import { Student } from "../../../Homework/ResultsList/Interface/interface";
+
+export interface ClassGroup {
+  classGroupId: string;
+  classGroupName: string;
+  Classes: Class[];
+}
 
 export interface ExamInfo {
   examObj: ExamConfig;
@@ -18,6 +24,7 @@ export interface ExamInfo {
 export interface StudentResult {
   id: number;
   studentName: string;
+  classId: number;
   examresStarted: string;
   createdAt: string;
   ExamResults: ExamResult[];

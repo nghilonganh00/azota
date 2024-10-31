@@ -10,18 +10,18 @@ interface StudentResultCardProps {
 
 const StudentResultCard: React.FC<StudentResultCardProps> = (props) => {
   const { studentResult } = props;
-  const { id, studentName, createdAt, ExamResults } = studentResult;
+  
+  const { id, studentName, ExamResults } = studentResult;
 
   const lastestExamResult = ExamResults[ExamResults.length - 1];
 
-  console.log("student result: ", studentResult);
 
   return (
     <Link
       to={`/teacher/exam/exam-review/${lastestExamResult.id}`}
       className="col-span-6 md:col-span-4"
     >
-      <div className="rounded-md bg-slate-100 py-5 shadow-sm duration-200 ease-in-out hover:scale-105 hover:cursor-pointer hover:shadow-lg">
+      <div className="rounded-md bg-white py-5 shadow-sm duration-200 ease-in-out hover:scale-105 hover:cursor-pointer hover:shadow-lg">
         <div className="flex items-center justify-start gap-2 border-b border-gray-300 px-4 pb-3">
           {/* <div className="size-10 rounded-full bg-red-600"></div> */}
           <StudentAvatar fullname={studentName} />
@@ -53,7 +53,7 @@ const StudentResultCard: React.FC<StudentResultCardProps> = (props) => {
           <div className="flex items-center justify-between px-4 text-gray-500">
             <div className="text-xs">Thời gian nộp bài:</div>
             <div className="text-xs font-medium">
-              {isoDateUtil.calculateDiffFromNow(createdAt)}
+              {isoDateUtil.calculateDiffFromNow(lastestExamResult.createdAt)}
             </div>
           </div>
         </div>

@@ -43,6 +43,26 @@ const StudentAPI = {
     }
   },
 
+  getExamAssignments: async (classId: number, examId: number) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/student/class/${classId}/exam/${examId}/assigments`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            x_authorization: userId,
+          },
+        },
+      );
+
+      const data = await response.data;
+      return data.data;
+    } catch (error) {
+      console.error("Error StudentAPI.getExamResult :" + error);
+      return [];
+    }
+  },
+
   create: async ({
     studentName,
     identificationNumber,

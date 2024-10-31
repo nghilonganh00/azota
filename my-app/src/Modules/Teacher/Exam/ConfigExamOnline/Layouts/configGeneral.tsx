@@ -17,6 +17,8 @@ interface ConfigGeneralProp {
   setExamConfig: React.Dispatch<React.SetStateAction<ExamConfig>>;
   assignedClasses: number[];
   setAssignedClasses: React.Dispatch<React.SetStateAction<number[]>>;
+  assignedStudentIds: number[];
+  setAssignedStudentIds: React.Dispatch<React.SetStateAction<number[]>>;
   handleChangeConfig: (name: string, newValue: string | number[]) => void;
 }
 
@@ -26,6 +28,8 @@ const ConfigGeneral: React.FC<ConfigGeneralProp> = (props) => {
     setExamConfig,
     assignedClasses,
     setAssignedClasses,
+    assignedStudentIds,
+    setAssignedStudentIds,
     handleChangeConfig,
   } = props;
 
@@ -195,6 +199,8 @@ const ConfigGeneral: React.FC<ConfigGeneralProp> = (props) => {
             setExamConfig={setExamConfig}
             assignedClasses={assignedClasses}
             setAssignedClasses={setAssignedClasses}
+            assignedStudentIds={assignedStudentIds}
+            setAssignedStudentIds={setAssignedStudentIds}
             handleChangeConfig={handleChangeConfig}
           />
         </div>

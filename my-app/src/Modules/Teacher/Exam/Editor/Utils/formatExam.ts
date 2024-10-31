@@ -30,6 +30,9 @@ const convertToJSON = (text: string) => {
 
     questions.forEach((question, index) => {
       const questionKey = questionMatches[index][0];
+      const match = questionKey.match(/\d+/);
+      const rawIndex = match ? match[0] : null;
+
       exam[partKey]["questions"][questionKey] = {};
 
       // Extract topic
@@ -44,12 +47,14 @@ const convertToJSON = (text: string) => {
       exam[partKey]["questions"][questionKey]["topic"] = topic.trim();
 
       // Extract options
-      exam[partKey]["questions"][questionKey]["options"] = {};
       exam[partKey]["questions"][questionKey]["type"] = "ESSAY"; //Default type
+      exam[partKey]["questions"][questionKey]["options"] = {};
+      exam[partKey]["questions"][questionKey]["rawIndex"] = rawIndex;
 
       optionKeys.forEach((optionKey) => {
-        const optionRegex = new RegExp(`${optionKey}\\.`, "g");
+        const optionRegex = new RegExp(`\\*?${optionKey}\\.`, "g");
         const optionMatches = Array.from(question.matchAll(optionRegex));
+        console.log("optionMatches: ", optionMatches);
         exam[partKey]["questions"][questionKey]["type"] = "MULTIQLE_CHOICE";
 
         if (optionMatches.length > 0) {
@@ -63,7 +68,8 @@ const convertToJSON = (text: string) => {
               .trim();
             exam[partKey]["questions"][questionKey]["options"][optionKey] = {
               content: option,
-              isAnswer: false,
+              isAnswer: optionMatches[0][0].startsWith("*"),
+              key: optionKey,
             };
           }
         }

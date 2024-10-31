@@ -17,7 +17,7 @@ const Editor = () => {
     localStorage.setItem("exam", editorValue);
   };
 
-  //After 3 seconds the user cannot edit in the EditorCode, the conversion function will be performed
+  //After 1 seconds the user cannot edit in the EditorCode, the conversion function will be performed
   useEffect(() => {
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
@@ -25,7 +25,7 @@ const Editor = () => {
 
     debounceTimeout.current = setTimeout(() => {
       handleCovertEditorIntoJSON();
-    }, 2000);
+    }, 1000);
 
     return () => {
       if (debounceTimeout.current) {

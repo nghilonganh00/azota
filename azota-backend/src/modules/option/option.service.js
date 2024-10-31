@@ -3,12 +3,13 @@
 import db from "../../models";
 
 const optionService = {
-  create: async ({ optionContent, isAnswer, questionId }) => {
+  create: async ({ optionContent, isAnswer, questionId, key }) => {
     try {
       const newOption = db.Option.create({
         optionContent,
         isAnswer,
         questionId,
+        key,
       });
 
       return newOption;

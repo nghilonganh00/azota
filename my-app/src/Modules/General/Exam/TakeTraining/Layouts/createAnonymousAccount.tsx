@@ -1,10 +1,16 @@
 import { OctagonAlert } from "lucide-react";
 import { useState } from "react";
 import UserAPI from "../../../../../API/userAPI";
-import AuthAPI from "../../../../../API/authAPI";
-import { NewUser } from "../libs/interface";
 
-const CreateAnonymousAccount = () => {
+interface CreateAnonymousAccountProps {
+  setUserToken: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+const CreateAnonymousAccount: React.FC<CreateAnonymousAccountProps> = (
+  props,
+) => {
+  const { setUserToken } = props;
+
   const [fullName, setFullName] = useState<string>("");
 
   const handleOnChangeFullName = (fullname: string) => {
@@ -19,6 +25,7 @@ const CreateAnonymousAccount = () => {
     const newUser = responseObj.data;
     console.log("new user: ", newUser);
     localStorage.setItem("user-token", newUser.accessToken);
+    setUserToken(newUser.accessToken);
   };
 
   return (

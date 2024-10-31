@@ -14,15 +14,16 @@ import CreateAnonymousAccount from "./Layouts/createAnonymousAccount";
 const TakeTraining = () => {
   const { hashId } = useParams();
   const navigate = useNavigate();
-  const userId = localStorage.getItem("userId");
+  const [userToken, setUserToken] = useState<string | null>(
+    localStorage.getItem("user-token"),
+  );
+  const examStartTime = new Date().toString();
 
   const [exam, setExam] = useState<Exam>({} as Exam);
   const [examAnswers, setExamAnswers] = useState<ExamAnswer[]>([]);
-  const [examStartTime, setExamStartTime] = useState(new Date().toString());
   const [examingQuestion, setExamingQuestion] = useState<Question>(
     {} as Question,
   );
-
   const [examingQuestionId, setExamingQuestionId] = useState<number>(0);
   const [isShowPartName, setShowPartName] = useState(false);
   const [selectedOption, setSelectOption] = useState<Option | null>(null);
@@ -139,8 +140,8 @@ const TakeTraining = () => {
     fetchExamData();
   }, [hashId]);
 
-  if (!userId) {
-    return <CreateAnonymousAccount />;
+  if (!userToken) {
+    return <CreateAnonymousAccount setUserToken={setUserToken} />;
   }
 
   return (

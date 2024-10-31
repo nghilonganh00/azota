@@ -21,20 +21,16 @@ const HistoryExamDropdown: React.FC<HistoryExamDropdownProps> = (props) => {
       </MenuDropdown.Button>
 
       <MenuDropdown.Panel>
-        <div className="max-w-56 rounded-md bg-white px-0.5 shadow-md">
+        <div className="h-72 max-w-56 overflow-y-scroll rounded-md bg-white px-0.5 shadow-md">
           {historyExam?.map((result, key) => {
             const { id, mark, examresStarted, examresSaved } = result;
 
             return (
               <MenuDropdown.Item>
-                <Link
-                  to={`/teacher/exam/exam-review/${id}`}
-                  className="border-b border-gray-200 p-2 hover:cursor-pointer"
-                  key={key}
-                >
+                <Link to={`/teacher/exam/exam-review/${id}`} key={key}>
                   <div
                     className={
-                      "space-y-1 rounded-md p-2 hover:bg-slate-100 " +
+                      "space-y-1 rounded-md border-b border-gray-200 p-2 hover:cursor-pointer hover:bg-slate-100" +
                       (examResultId === id.toString() && "bg-slate-100")
                     }
                   >

@@ -1,25 +1,21 @@
 import { LuBell } from "react-icons/lu";
-import { Link, useSearchParams } from "react-router-dom";
 import Menu from "../Menu/menu";
 import { ChevronLeft } from "lucide-react";
+import useGoBack from "../../../hooks/useGoBack";
 
 const TopBar = () => {
-  const [searchParams] = useSearchParams();
-
-  const backTo = searchParams.get("backto") || "/";
-
-  console.log("backTo:", backTo);
+  const goBack = useGoBack();
 
   return (
-    <div className="w-full border-b border-solid border-slate-200 py-4 px-4">
+    <div className="w-full border-b border-solid border-slate-200 px-4 py-4">
       <div className="flex items-center justify-between">
-        <Link
-          to={backTo}
-          className="flex items-center gap-1  text-center font-medium"
+        <div
+          className="flex items-center gap-1 text-center font-medium hover:cursor-pointer"
+          onClick={goBack}
         >
           <ChevronLeft strokeWidth={1.5} className="size-5" />
           <span className="text-sm text-gray-800">Quay lại</span>
-        </Link>
+        </div>
 
         <div className="flex items-center gap-5">
           <img

@@ -1,4 +1,3 @@
-import { sequelize } from "../../models";
 import sequelizeUtil from "../../utils/sequelizeUtil";
 import examService from "../exam/exam.service";
 import examResultService from "./examResult.service";
@@ -8,19 +7,19 @@ const examResultMethod = {
     try {
       const examResult = await examResultService.getAnswersById(examResultId);
       const examResultObj = sequelizeUtil.convertObj(examResult);
-      console.log("examResultObj: ", examResultObj);
 
       const exam = await examService.getById(examResultObj.examId);
       const examObj = sequelizeUtil.convertObj(exam);
 
       let examresAnswers = examResultObj.examresAnswers;
-      examresAnswers = examresAnswers.replace(/\\/g, "");
+      examresAnswers = examresAnswers
+        ? examresAnswers.replace(/\\/g, "")
+        : "{}";
 
-      // Now parse the JSON string
       const examresAnswersObj = JSON.parse(examresAnswers);
 
       let rightAnswer = 0;
-      const questionTotal = examObj.Questions.length;
+      const questionTotal = examObj.Questions?.length || 0;
       let mark = 0.0;
       let correctQuestionIds = [];
 
@@ -47,16 +46,12 @@ const examResultMethod = {
               }
             });
           }
-          console.log("question: ", question);
-          console.log("examresAnswer: ", examresAnswer);
-          console.log("rightAnswer: ", rightAnswer);
-          console.log("mark: ", mark);
         }
       });
 
       return { rightAnswer, questionTotal, mark, correctQuestionIds };
     } catch (error) {
-      throw new Error(`Error in examResultService.getMark: ${error}`);
+      throw new Error(`Error in examResultMethod.markExam: ${error}`);
     }
   },
 };

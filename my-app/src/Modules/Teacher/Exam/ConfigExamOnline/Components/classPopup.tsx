@@ -1,18 +1,63 @@
 import { AlignJustify, Divide, Search } from "lucide-react";
-import { Fragment, useState } from "react";
-import { Classroom } from "../libs/interface";
+import { Fragment, useEffect, useState } from "react";
+import { Classroom, Student } from "../libs/interface";
 import Popup from "../../../../../Globals/Components/popup";
 import Searchbar from "../../../../../Globals/Components/Searchbar/searchbar";
+import StudentAPI from "../../../../../API/studentAPI";
 
 interface ClassroomPopupProps {
   classroom: Classroom;
+  assignedStudentIds: number[];
+  setAssignedStudentIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 const ClassroomPopup: React.FC<ClassroomPopupProps> = (props) => {
-  const { classroom } = props;
-  const { className, studentCount, Students } = classroom;
+  const { classroom, assignedStudentIds, setAssignedStudentIds } = props;
+
+  // Bản nháp lưu danh sách sinh viên. Nhấn "Lưu" để đồng bộ.
+  const [assignedStudentIdsDraft, setAssignedStudentIdsDraft] = useState<
+    number[]
+  >([] as number[]);
+
+  const examId = sessionStorage.getItem("examId");
+
+  const { className } = classroom;
 
   const [isOpenPopup, setOpenPopup] = useState<boolean>(false);
+  const [students, setStudents] = useState<Student[]>([]);
+
+  // Cập nhật trong bản nháp
+  const handleAssignStudentInDraft = (studentId: number) => {
+    setAssignedStudentIdsDraft((preValue) =>
+      preValue.includes(studentId)
+        ? preValue.filter((e) => e !== studentId)
+        : [...preValue, studentId],
+    );
+  };
+
+  const handleSave = () => {
+    setAssignedStudentIds(assignedStudentIdsDraft);
+    setOpenPopup(false);
+  };
+
+  const fetchStudentExamAssignmentsData = async () => {
+    if (examId) {
+      const data = await StudentAPI.getExamAssignments(
+        classroom.id,
+        Number(examId),
+      );
+
+      setStudents(data);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpenPopup) fetchStudentExamAssignmentsData();
+  }, [isOpenPopup]);
+
+  useEffect(() => {
+    if (assignedStudentIds) setAssignedStudentIdsDraft(assignedStudentIds);
+  }, [assignedStudentIds]);
 
   return (
     <Fragment>
@@ -54,17 +99,37 @@ const ClassroomPopup: React.FC<ClassroomPopupProps> = (props) => {
               </div>
             </div>
 
-            <div className="grid grid-cols-12 gap-y-4 rounded-b-md bg-white p-3 pt-5">
-              {Students.map((student, key) => (
-                <div className="col-span-4" key={key}>
-                  <div className="flex items-center gap-1">
-                    <input type="checkbox" className="size-4" />
-                    <label htmlFor="" className="text-sm">
-                      {student.studentName}
-                    </label>
+            <div className="bg-white p-3 pt-5">
+              <div className="grid grid-cols-12 gap-y-4 rounded-b-md bg-white">
+                {students?.map((student, key) => (
+                  <div className="col-span-4" key={key}>
+                    <div className="flex items-center gap-1">
+                      <input
+                        type="checkbox"
+                        className="size-4"
+                        defaultChecked={assignedStudentIds?.includes(
+                          parseInt(student.id),
+                        )}
+                        onChange={() =>
+                          handleAssignStudentInDraft(parseInt(student.id))
+                        }
+                      />
+                      <label htmlFor="" className="text-sm">
+                        {student.studentName}
+                      </label>
+                    </div>
                   </div>
+                ))}
+              </div>
+
+              <div className="flex justify-end">
+                <div
+                  className="mt-4 inline-block rounded-md bg-blue-800 px-8 py-2 text-sm font-semibold text-white hover:cursor-pointer hover:bg-blue-700"
+                  onClick={handleSave}
+                >
+                  Lưu
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </Popup>

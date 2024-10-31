@@ -8,6 +8,7 @@ import questionPartService from "../questionPart/questionPart.service";
 import userService from "../user/user.service";
 import examService from "./exam.service";
 import redisMethod from "../redis/redis.method";
+import db from "../../models";
 
 const examController = {
   handleGetDetailByHashId: async (req, res) => {
@@ -54,22 +55,40 @@ const examController = {
       });
     }
   },
+
   handleConfigByHashId: async (req, res) => {
     try {
       const hashId = req.params.hashId;
       const examObj = await examService.getConfigByHashId(hashId);
       const examId = examObj.id;
-      const assignedClassObjs = await examByClassService.getAllByExamId(examId);
+
+      const classIdRecords = await db.sequelize.query(
+        `
+        SELECT 
+          es.classId
+        FROM 
+          ExamByClasses as es
+        Where
+          es.examId = :examId
+      `,
+        {
+          replacements: { examId: examId },
+          type: db.sequelize.QueryTypes.SELECT,
+        }
+      );
+      const assignedClassIds = classIdRecords.map((record) => record.classId);
+
       const assignedStudentObjs = await ExamByStudentService.getAllByExamId(
         examId
       );
+
       const authorObj = await userService.getDetailById(examObj.teacherId);
       const classGroupObjs = await classgroupService.getAllAssignedExam(examId);
 
       return res.status(201).json({
         data: {
           examObj,
-          assignedClassObjs,
+          assignedClassIds,
           assignedStudentObjs,
           authorObj,
           classGroupObjs,
@@ -83,6 +102,7 @@ const examController = {
       });
     }
   },
+
   handleGetByHashId: async (req, res) => {
     try {
       const hashId = req.params.hashId;
@@ -118,6 +138,8 @@ const examController = {
         examContent,
       } = req.body;
 
+      console.log("examContent: ", examContent);
+
       const newExam = await examService.create({
         examName,
         examAssignType,
@@ -142,10 +164,11 @@ const examController = {
           const partId = newPart.id;
 
           Object.keys(questions).map(async (questionKey) => {
-            const { type, topic, options, method, explain } =
+            const { rawIndex, type, topic, options, method, explain } =
               questions[questionKey];
 
             const newQuestion = await questionService.create({
+              rawIndex,
               topic,
               type,
               examId,
@@ -156,12 +179,13 @@ const examController = {
 
             const questionId = newQuestion.id;
             Object.keys(options).map(async (optionKey) => {
-              const { content, isAnswer } = options[optionKey];
-              console.log("option content: ", content);
+              const { content, isAnswer, key } = options[optionKey];
+              console.log("isAnswer: ", isAnswer);
               const newOption = await optionService.create({
                 optionContent: content,
-                isAnswer,
+                isAnswer: isAnswer,
                 questionId,
+                key,
               });
             });
           });
@@ -180,6 +204,7 @@ const examController = {
       });
     }
   },
+
   handleUpdateConfig: async (req, res) => {
     try {
       const hashId = req.params.hashId;
@@ -191,6 +216,22 @@ const examController = {
         subjectId,
         purposeId,
         examContent,
+        assignedStudentIds,
+        assignedClassIds,
+        examDuration,
+        examEnd,
+        examLimitSubmit,
+        examStart,
+        examType,
+        fee,
+        header,
+        isHideGroupQuestionTitle,
+        isPublish,
+        isRandomQuestion,
+        isSectionsStartingFromQuestion1,
+        questionTotal,
+        showAnswer,
+        showResult,
       } = req.body;
 
       const exam = await examService.updateConfigByHashId({
@@ -198,10 +239,26 @@ const examController = {
         examName,
         examAssignType,
         examSubmitCount,
-        gradeId,
-        subjectId,
-        purposeId,
+        // gradeId,
+        // subjectId,
+        // purposeId,
         examContent,
+        assignedStudentIds,
+        assignedClassIds,
+        examDuration,
+        examEnd,
+        examLimitSubmit,
+        examStart,
+        examType,
+        fee,
+        header,
+        isHideGroupQuestionTitle,
+        isPublish,
+        isRandomQuestion,
+        isSectionsStartingFromQuestion1,
+        questionTotal,
+        showAnswer,
+        showResult,
       });
 
       redisMethod.delete(hashId);

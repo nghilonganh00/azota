@@ -1,12 +1,14 @@
 import { ChevronDown } from "lucide-react";
-import { ClassGroup } from "../../../Homework/AddHomework/libs/interfaces";
+import { ClassGroup } from "../libs/interface";
+import { Class } from "../../../../../Globals/Interfaces/interface";
 
 interface ClassGroupCollapseProps {
   classGroup: ClassGroup;
+  handleSelectClassroom: (selectClassroom: Class) => void;
 }
 
 const ClassGroupCollapse: React.FC<ClassGroupCollapseProps> = (props) => {
-  const { classGroup } = props;
+  const { classGroup, handleSelectClassroom } = props;
   const { classGroupName, Classes } = classGroup;
 
   return (
@@ -20,8 +22,12 @@ const ClassGroupCollapse: React.FC<ClassGroupCollapseProps> = (props) => {
         {Classes.map((classroom, key) => {
           const { className, studentCount } = classroom;
           return (
-            <div className="col-span-3">
-              <div className="rounded-md bg-[#c1d9f159] p-4">
+            <div
+              className="col-span-3"
+              key={key}
+              onClick={() => handleSelectClassroom(classroom)}
+            >
+              <div className="rounded-md bg-[#c1d9f159] p-4 hover:cursor-pointer">
                 <div className="text-sm font-medium">{className}</div>
                 <div className="mt-2 text-xs font-medium text-slate-500">
                   {`Sĩ số: ${studentCount}`}

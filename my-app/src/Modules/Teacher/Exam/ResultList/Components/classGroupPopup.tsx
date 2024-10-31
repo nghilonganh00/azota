@@ -2,21 +2,28 @@ import { ChevronDown, ChevronsDownUp, Search } from "lucide-react";
 import { useState } from "react";
 import { Fragment } from "react/jsx-runtime";
 import Popup from "../../../../../Globals/Components/popup";
-import Searchbar from "../../../../../Globals/Components/Searchbar/searchbar";
-import { ClassGroup } from "../../../Homework/AddHomework/libs/interfaces";
 import ClassGroupCollapse from "./classGroupCollapse";
+import { ClassGroup } from "../libs/interface";
+import { Class } from "../../../../../Globals/Interfaces/interface";
 
 interface ClassGroupPopupProps {
   showedClassGroup: ClassGroup;
   setShowClassGroup: React.Dispatch<React.SetStateAction<ClassGroup>>;
+  setShowClassroom: React.Dispatch<React.SetStateAction<Class | null>>;
   classGroups: ClassGroup[];
 }
 
 const ClassGroupPopup: React.FC<ClassGroupPopupProps> = (props) => {
-  const { showedClassGroup, setShowClassGroup, classGroups } = props;
+  const { showedClassGroup, setShowClassGroup, setShowClassroom, classGroups } =
+    props;
 
   const { classGroupName } = showedClassGroup;
   const [isOpen, setOpen] = useState<boolean>(false);
+
+  const handleSelectClassroom = (selectedClassroom: Class) => {
+    setShowClassroom(selectedClassroom);
+    setOpen(false);
+  };
 
   return (
     <Fragment>
@@ -28,7 +35,7 @@ const ClassGroupPopup: React.FC<ClassGroupPopupProps> = (props) => {
           {`Chọn nhóm lớp: ${classGroupName}`}
         </div>
         <div className="ml-1 size-4 rounded-full bg-white text-center text-xs/4 font-medium">
-          1
+          {showedClassGroup?.Classes?.length}
         </div>
         <ChevronDown className="ml-3 text-white" strokeWidth={1.5} />
       </div>
@@ -53,7 +60,11 @@ const ClassGroupPopup: React.FC<ClassGroupPopupProps> = (props) => {
 
             <div className="mt-2 h-[520px] space-y-6 overflow-y-scroll rounded-md border border-gray-200 px-2 py-4 shadow">
               {classGroups.map((classGroup, key) => (
-                <ClassGroupCollapse classGroup={classGroup} key={key} />
+                <ClassGroupCollapse
+                  classGroup={classGroup}
+                  key={key}
+                  handleSelectClassroom={handleSelectClassroom}
+                />
               ))}
             </div>
 

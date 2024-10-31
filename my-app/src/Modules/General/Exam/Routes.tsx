@@ -2,6 +2,7 @@ import StudentLayout from "../../../Globals/Layouts/studentLayout";
 import AnswerExam from "./AnswerExam/answerExam";
 import StartExam from "./StartExam/startExam";
 import SubmitExam from "./SubmitExam/submitExam";
+import TakeExam from "./TakeExam/takeExam";
 import TakeTraining from "./TakeTraining/takeTraining";
 
 const ExamRoutes = {
@@ -16,7 +17,17 @@ const ExamRoutes = {
         { path: "answer-exam/:examResultId", element: <AnswerExam /> },
       ],
     },
-    { path: "take-training/:hashId", element: <TakeTraining /> },
+    {
+      path: "",
+      // element: "",
+      children: [
+        { path: "take-training/:hashId", element: <TakeTraining /> },
+        {
+          path: "take-exam/:hashId",
+          element: <TakeExam />,
+        },
+      ],
+    },
   ],
 };
 

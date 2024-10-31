@@ -1,11 +1,9 @@
 import {
-  AlignJustify,
   Expand,
   Filter,
   PanelLeftClose,
   Search,
 } from "lucide-react";
-import { ExamConfig } from "../../../../../Globals/Interfaces/interface";
 import { ClassGroup } from "../../../Homework/AddHomework/libs/interfaces";
 import ClassGroupBox from "./classGroupBox";
 
@@ -71,7 +69,7 @@ const AssignClassPanel: React.FC<AssignClassPanelProps> = (props) => {
           {classGroups.map((classGroup, key) => (
             <ClassGroupBox
               key={key}
-              initValue={assignedClasses}
+              assignedClassIds={assignedClasses}
               onChange={onChange}
               classGroup={classGroup}
             />

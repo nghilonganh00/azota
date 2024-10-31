@@ -84,6 +84,7 @@ const examResultController = {
         message: `Get the exam with examId: ${examResultId} successfully`,
       });
     } catch (error) {
+      console.log(error);
       return res.status(500).json({
         message: `Internal Server Error: ${error}`,
         data: {},
@@ -126,6 +127,45 @@ const examResultController = {
           // markedByObj: markedBy,
         },
         message: `Get the exam with examId: ${examResultId} successfully`,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: `Internal Server Error: ${error}`,
+        data: {},
+      });
+    }
+  },
+  handleGetLatestByExamId: async (req, res) => {
+    try {
+      const { examId } = req.params;
+
+      const data = await examResultService.getLatestStudentResultByExamId(
+        examId
+      );
+
+      return res.status(200).json({
+        data: { examResults: data },
+        message: `Get the latest exam results with examId: ${examId} successfully`,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: `Internal Server Error: ${error}`,
+        data: {},
+      });
+    }
+  },
+  getAssignedByClassLatest: async (req, res) => {
+    try {
+      const { examId, classId } = req.params;
+
+      const data = await examResultService.getAssignedByClassLatest(
+        examId,
+        classId
+      );
+
+      return res.status(200).json({
+        data: data,
+        message: `Get the latest exam results with examId: ${examId} assigned by class ${classId} successfully`,
       });
     } catch (error) {
       return res.status(500).json({

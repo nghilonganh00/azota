@@ -129,7 +129,7 @@ const ExamAPI = {
         },
         body: JSON.stringify(exam),
       });
-
+      
       return response;
     } catch (error) {
       console.error(`Error in ExamAPI.updatedConfigByHashId: ${error}`);

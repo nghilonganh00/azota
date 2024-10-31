@@ -73,4 +73,6 @@ const del = async (id) => {
   }
 };
 
+
+
 export default { isExist, getAll, getAllByTeacher, create, edit, del };

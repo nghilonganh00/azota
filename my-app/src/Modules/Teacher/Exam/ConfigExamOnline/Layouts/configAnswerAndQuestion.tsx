@@ -11,6 +11,8 @@ const ConfigAnswerAndQuestion: React.FC<ConfigAnswerAndQuestionProps> = (
 ) => {
   const { examConfig, setExamConfig, handleChangeConfig } = props;
 
+  const { showAnswer, showResult } = examConfig;
+
   return (
     <div className="rounded-md bg-white px-5 py-6 text-gray-800 shadow">
       <div className="border-b border-gray-200 pb-4 text-base font-medium">
@@ -32,7 +34,7 @@ const ConfigAnswerAndQuestion: React.FC<ConfigAnswerAndQuestionProps> = (
                   name="config-show-score"
                   className="h-4 w-4 border-gray-300 accent-blue-600"
                   onChange={() => handleChangeConfig("showResult", "NO")}
-                  // defaultChecked={fee === "FREE"}
+                  defaultChecked={showResult === "NO"}
                 />
                 <label className="text-sm" htmlFor="score-no">
                   Không
@@ -46,7 +48,7 @@ const ConfigAnswerAndQuestion: React.FC<ConfigAnswerAndQuestionProps> = (
                   name="config-show-score"
                   className="h-4 w-4 border-gray-300 accent-blue-600"
                   onChange={() => handleChangeConfig("showResult", "SUBMITTED")}
-                  // defaultChecked={fee === "TEST"}
+                  defaultChecked={showResult === "SUBMITTED"}
                 />
                 <label className="text-sm" htmlFor="score-finish">
                   Khi làm bài xong
@@ -62,7 +64,7 @@ const ConfigAnswerAndQuestion: React.FC<ConfigAnswerAndQuestionProps> = (
                   onChange={() =>
                     handleChangeConfig("showResult", "ALL_SUBMITTED")
                   }
-                  // defaultChecked={fee === "EXPLAIN"}
+                  defaultChecked={showResult === "ALL_SUBMITTED"}
                 />
                 <label className="text-sm" htmlFor="score-all-finish">
                   Khi tất cả thi xong
@@ -86,7 +88,7 @@ const ConfigAnswerAndQuestion: React.FC<ConfigAnswerAndQuestionProps> = (
                   name="config-answer"
                   className="h-4 w-4 border-gray-300 accent-blue-600"
                   onChange={() => handleChangeConfig("showAnswer", "NO")}
-                  //   defaultChecked={fee === "FREE"}
+                  defaultChecked={showAnswer === "NO"}
                 />
                 <label className="text-sm" htmlFor="answer-no">
                   Không
@@ -100,7 +102,7 @@ const ConfigAnswerAndQuestion: React.FC<ConfigAnswerAndQuestionProps> = (
                   id="answer-finish"
                   className="h-4 w-4 border-gray-300 accent-blue-600"
                   onChange={() => handleChangeConfig("showAnswer", "SUBMITTED")}
-                  //   defaultChecked={fee === "TEST"}
+                  defaultChecked={showAnswer === "SUBMITTED"}
                 />
                 <label className="text-sm" htmlFor="answer-finish">
                   Khi làm bài xong
@@ -116,7 +118,7 @@ const ConfigAnswerAndQuestion: React.FC<ConfigAnswerAndQuestionProps> = (
                   onChange={() =>
                     handleChangeConfig("showAnswer", "ALL_SUBMITTED")
                   }
-                  //   defaultChecked={fee === "EXPLAIN"}
+                  defaultChecked={showAnswer === "ALL_SUBMITTED"}
                 />
                 <label className="text-sm" htmlFor="answer-all-finish">
                   Khi tất cả thi xong
@@ -132,7 +134,7 @@ const ConfigAnswerAndQuestion: React.FC<ConfigAnswerAndQuestionProps> = (
                   onChange={() =>
                     handleChangeConfig("showAnswer", "REACHED_POINT")
                   }
-                  //   defaultChecked={fee === "EXPLAIN"}
+                  defaultChecked={showAnswer === "REACHED_POINT"}
                 />
                 <label className="text-sm" htmlFor="exam-pass">
                   Khi đạt đến số điểm nhất định

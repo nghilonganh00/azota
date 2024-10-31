@@ -1,9 +1,14 @@
-import { Student } from "../../../Class/ClassDetail/Interface/interface";
+import { Student as IStudent } from "../../../Class/ClassDetail/Interface/interface";
+
+export interface Student extends IStudent {
+  isAssigned: boolean;
+}
 
 export interface Classroom {
   id: number;
   className: string;
   studentCount: number;
+  assignedStudentCount: number;
   Students: Student[];
 }
 
@@ -12,3 +17,4 @@ export interface ClassGroup {
   classGroupName: string;
   Classes: Classroom[];
 }
+

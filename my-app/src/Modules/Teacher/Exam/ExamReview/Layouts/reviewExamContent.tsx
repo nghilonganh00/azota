@@ -1,9 +1,11 @@
 import {
   AlignJustify,
+  CheckCircle2,
   FilePenLine,
   Filter,
   PanelLeftClose,
   RotateCcw,
+  XCircle,
 } from "lucide-react";
 import { ExamReviewI, GroupedQuestionPart } from "../libs/interface";
 import { groupQuestionsByPart } from "../libs/utils";
@@ -15,6 +17,7 @@ interface ReviewExamContentProps {
 const ReviewExamContent: React.FC<ReviewExamContentProps> = (props) => {
   const { examReview } = props;
   const { examObj, examResult, correctQuestionIds } = examReview;
+  console.log("correct: ", correctQuestionIds);
   const { Questions } = examObj || {};
 
   const questionParts: GroupedQuestionPart[] =
@@ -113,7 +116,7 @@ const ReviewExamContent: React.FC<ReviewExamContentProps> = (props) => {
                       >
                         Đáp án đúng:
                         {Options.map(
-                          (option, key) => option.isAnswer && option.key + " ",
+                          (option) => option.isAnswer && option.key + " ",
                         )}
                       </div>
 
@@ -125,13 +128,35 @@ const ReviewExamContent: React.FC<ReviewExamContentProps> = (props) => {
                             : "border-red-600")
                         }
                       >
-                        {/* {examresAnswersObj?.map((examresAnswers, key) => {
-
-                        })} */}
-                        <div className="w-10 text-right font-medium">A</div>
-                        <div className="w-10 text-right font-medium">B</div>
-                        <div className="w-10 text-right font-medium">C</div>
-                        <div className="w-10 text-right font-medium">D</div>
+                        {Options.sort((a, b) => (a.key > b.key ? 1 : -1)).map(
+                          (option, key) => {
+                            return (
+                              <div className="relative">
+                                {option.isAnswer && (
+                                  <div className="absolute">
+                                    {correctQuestionIds.includes(id) ? (
+                                      <CheckCircle2
+                                        className="text-green-600"
+                                        strokeWidth={1.5}
+                                      />
+                                    ) : (
+                                      <XCircle
+                                        className="text-red-600"
+                                        strokeWidth={1.5}
+                                      />
+                                    )}
+                                  </div>
+                                )}
+                                <div
+                                  className="w-10 text-right font-medium"
+                                  key={key}
+                                >
+                                  {option.key}
+                                </div>
+                              </div>
+                            );
+                          },
+                        )}
                       </div>
                     </div>
                   </div>
@@ -140,121 +165,6 @@ const ReviewExamContent: React.FC<ReviewExamContentProps> = (props) => {
             </div>
           </div>
         ))}
-
-        {/* <div className="mt-6 px-6 text-sm">
-          <div className="font-semibold text-gray-800">Phần 1. TRẮC NGHIỆM</div>
-          <div className="space-y-14">
-            <div>
-              <div className="mt-3 flex items-center justify-between">
-                <div className="font-semibold">Câu 1</div>
-                <div className="flex items-center gap-1">
-                  <div className="rounded-md border border-blue-800 p-1">
-                    <FilePenLine className="size-4 text-blue-800" />
-                  </div>
-
-                  <div className="rounded-md border border-blue-800 p-1">
-                    <RotateCcw className="size-4 text-blue-800" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-2">
-                Mô hình tổng quát đảm bảo an toàn thông tin và hệ thống thông
-                tin thường gồm các lớp:
-              </div>
-
-              <div className="mt-6 space-y-6">
-                <div>
-                  <span className="font-semibold">A.</span> An ninh tổ chức, An
-                  ninh mạng và Điều khiển truy cập
-                </div>
-
-                <div>
-                  <span className="font-semibold">B.</span> An ninh tổ chức,
-                  Tưởng lửa và Điều khiển truy cập
-                </div>
-
-                <div>
-                  <span className="font-semibold">C.</span> An ninh tổ chức, An
-                  ninh mạng và An toàn hệ điều hành và ứng dụng
-                </div>
-
-                <div>
-                  <span className="font-semibold">D.</span> An ninh tổ chức, An
-                  ninh mạng và An ninh hệ thống
-                </div>
-              </div>
-
-              <div className="mt-4 flex items-center justify-end gap-2">
-                <div className="text-base font-medium text-[red]">
-                  Đáp án đúng: B
-                </div>
-
-                <div className="flex items-center gap-4 rounded border border-red-600 px-6 py-2 text-base">
-                  <div className="w-10 text-right font-medium">A</div>
-                  <div className="w-10 text-right font-medium">B</div>
-                  <div className="w-10 text-right font-medium">C</div>
-                  <div className="w-10 text-right font-medium">D</div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <div className="mt-3 flex items-center justify-between">
-                <div className="font-semibold">Câu 1</div>
-                <div className="flex items-center gap-1">
-                  <div className="rounded-md border border-blue-800 p-1">
-                    <FilePenLine className="size-4 text-blue-800" />
-                  </div>
-
-                  <div className="rounded-md border border-blue-800 p-1">
-                    <RotateCcw className="size-4 text-blue-800" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-2">
-                Mô hình tổng quát đảm bảo an toàn thông tin và hệ thống thông
-                tin thường gồm các lớp:
-              </div>
-
-              <div className="mt-6 space-y-6">
-                <div>
-                  <span className="font-semibold">A.</span> An ninh tổ chức, An
-                  ninh mạng và Điều khiển truy cập
-                </div>
-
-                <div>
-                  <span className="font-semibold">B.</span> An ninh tổ chức,
-                  Tưởng lửa và Điều khiển truy cập
-                </div>
-
-                <div>
-                  <span className="font-semibold">C.</span> An ninh tổ chức, An
-                  ninh mạng và An toàn hệ điều hành và ứng dụng
-                </div>
-
-                <div>
-                  <span className="font-semibold">D.</span> An ninh tổ chức, An
-                  ninh mạng và An ninh hệ thống
-                </div>
-              </div>
-
-              <div className="mt-4 flex items-center justify-end gap-2">
-                <div className="text-base font-medium text-[red]">
-                  Đáp án đúng: B
-                </div>
-
-                <div className="flex items-center gap-4 rounded border border-red-600 px-6 py-2 text-base">
-                  <div className="w-10 text-right font-medium">A</div>
-                  <div className="w-10 text-right font-medium">B</div>
-                  <div className="w-10 text-right font-medium">C</div>
-                  <div className="w-10 text-right font-medium">D</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
     </div>
   );

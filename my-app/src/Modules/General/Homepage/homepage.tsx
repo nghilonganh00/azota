@@ -8,20 +8,22 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetchInfoUserData = async () => {
-      const response = await UserAPI.getInfo();
+      try {
+        const response = await UserAPI.getInfo();
 
-      const responseObj = await response.json();
-      const user: User = responseObj.data;
+        const responseObj = await response.json();
+        const user: User = responseObj.data;
 
-      if (!response.ok || !user) {
-        navigate("/auth/login");
-      }
-      
-      if (user.userRole === "TEACHER") {
-        navigate("/teacher/dashboard");
-      } else {
-        navigate("/student");
-      }
+        if (!response.ok || !user) {
+          navigate("/auth/login");
+        }
+
+        if (user.userRole === "TEACHER") {
+          navigate("/teacher/dashboard");
+        } else {
+          navigate("/student");
+        }
+      } catch (error: any) {}
     };
 
     fetchInfoUserData();

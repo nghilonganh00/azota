@@ -1,16 +1,16 @@
 import { Expand, Filter, PanelLeftClose, Search } from "lucide-react";
-import { useEffect, useState } from "react";
 import { ClassGroup } from "../libs/interface";
 import ClassGroupStudentItem from "./classGroupStudentItem";
 
 interface AssignStudentPanelProps {
-  assignedStudent: number[];
-  onChange: (assignStudent: number) => void;
   classGroupWithStudent: ClassGroup[];
+  assignedStudentIds: number[];
+  setAssignedStudentIds: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 const AssignStudentPanel: React.FC<AssignStudentPanelProps> = (props) => {
-  const { assignedStudent, onChange, classGroupWithStudent } = props;
+  const { classGroupWithStudent, assignedStudentIds, setAssignedStudentIds } =
+    props;
 
   console.log("list student: ", classGroupWithStudent);
 
@@ -65,7 +65,12 @@ const AssignStudentPanel: React.FC<AssignStudentPanelProps> = (props) => {
 
         <div>
           {classGroupWithStudent.map((classgroup, key) => (
-            <ClassGroupStudentItem classGroup={classgroup} key={key} />
+            <ClassGroupStudentItem
+              key={key}
+              classGroup={classgroup}
+              assignedStudentIds={assignedStudentIds}
+              setAssignedStudentIds={setAssignedStudentIds}
+            />
           ))}
         </div>
       </div>

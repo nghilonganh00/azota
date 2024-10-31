@@ -5,33 +5,42 @@ import {
   PanelRightClose,
   Search,
 } from "lucide-react";
-import ClassGroupPopup from "../Components/classGroupPopup";
-import StudentResultCard from "../Components/studentResultCard";
-import { ClassGroup } from "../../../Homework/AddHomework/libs/interfaces";
-import { Class } from "../../../../../Globals/Interfaces/interface";
 import { useEffect, useState } from "react";
 import StudentResultList from "../Components/studentResultList";
+import { ClassGroup, ExamInfo, StudentResult } from "../libs/interface";
+import AssignedByClass from "./assignedByClass";
+import AssignedByStudent from "./assignedByStudent";
+import ClassGroupAPI from "../../../../../API/classGroupAPI";
 
 interface ResultListAreaProps {
-  classgroups: ClassGroup[];
+  examInfo: ExamInfo;
+  studentResults: StudentResult[];
 }
 
 const ResultListArea: React.FC<ResultListAreaProps> = (props) => {
-  const { classgroups } = props;
+  const { examInfo, studentResults } = props;
+  const { examObj } = examInfo || {};
 
-  const [showedClassGroup, setShowClassGroup] = useState<ClassGroup>(
-    {} as ClassGroup,
-  );
-  const [showedClassroom, setShowClassroom] = useState<Class | null>(null);
+  const [classGroups, setClassGroups] = useState<ClassGroup[]>([]);
+
+  const renderResultListContent = () => {
+    const components = {
+      ALL: <StudentResultList studentResults={studentResults} />,
+      CLASS: <AssignedByClass classGroups={classGroups} />,
+      STUDENT: <AssignedByStudent classGroups={classGroups} />,
+    };
+
+    return components[examObj?.examAssignType] || null;
+  };
+
+  const fetchClassGroupData = async () => {
+    const data = await ClassGroupAPI.getAll();
+    setClassGroups(data);
+  };
 
   useEffect(() => {
-    if (classgroups?.length > 0) {
-      setShowClassGroup(classgroups[0]);
-      setShowClassroom(classgroups[0].Classes[0]);
-    }
-  }, [classgroups]);
-
-  console.log("assigned classgroups: ", classgroups);
+    fetchClassGroupData();
+  }, []);
 
   return (
     <div className="col-span-8 h-96 md:col-span-9">
@@ -67,7 +76,6 @@ const ResultListArea: React.FC<ResultListAreaProps> = (props) => {
           </div>
         </div>
       </div>
-
       <div className="flex items-center justify-between py-4">
         <div className="text-sm font-medium">Danh sách đã thi (2/2)</div>
         <div className="flex items-center gap-2 rounded-md bg-orange-500/15 px-2 py-1 shadow-sm">
@@ -78,28 +86,7 @@ const ResultListArea: React.FC<ResultListAreaProps> = (props) => {
         </div>
       </div>
 
-      <div className="rounded-md border-gray-300 bg-white p-3 pb-28 shadow-sm">
-        <ClassGroupPopup
-          showedClassGroup={showedClassGroup}
-          setShowClassGroup={setShowClassGroup}
-          classGroups={classgroups}
-        />
-
-        <div className="flex items-center">
-          {showedClassGroup.Classes?.map((classroom, key) => (
-            <div
-              className="w-[20%] border-b-2 border-blue-800 py-3 text-center hover:cursor-pointer"
-              key={key}
-            >
-              <div className="text-sm font-medium">{`${classroom.className}`}</div>
-            </div>
-          ))}
-        </div>
-
-        {showedClassroom && (
-          <StudentResultList showedClassroom={showedClassroom} />
-        )}
-      </div>
+      {renderResultListContent()}
     </div>
   );
 };

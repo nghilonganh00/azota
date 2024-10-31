@@ -22,7 +22,6 @@ const MENU_TABS = [
   { icon: User, label: "Tài Khoản", link: "" },
   { icon: ArrowRightLeft, label: "Vào màn học sinh", link: "" },
   { icon: Moon, label: "Chế độ tối", link: "" },
-  { icon: RefreshCcw, label: "Refresh", link: "" },
 ];
 
 const AUTH_TABS = [
@@ -49,30 +48,46 @@ const Menu = () => {
   const [userRole, setUserRole] = useState<UserRole>("STUDENT");
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
+  const handleRemoveTeacherRole = async () => {
+    try {
+      const updatedUser = await UserAPI.removeTeacherRole();
+      setUserRole("STUDENT");
+      navigate("/student/classroom");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleRegisterTeacherRole = async () => {
+    try {
+      const updatedUser = await UserAPI.registerTeacherRole();
+      setUserRole("TEACHER");
+      navigate("/teacher/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("userId");
   };
 
-  const handleRemoveTeacherRole = async () => {
-    const updatedUser = await UserAPI.removeTeacherRole();
-  };
-
-  const handleRegisterTeacherRole = async () => {
-    const updatedUser = await UserAPI.registerTeacherRole();
-  };
-
   useEffect(() => {
     const fetchInfoUserData = async () => {
-      const response = await UserAPI.getInfo();
+      try {
+        const response = await UserAPI.getInfo();
 
-      const responseObj = await response.json();
-      const user: IUser = responseObj.data;
+        const responseObj = await response.json();
+        const user: IUser = responseObj.data;
 
-      if (!response.ok || !user) {
-        navigate("/auth/login");
+        setUserRole(user.userRole);
+      } catch (error) {
+        return;
       }
-
-      setUserRole(user.userRole);
     };
 
     fetchInfoUserData();
@@ -113,6 +128,13 @@ const Menu = () => {
               </div>
             ))}
 
+            <div className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium">
+              <RefreshCcw strokeWidth={1.5} className="size-4" />
+              <div className="text-sm" onClick={handleRefresh}>
+                Refresh
+              </div>
+            </div>
+
             {userRole === "TEACHER" ? (
               <RoleAction
                 onClick={handleRemoveTeacherRole}
@@ -129,6 +151,7 @@ const Menu = () => {
           <div className="p-2">
             {AUTH_TABS.map((tab, key) => (
               <Link
+                key={key}
                 to={tab.link}
                 className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium"
               >

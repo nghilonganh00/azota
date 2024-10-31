@@ -23,6 +23,18 @@ router.get(
   examResultController.handleGetAnswer
 );
 
+router.get(
+  "/latest/assigned-by-class/:examId/:classId",
+  AuthMiddleware.isAuth,
+  examResultController.getAssignedByClassLatest
+);
+
+router.get(
+  "/latest/:examId",
+  AuthMiddleware.isAuth,
+  examResultController.handleGetLatestByExamId
+);
+
 router.post("/", AuthMiddleware.isAuth, examResultController.handleCreate);
 
 export default router;

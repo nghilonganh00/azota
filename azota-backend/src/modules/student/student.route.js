@@ -10,6 +10,11 @@ let router = express.Router();
 router.get("/confirm/:studentId", studentController.handleConfirm);
 router.get("/exam-result", studentController.handleGetExamResults);
 router.get("/", studentController.handleGetAll);
+router.get(
+  "/class/:classId/exam/:examId/assigments",
+  AuthMiddleware.isAuth,
+  studentController.getExamAssignments
+);
 router.post(
   "/",
   AuthMiddleware.isAuth,

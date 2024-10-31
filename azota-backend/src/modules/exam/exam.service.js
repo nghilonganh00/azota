@@ -1,5 +1,7 @@
 import db from "../../models/index";
 import generateRandomString from "../../utils/generateRandomString";
+import examByClassService from "../examByClass/examByClass.service";
+import ExamByStudentService from "../examByStudent/examByStudent.service";
 
 const examService = {
   create: async ({
@@ -85,7 +87,7 @@ const examService = {
               db.sequelize.literal(`(
                     SELECT COUNT(*)
                     FROM Questions AS questions
-                    WHERE questions.examId = ExamId
+                    WHERE questions.examId = Exam.id
                   )`),
               "questionTotal",
             ],
@@ -154,9 +156,26 @@ const examService = {
     subjectId,
     purposeId,
     examContent,
+    assignedStudentIds,
+    assignedClassIds,
+    examDuration,
+    examEnd,
+    examLimitSubmit,
+    examStart,
+    examType,
+    fee,
+    header,
+    isHideGroupQuestionTitle,
+    isPublish,
+    isRandomQuestion,
+    isSectionsStartingFromQuestion1,
+    questionTotal,
+    showAnswer,
+    showResult,
   }) => {
     try {
       const exam = await db.Exam.findOne({ where: { hashId: hashId } });
+
       exam.update({
         examName,
         examAssignType,
@@ -165,11 +184,34 @@ const examService = {
         subjectId,
         purposeId,
         examContent,
+        examDuration,
+        examEnd,
+        examLimitSubmit,
+        examStart,
+        examType,
+        fee,
+        header,
+        isHideGroupQuestionTitle,
+        isPublish,
+        isRandomQuestion,
+        isSectionsStartingFromQuestion1,
+        questionTotal,
+        showAnswer,
+        showResult,
       });
+
+      if (examAssignType === "STUDENT") {
+        await ExamByStudentService.syncAssignedStudents(
+          exam.id,
+          assignedStudentIds
+        );
+      } else if (examAssignType === "CLASS") {
+        await examByClassService.syncAssignedclasss(exam.id, assignedClassIds);
+      }
 
       return exam;
     } catch (error) {
-      throw error;
+      throw Error(`Error in updateConfigByHashId of examService: ${error}`);
     }
   },
 };

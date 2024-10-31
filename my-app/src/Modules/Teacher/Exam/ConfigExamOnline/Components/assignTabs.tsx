@@ -11,6 +11,8 @@ interface AssignTabsProp {
   setExamConfig: React.Dispatch<React.SetStateAction<ExamConfig>>;
   assignedClasses: number[];
   setAssignedClasses: React.Dispatch<React.SetStateAction<number[]>>;
+  assignedStudentIds: number[];
+  setAssignedStudentIds: React.Dispatch<React.SetStateAction<number[]>>;
   handleChangeConfig: (name: string, newValue: string | number[]) => void;
 }
 
@@ -26,11 +28,12 @@ const AssignTabs: React.FC<AssignTabsProp> = (props) => {
     setExamConfig,
     assignedClasses,
     setAssignedClasses,
+    assignedStudentIds,
+    setAssignedStudentIds,
     handleChangeConfig,
   } = props;
 
   const { examAssignType } = examConfig;
-  console.log("exam assign type: ", examAssignType);
   const [classGroups, setClassGroups] = useState<ClassGroup[]>([]);
   const [classGroupWithStudent, setClassGroupWithStudent] = useState([]);
 
@@ -42,17 +45,17 @@ const AssignTabs: React.FC<AssignTabsProp> = (props) => {
     );
   };
 
+  const fetchClassGroupData = async () => {
+    const data = await ClassGroupAPI.getAll();
+    setClassGroups(data);
+  };
+
+  const fetchListStudentData = async () => {
+    const data = await ClassGroupAPI.getAllWithStudent();
+    setClassGroupWithStudent(data);
+  };
+
   useEffect(() => {
-    const fetchClassGroupData = async () => {
-      const data = await ClassGroupAPI.getAll();
-      setClassGroups(data);
-    };
-
-    const fetchListStudentData = async () => {
-      const data = await ClassGroupAPI.getAllWithStudent();
-      setClassGroupWithStudent(data);
-    };
-
     fetchClassGroupData();
     fetchListStudentData();
   }, []);
@@ -101,9 +104,9 @@ const AssignTabs: React.FC<AssignTabsProp> = (props) => {
 
         {examAssignType === "STUDENT" && (
           <AssignStudentPanel
-            assignedStudent={assignedClasses}
-            onChange={handleAssignClass}
             classGroupWithStudent={classGroupWithStudent}
+            assignedStudentIds={assignedStudentIds}
+            setAssignedStudentIds={setAssignedStudentIds}
           />
         )}
       </div>
