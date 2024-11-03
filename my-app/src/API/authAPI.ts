@@ -1,3 +1,5 @@
+const accessToken = localStorage.getItem("userId");
+
 const AuthAPI = {
   register: async (
     username: string,
@@ -65,6 +67,72 @@ const AuthAPI = {
       return response;
     } catch (error) {
       console.log("Error in login of AuthAPI: ", error);
+    }
+  },
+  generateLoginQRCode: async (): Promise<Response> => {
+    try {
+      const url = "http://localhost:8080/api/auth/generate-login-qr";
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          x_authorization: `${accessToken}`,
+        },
+      });
+
+      return response;
+    } catch (error) {
+      return new Response(null, {
+        status: 500,
+        statusText: "Internal Server Error",
+      });
+    }
+  },
+  approveLoginQrCode: async (sessionId: string): Promise<Response> => {
+    try {
+      const url = "http://localhost:8080/api/auth/approve-login-qr";
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          x_authorization: `${accessToken}`,
+        },
+        body: JSON.stringify({
+          sessionId: sessionId,
+        }),
+      });
+
+      return response;
+    } catch (error) {
+      return new Response(null, {
+        status: 500,
+        statusText: "Internal Server Error",
+      });
+    }
+  },
+  checkLoginQrApproval: async (sessionId: string): Promise<Response> => {
+    try {
+      const url = "http://localhost:8080/api/auth/check-qr-login-approval";
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          x_authorization: `${accessToken}`,
+        },
+        body: JSON.stringify({
+          sessionId: sessionId,
+        }),
+      });
+
+      return response;
+    } catch (error) {
+      return new Response(null, {
+        status: 500,
+        statusText: "Internal Server Error",
+      });
     }
   },
 };

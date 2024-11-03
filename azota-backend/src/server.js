@@ -3,7 +3,9 @@ import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
 import initWebRoutes from "./routes/route";
 import connectDB from "./config/connectDB";
-import Redis from "ioredis";
+
+require("./utils/sessionCleaner");
+require("./config/socketIO");
 
 let app = express();
 

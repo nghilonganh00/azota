@@ -2,6 +2,8 @@ import db from "../../models";
 import bcrypt from "bcrypt";
 import authMethod from "./auth.method";
 import userService from "../user/user.service";
+import AuthService from "./auth.service";
+import io from "../../config/socketIO";
 
 const SALT_ROUNDS = 10;
 
@@ -72,15 +74,11 @@ const AuthController = {
         userId: user.id,
       };
 
-      console.log("userId: ", user.id);
-
       const accessToken = await authMethod.generateToken(
         dataForAccessToken,
         accessTokenSecret,
         accessTokenLife
       );
-
-      console.log("accessToken: ", accessToken);
 
       if (!accessToken) {
         return res.status(401).json({
@@ -133,7 +131,6 @@ const AuthController = {
       // Check if the user already exists in the database
       // If not, create a new user with the details from the Google account
       let user = await userService.getDetailByEmail(googleUser.email);
-
       if (!user) {
         user = await userService.create({
           email: googleUser.email,
@@ -164,6 +161,78 @@ const AuthController = {
 
       return res.status(500).json({
         message: `Login failed by Google with error: ${error.message}`,
+      });
+    }
+  },
+  generateLoginQR: async (req, res) => {
+    try {
+      const { sessionId, qrUrl } = await AuthService.generateLoginQrcode();
+
+      return res.status(201).json({
+        data: { qrUrl, sessionId },
+        message: "Create successfully the Login QR",
+      });
+    } catch (error) {
+      console.log("Failed generateLoginQR in auth.controller: ", error);
+      return res.status(500).json({
+        data: "",
+        message: "Internal Servel Error",
+      });
+    }
+  },
+  approveQrLogin: async (req, res) => {
+    try {
+      const user = req.user;
+      const { sessionId } = req.body;
+
+      const isApprove = await AuthService.approveLoginQrCode({
+        sessionId,
+        userId: user.id,
+      });
+
+      if (isApprove) {
+        io.emit("login-approved", user);
+
+        return res.status(200).json({
+          data: sessionId,
+          message: "Login by Qrcode approved",
+        });
+      }
+
+      return res.status(404).json({
+        data: sessionId,
+        message: "Session not found or already used",
+      });
+    } catch (error) {
+      console.log("Failed approveQrLogin: ", error);
+      return res.status(500).json({
+        data: "",
+        message: "Internal Server Error",
+      });
+    }
+  },
+  checkLoginQrCodeApproval: async (req, res) => {
+    try {
+      const { sessionId } = req.body;
+
+      const accessToken = await AuthService.checkLoginQrCodeApproval(sessionId);
+
+      if (!accessToken) {
+        return res.status(404).json({
+          data: "",
+          message: "The sessionId doesn't exist or expired",
+        });
+      }
+
+      return res.status(200).json({
+        data: { accessToken },
+        message: "The sessionId doesn't exist or expired",
+      });
+    } catch (error) {
+      console.log("Failed checkLoginQrCodeApproval: ", error);
+      return res.status(500).json({
+        data: "",
+        message: "Internal Server Error",
       });
     }
   },

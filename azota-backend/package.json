@@ -25,9 +25,12 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.10.1",
     "node-fetch": "^3.3.2",
+    "qrcode": "^1.5.4",
     "redis": "^4.7.0",
     "sequelize": "^6.37.3",
-    "util": "^0.12.5"
+    "socket.io": "^4.8.1",
+    "util": "^0.12.5",
+    "uuid": "^11.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",

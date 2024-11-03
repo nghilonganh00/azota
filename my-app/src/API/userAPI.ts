@@ -24,11 +24,11 @@ const UserAPI = {
       return {};
     }
   },
-  removeTeacherRole: async () => {
+  removeTeacherRole: async (): Promise<Response> => {
     try {
       if (!accessToken) {
         console.error("Access Token isn't in LocalStorage");
-        return {};
+        return new Response(null, { status: 401, statusText: "Unauthorized" });
       }
 
       const url = new URL(`http://localhost:8080/api/user/remove-teacher-role`);
@@ -44,14 +44,20 @@ const UserAPI = {
       return response;
     } catch (error) {
       console.log("Error in removeTeacherRole of UserAPI: ", error);
-      return {};
+      return new Response(null, {
+        status: 500,
+        statusText: "Internal Server Error",
+      });
     }
   },
-  registerTeacherRole: async () => {
+  registerTeacherRole: async (): Promise<Response> => {
     try {
       if (!accessToken) {
         console.error("Access Token isn't in LocalStorage");
-        return {};
+        return new Response(null, {
+          status: 401,
+          statusText: "Unauthorized",
+        });
       }
 
       const url = new URL(
@@ -69,7 +75,10 @@ const UserAPI = {
       return response;
     } catch (error) {
       console.error("Error in registerTeacherRole of UserAPI: ", error);
-      return {};
+      return new Response(null, {
+        status: 500,
+        statusText: "Internal Server Error",
+      });
     }
   },
   createAnonymous: async (fullName: string) => {

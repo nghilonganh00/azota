@@ -1,33 +1,31 @@
 import { useState, useEffect } from "react";
 import UserAPI from "../../../API/userAPI";
 import { useNavigate } from "react-router";
-import { User } from "../../../Globals/Interfaces/userInterface";
 
 const HomePage = () => {
   const navigate = useNavigate();
 
+  const handleUserRedirect = async () => {
+    const response = await UserAPI.getInfo();
+    if (!response.ok) {
+      return;
+    }
+
+    const responseObj = await response.json();
+
+    const user = responseObj.data;
+
+    if (user.userRole === "TEACHER") {
+      navigate("/teacher/dashboard");
+    } else {
+      navigate("/student/classroom");
+    }
+  };
+
   useEffect(() => {
-    const fetchInfoUserData = async () => {
-      try {
-        const response = await UserAPI.getInfo();
+    handleUserRedirect();
+  }, [navigate]);
 
-        const responseObj = await response.json();
-        const user: User = responseObj.data;
-
-        if (!response.ok || !user) {
-          navigate("/auth/login");
-        }
-
-        if (user.userRole === "TEACHER") {
-          navigate("/teacher/dashboard");
-        } else {
-          navigate("/student");
-        }
-      } catch (error: any) {}
-    };
-
-    fetchInfoUserData();
-  }, []);
   return <div></div>;
 };
 

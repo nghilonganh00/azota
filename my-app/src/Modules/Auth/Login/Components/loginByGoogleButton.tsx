@@ -3,23 +3,12 @@ import GoogleIcon from "../../../../Assets/icons/google.svg";
 import { useState, useEffect } from "react";
 import AuthAPI from "../../../../API/authAPI";
 import { useNavigate } from "react-router";
-
-interface Profile {
-  id: string;
-  email: string;
-  verified_email: boolean;
-  name: string;
-  given_name: string;
-  family_name: string;
-  picture: string;
-  locale: string;
-}
+import { User } from "../../../../Globals/Interfaces/userInterface";
 
 const LoginByGoogleButton = () => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState<TokenResponse | null>(null);
-  const [profile, setProfile] = useState<Profile | null>(null);
 
   const handleLoginByGoogle = useGoogleLogin({
     onSuccess: (codeResponse) => {
@@ -32,13 +21,17 @@ const LoginByGoogleButton = () => {
     const loginByGoogle = async () => {
       if (user) {
         const response = await AuthAPI.loginByGoogle(user.access_token);
-        console.log("response: ", response);
-        if (response?.ok) {
-          const responseObj = await response.json();
-          const accessToken = responseObj.data.accessToken;
+        const responseObj = await response?.json();
+        const userObj: User = responseObj.data.userObj;
+        const accessToken = responseObj.data.accessToken;
+        console.log("response login by google: ", responseObj.data);
 
-          localStorage.setItem("userId", accessToken);
+        localStorage.setItem("userId", accessToken);
+
+        if (userObj.userRole === "TEACHER") {
           navigate("/teacher/dashboard");
+        } else {
+          navigate("/student/classroom");
         }
       }
     };

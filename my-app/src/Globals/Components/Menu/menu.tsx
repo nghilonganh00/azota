@@ -25,7 +25,7 @@ const MENU_TABS = [
 ];
 
 const AUTH_TABS = [
-  { icon: ScanLine, label: "QR đăng nhập", link: "" },
+  { icon: ScanLine, label: "QR đăng nhập", link: "/auth/login-qrcode" },
   { icon: QrCode, label: "Tạo QR quên mật khẩu", link: "" },
 ];
 
@@ -54,9 +54,8 @@ const Menu = () => {
 
   const handleRemoveTeacherRole = async () => {
     try {
-      const updatedUser = await UserAPI.removeTeacherRole();
-      setUserRole("STUDENT");
-      navigate("/student/classroom");
+      const response = await UserAPI.removeTeacherRole();
+      if (response.ok) navigate("/student/classroom");
     } catch (error) {
       console.log(error);
     }
@@ -64,9 +63,9 @@ const Menu = () => {
 
   const handleRegisterTeacherRole = async () => {
     try {
-      const updatedUser = await UserAPI.registerTeacherRole();
-      setUserRole("TEACHER");
-      navigate("/teacher/dashboard");
+      const response = await UserAPI.registerTeacherRole();
+
+      if (response.ok) navigate("/teacher/dashboard");
     } catch (error) {
       console.log(error);
     }
@@ -77,20 +76,17 @@ const Menu = () => {
   };
 
   useEffect(() => {
-    const fetchInfoUserData = async () => {
-      try {
-        const response = await UserAPI.getInfo();
-
-        const responseObj = await response.json();
-        const user: IUser = responseObj.data;
-
-        setUserRole(user.userRole);
-      } catch (error) {
-        return;
+    const fetchUserInfoData = async () => {
+      const response = await UserAPI.getInfo();
+      if (!response.ok) {
+        navigate("/auth/login");
       }
+      const responseObj = await response.json();
+      const userObj = responseObj.data;
+      setUserRole(userObj.userRole);
     };
 
-    fetchInfoUserData();
+    fetchUserInfoData();
   }, []);
 
   return (

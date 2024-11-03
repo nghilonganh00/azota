@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { QrCode } from "lucide-react";
+import { EyeOff, QrCode } from "lucide-react";
 
 import { Link, useNavigate } from "react-router-dom";
 import AuthAPI from "../../../API/authAPI";
 
 import LoginByGoogleButton from "./Components/loginByGoogleButton";
+import LoginByQRCode from "./Components/loginByQRCode";
 
 interface LoginInfo {
   username: string;
@@ -65,10 +66,10 @@ const Login = () => {
             className="w-full rounded-md border border-slate-300 px-4 py-2.5 text-sm shadow-sm"
             placeholder="Mật khẩu"
           />
-          {/* <EyeOff
+          <EyeOff
             className="absolute right-2 top-2 text-gray-600"
             strokeWidth={1.5}
-          /> */}
+          />
         </div>
         <div className="w-full">
           <div className="text-sm text-gray-800">Quên mật khẩu ?</div>
@@ -92,10 +93,7 @@ const Login = () => {
         <div className="flex w-full items-center gap-2">
           <LoginByGoogleButton />
 
-          <div className="flex w-full items-center justify-center gap-2 rounded-md border border-gray-200 py-2 shadow-sm">
-            <QrCode className="size-4 text-gray-600" />
-            <div className="text-sm font-medium text-gray-600">Qrcode</div>
-          </div>
+          <LoginByQRCode />
         </div>
       </form>
     </div>

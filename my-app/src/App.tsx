@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import "./index.css";
-import { Outlet, useNavigate } from "react-router";
-import UserAPI from "./API/userAPI";
+import { Outlet } from "react-router";
 
 function App() {
   return (

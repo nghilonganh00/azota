@@ -8,22 +8,6 @@ import { User } from "../Interfaces/userInterface";
 const StudentLayout = () => {
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     const response = await UserAPI.getInfo();
-  //     if (!response.ok) {
-  //       console.log("fetch user data fail");
-  //     } else {
-  //       const responseObj = await response.json();
-  //       const userObj: User = responseObj.data;
-  //       if (userObj.userRole === "TEACHER") {
-  //         navigate("/teacher/dashboard");
-  //       }
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, []);
   return (
     <div className="flex h-screen overflow-y-hidden">
       <StudentLeftNavbar />
