@@ -49,6 +49,8 @@ const examResultMethod = {
         }
       });
 
+      mark = Math.round(mark * 100) / 100;
+
       return { rightAnswer, questionTotal, mark, correctQuestionIds };
     } catch (error) {
       throw new Error(`Error in examResultMethod.markExam: ${error}`);

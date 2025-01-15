@@ -80,10 +80,11 @@ const Menu = () => {
       const response = await UserAPI.getInfo();
       if (!response.ok) {
         navigate("/auth/login");
+        return;
       }
       const responseObj = await response.json();
-      const userObj = responseObj.data;
-      setUserRole(userObj.userRole);
+      const userObj = responseObj;
+      setUserRole(userObj.role);
     };
 
     fetchUserInfoData();

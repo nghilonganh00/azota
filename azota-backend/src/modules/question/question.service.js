@@ -11,6 +11,7 @@ const questionService = {
     examExplain,
     examMethod,
     questionPartId,
+    scorePerQuestion,
   }) => {
     try {
       const newQuestion = await db.Question.create({
@@ -21,6 +22,7 @@ const questionService = {
         examExplain,
         examMethod,
         questionPartId,
+        scorePerQuestion,
       });
 
       return newQuestion;

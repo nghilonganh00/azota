@@ -30,7 +30,7 @@ const Register = () => {
       userRole,
     );
 
-    if (response?.status === 200) {
+    if (response?.status === 201) {
       alert("Bạn đã đăng nhập thành công!");
       navigate("/auth/login");
     }

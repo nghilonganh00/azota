@@ -138,8 +138,6 @@ const examController = {
         examContent,
       } = req.body;
 
-      console.log("examContent: ", examContent);
-
       const newExam = await examService.create({
         examName,
         examAssignType,
@@ -151,6 +149,12 @@ const examController = {
       });
 
       const examId = newExam.id;
+      const questionTotal = Object.values(examContent).reduce(
+        (total, part) => total + Object.keys(part.questions).length,
+        0
+      );
+      const scorePerQuestion = 10 / questionTotal;
+      console.log("questionTotal: ", questionTotal);
 
       await Promise.all(
         Object.keys(examContent).map(async (partName) => {
@@ -175,6 +179,7 @@ const examController = {
               examExplain: explain,
               examMethod: method,
               questionPartId: partId,
+              scorePerQuestion,
             });
 
             const questionId = newQuestion.id;

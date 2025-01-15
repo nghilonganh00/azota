@@ -1,20 +1,20 @@
-const accessToken = localStorage.getItem("userId");
+const accessToken = localStorage.getItem("accessToken");
 
 const UserAPI = {
   getInfo: async (): Promise<any> => {
     try {
       if (!accessToken) {
-        console.error("Access Token isn't in LocalStorage");
+        console.error("Access Token isn't in LocalStorage" + accessToken);
         return new Error("ACCESS_TOKEN_NOT_IN_LOCALSTORAGE");
       }
 
-      const url = new URL(`http://localhost:8080/api/user/info`);
+      const url = new URL(`http://localhost:8080/api/users`);
 
       const response = await fetch(url, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          x_authorization: accessToken,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
 

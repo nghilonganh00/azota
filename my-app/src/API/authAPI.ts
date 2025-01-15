@@ -11,11 +11,11 @@ const AuthAPI = {
       const requestData = {
         username,
         password,
-        userFullName,
-        userRole,
+        fullname: userFullName,
+        role: userRole,
       };
 
-      const url = "http://localhost:8080/api/auth/register";
+      const url = "http://localhost:8080/api/auth/signup";
 
       const response = await fetch(url, {
         method: "POST",

@@ -1,10 +1,10 @@
 const ClassGroupAPI = {
   getAll: async () => {
     try {
-      const url = new URL("http://localhost:8080/api/classgroup");
+      const url = new URL("http://localhost:8080/api/classgroups");
 
-      const userId = localStorage.getItem("userId");
-      if (!userId) {
+      const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
         throw new Error("User ID not found in localStorage.");
       }
 
@@ -12,7 +12,7 @@ const ClassGroupAPI = {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          x_authorization: userId,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
 

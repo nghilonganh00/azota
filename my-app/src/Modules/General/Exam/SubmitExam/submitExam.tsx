@@ -119,7 +119,9 @@ const SubmitExam = () => {
                 <div className="">Tổng số câu hỏi trong đề</div>
               </div>
 
-              <div className="text-sm font-medium text-zinc-500">1</div>
+              <div className="text-sm font-medium text-zinc-500">
+                {questionTotal}
+              </div>
             </div>
           </div>
 
