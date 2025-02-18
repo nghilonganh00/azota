@@ -35,17 +35,17 @@ Dự án được chia thành 2 phần chính:
 
 ## Công nghệ sử dụng
 - **Front-end:**
-  - Ngôn ngữ: JavaScript/TypeScript
-  - Framework: React / Vue / Angular
-  - CSS Framework: Bootstrap / Tailwind CSS
+  - Ngôn ngữ: TypeScript
+  - Framework: React
+  - CSS Framework: Tailwind CSS
 
 - **Back-end:**
   - Node.js
-  - Framework: NestJS hoặc Express
+  - Framework: NestJS
   - Authentication: JWT, OAuth2
 
 - **Cơ sở dữ liệu:**  
-  - MySQL / PostgreSQL / MongoDB
+  - MySQL
 
 - **Quản lý phiên bản:**  
   - Git và GitHub
@@ -55,7 +55,7 @@ Dự án được chia thành 2 phần chính:
 ### Yêu cầu hệ thống
 - Node.js (phiên bản 14 trở lên)
 - NPM hoặc Yarn
-- Cơ sở dữ liệu (MySQL, PostgreSQL hoặc MongoDB)
+- Cơ sở dữ liệu (MySQL)
 
 ### Các bước cài đặt
 
