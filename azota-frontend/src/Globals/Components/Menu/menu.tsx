@@ -105,12 +105,14 @@ const Menu = () => {
       onMouseLeave={() => setDropdownVisible(false)}
     >
       <img
-        className="h-8 w-8 rounded-full border border-slate-200"
+        className="h-8 w-8 rounded-full"
         src="https://lh3.googleusercontent.com/a/ACg8ocJ_iFoqcbXAa93XLL5ekog96hEVyxgkeCD7oenQOr3efwaZiQ=s96-c"
       ></img>
       <div>
-        <div className="text-sm font-medium text-slate-800">{user.fullName}</div>
-        <div className="text-xs text-slate-500">{user.role === UserRole.TEACHER ? "Giáo viên" : "Học sinh"}</div>
+        <div className="text-sm font-medium text-slate-800 dark:text-gray-300">{user.fullName}</div>
+        <div className="text-xs text-slate-500 dark:text-slate-400">
+          {user.role === UserRole.TEACHER ? "Giáo viên" : "Học sinh"}
+        </div>
       </div>
 
       {isDropdownVisible && (

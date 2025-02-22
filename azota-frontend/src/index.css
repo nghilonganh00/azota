@@ -15,8 +15,8 @@ body,
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -47,4 +47,16 @@ input[type="checkbox"] {
 
 :root {
   --color-success: 104 204 0;
+  --color-primary: 29 78 216;
+  --color-slate-500: 148 163 184;
+  --color-darkmode-50: 87 103 132;
+  --color-darkmode-100: 74 90 121;
+  --color-darkmode-200: 65 81 114;
+  --color-darkmode-300: 53 69 103;
+  --color-darkmode-400: 48 61 93;
+  --color-darkmode-500: 41 53 82;
+  --color-darkmode-600: 40 51 78;
+  --color-darkmode-700: 35 45 69;
+  --color-darkmode-800: 27 37 59;
+  --color-darkmode-900: 15 23 42;
 }

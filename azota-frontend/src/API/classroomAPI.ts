@@ -1,11 +1,12 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import { axiosInstance } from "../services/axiosInstance";
 
 const accessToken = localStorage.getItem("accessToken");
 
 export const ClassroomAPI = {
   getStudents: async (classId: string | number): Promise<AxiosResponse> => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/classrooms/${classId}/students`, {
+      const response = await axiosInstance.get(`http://localhost:8080/api/classrooms/${classId}/students`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -39,7 +40,7 @@ export const ClassroomAPI = {
         searchKeyword,
       };
 
-      const response = await axios.get(url, {
+      const response = await axiosInstance.get(url, {
         params,
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +56,7 @@ export const ClassroomAPI = {
 
   create: async (className: string, classYear: string, classGroupId?: number) => {
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         "http://localhost:8080/api/classrooms",
         {
           className,

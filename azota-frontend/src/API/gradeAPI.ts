@@ -1,11 +1,10 @@
-import axios, { AxiosResponse } from "axios";
-
-const userId = localStorage.getItem("userId");
+import { AxiosResponse } from "axios";
+import { axiosInstance } from "../services/axiosInstance";
 
 const GradeAPI = {
   getAll: async (): Promise<AxiosResponse | null> => {
     try {
-      const response = await axios.get("http://localhost:8080/api/grades", {
+      const response = await axiosInstance.get("http://localhost:8080/api/grades", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

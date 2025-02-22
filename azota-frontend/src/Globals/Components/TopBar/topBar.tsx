@@ -25,11 +25,11 @@ const TopBar = () => {
   }, []);
 
   return (
-    <div className="w-full border-b border-solid border-slate-200 px-4 py-4">
+    <div className="w-full border-b border-solid border-slate-200 px-4 py-4 dark:border-slate-600">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1 text-center font-medium hover:cursor-pointer" onClick={goBack}>
-          <ChevronLeft strokeWidth={1.5} className="size-5" />
-          <span className="text-sm text-gray-800">Quay lại</span>
+          <ChevronLeft strokeWidth={1.5} className="size-5 dark:text-white" />
+          <span className="text-sm text-gray-800 dark:text-white">Quay lại</span>
         </div>
 
         <div className="flex items-center gap-5">
@@ -37,7 +37,7 @@ const TopBar = () => {
             alt="flag/vi.svg"
             src="https://239114911.e.cdneverest.net/cdnazota/storage_public/azota_assets/flag/vi.svg"
           ></img>
-          <LuBell className="size-5 text-slate-600" />
+          <LuBell className="size-5 text-slate-600 dark:text-slate-200" />
 
           {accessToken ? <Menu /> : <AnonymousMenu />}
         </div>

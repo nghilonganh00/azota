@@ -1,11 +1,12 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import { axiosInstance } from "../services/axiosInstance";
 
 const accessToken = localStorage.getItem("accessToken");
 
 const HomeworkFileAPI = {
   add: async (homeworkId: number, title: string, link: string): Promise<AxiosResponse | null> => {
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         "http://localhost:8080/api/homework-files/",
         { homeworkId, title, link },
         {
@@ -25,15 +26,12 @@ const HomeworkFileAPI = {
 
   remove: async (homeworkId: number) => {
     try {
-      const response = await axios.delete(
-        "http://localhost:8080/api/homework-files/" + homeworkId,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
+      const response = await axiosInstance.delete("http://localhost:8080/api/homework-files/" + homeworkId, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
         },
-      );
+      });
 
       return response;
     } catch (error) {

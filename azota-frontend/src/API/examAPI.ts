@@ -1,7 +1,8 @@
-import axios, { Axios, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { Exam } from "../Globals/Interfaces/exam.interface";
 import { CreateExam } from "../Modules/Teacher/Exam/CreateExam/libs/interface";
 import { BASE_API_URL } from "../Globals/Constant/constant";
+import { axiosInstance } from "../services/axiosInstance";
 
 const accessToken = localStorage.getItem("accessToken");
 const EXAM_API_URL = `${BASE_API_URL}/exams`;
@@ -29,7 +30,7 @@ const ExamAPI = {
         content: examContent,
       };
 
-      const response = await axios.post(`${EXAM_API_URL}`, requestBody, {
+      const response = await axiosInstance.post(`${EXAM_API_URL}`, requestBody, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -48,7 +49,7 @@ const ExamAPI = {
         return null;
       }
 
-      const response = await axios.post("http://localhost:8080/api/exam/preview", {
+      const response = await axiosInstance.post("http://localhost:8080/api/exam/preview", {
         headers: {
           "Content-Type": "application/json",
           Authorization: accessToken,
@@ -67,7 +68,7 @@ const ExamAPI = {
         throw new Error("Access token not found in local storage");
       }
 
-      const response = await axios.get(`${EXAM_API_URL}/previews`, {
+      const response = await axiosInstance.get(`${EXAM_API_URL}/previews`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -88,7 +89,7 @@ const ExamAPI = {
   },
   getConfig: async (id: string): Promise<AxiosResponse | null> => {
     try {
-      const response = await axios.get(`${EXAM_API_URL}/${id}/config`, {
+      const response = await axiosInstance.get(`${EXAM_API_URL}/${id}/config`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -104,7 +105,7 @@ const ExamAPI = {
 
   previewByHashId: async (hashId: string): Promise<AxiosResponse | null> => {
     try {
-      const response = await axios.get(`${EXAM_API_URL}/hash-id/${hashId}/preview`, {
+      const response = await axiosInstance.get(`${EXAM_API_URL}/hash-id/${hashId}/preview`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -123,7 +124,7 @@ const ExamAPI = {
         throw new Error("Access token not found");
       }
 
-      const response = await axios.get(`${EXAM_API_URL}/${id}/content`, {
+      const response = await axiosInstance.get(`${EXAM_API_URL}/${id}/content`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -139,7 +140,7 @@ const ExamAPI = {
 
   getContentByHashId: async (hashId: string): Promise<AxiosResponse | null> => {
     try {
-      const response = await axios.get(`${EXAM_API_URL}/hash-id/${hashId}/content`, {
+      const response = await axiosInstance.get(`${EXAM_API_URL}/hash-id/${hashId}/content`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -160,7 +161,7 @@ const ExamAPI = {
     assignedClassIds: number[],
   ): Promise<AxiosResponse | null> => {
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         `${EXAM_API_URL}/${examId}/publish`,
         { ...examConfig, assignedClassIds, assignedStudentIds },
         {
@@ -204,7 +205,7 @@ const ExamAPI = {
 
   remove: async (id: string): Promise<AxiosResponse | null> => {
     try {
-      const response = await axios.delete(`${EXAM_API_URL}/${id}`, {
+      const response = await axiosInstance.delete(`${EXAM_API_URL}/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,

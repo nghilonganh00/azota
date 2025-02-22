@@ -18,7 +18,10 @@ export class AuthService {
     private teacherService: TeacherService
   ) {}
 
-  async signIn(username: string, password: string): Promise<{ accessToken: string; user: UserResponseDto }> {
+  async login(
+    username: string,
+    password: string
+  ): Promise<{ accessToken: string; refreshToken: string; user: UserResponseDto }> {
     const user = await this.userService.findOne(username);
     console.log(`username: ${username} password: ${password}`);
     if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -29,13 +32,17 @@ export class AuthService {
 
     const userResponseDto = plainToClass(UserResponseDto, user);
 
+    const accessToken = await this.jwtService.signAsync(payload, { expiresIn: "1h" });
+    const refreshToken = await this.jwtService.signAsync(payload, { expiresIn: "7d" });
+
     return {
-      accessToken: await this.jwtService.signAsync(payload),
+      accessToken: accessToken,
+      refreshToken: refreshToken,
       user: userResponseDto,
     };
   }
 
-  async signUp(signUpDto: SignUpDto): Promise<void> {
+  async register(signUpDto: SignUpDto): Promise<void> {
     const { username, password, fullname, role } = signUpDto;
 
     const existedUser = await this.userService.findOne(username);
@@ -55,6 +62,18 @@ export class AuthService {
         break;
       default:
         break;
+    }
+  }
+
+  async refreshToken(refreshToken: string): Promise<{ accessToken: string }> {
+    try {
+      const payload = this.jwtService.verify(refreshToken);
+      const newAccessToken = this.jwtService.sign({ sub: payload.id, username: payload.username }, { expiresIn: "1h" });
+
+      return { accessToken: newAccessToken };
+    } catch (error) {
+      console.log(error);
+      throw new UnauthorizedException("Invalid refresh token");
     }
   }
 }

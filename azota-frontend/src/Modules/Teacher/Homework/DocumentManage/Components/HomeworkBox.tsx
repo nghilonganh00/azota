@@ -12,12 +12,12 @@ const HomeworkBox: React.FC<HomeworkBoxProps> = (props) => {
   const { id: homeworkId, title, content, startDate, endDate, createdAt, classroomId } = homework;
 
   return (
-    <Link to={`/teacher/homework/${homeworkId}/submissions`} className="col-span-6 md:col-span-3">
-      <div className="flex items-center justify-between rounded-md bg-white p-2 shadow-sm duration-200 ease-in-out hover:scale-105 hover:cursor-pointer hover:shadow-md">
+    <Link to={`/teacher/homework/${homeworkId}/submissions`} className="col-span-12 md:col-span-6 lg:col-span-3">
+      <div className="flex items-center justify-between rounded-md bg-white p-2 shadow-sm duration-200 ease-in-out hover:scale-105 hover:cursor-pointer hover:shadow-md dark:bg-[rgb(var(--color-darkmode-400))]">
         <div className="flex items-center gap-4">
-          <FileText strokeWidth={1.5} size={40} className="text-blue-900" />
+          <FileText strokeWidth={1.5} size={40} className="text-blue-900 dark:text-blue-700" />
           <div className="space-y-1">
-            <div className="text-sm font-medium text-slate-900">{title}</div>
+            <div className="text-sm font-medium text-slate-900 dark:text-slate-300">{title}</div>
             <div>
               <div className="text-xs font-semibold text-slate-400">
                 {`Ngày tạo: ${isoDateUtil.toDateTime(createdAt)}`}

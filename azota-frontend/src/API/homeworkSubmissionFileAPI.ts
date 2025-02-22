@@ -1,14 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import FirebaseStorage from "../Firebase/firebaseStorage";
+import { axiosInstance } from "../services/axiosInstance";
 
 const accessToken = localStorage.getItem("accessToken");
 
 export const HomeworkSubmissionFileAPI = {
-  create: async (
-    hashId: string,
-    studentClassId: number | string,
-    files: File[],
-  ): Promise<AxiosResponse | null> => {
+  create: async (hashId: string, studentClassId: number | string, files: File[]): Promise<AxiosResponse | null> => {
     try {
       const fileObj = await Promise.all(
         files.map(async (file) => {
@@ -21,7 +18,7 @@ export const HomeworkSubmissionFileAPI = {
       );
 
       const url = `http://localhost:8080/api/homework-submission-files`;
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         url,
         { files: fileObj },
         {

@@ -27,11 +27,11 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
             <Link
               to={tab.link}
               key={index}
-              className="col-span-3 shadow-sm duration-300 ease-in-out hover:scale-105 hover:shadow-md"
+              className="col-span-6 h-full rounded-md bg-white shadow-sm duration-300 ease-in-out hover:scale-105 hover:shadow-md dark:bg-[rgb(var(--color-darkmode-600))] md:col-span-3"
             >
-              <div className="rounded-md bg-white p-8">
-                <tab.icon className="mx-auto size-12 text-blue-800" strokeWidth={1.5} />
-                <div className="mt-3 text-center font-medium">{tab.label}</div>
+              <div className="p-8">
+                <tab.icon className="mx-auto size-12 text-blue-800 dark:text-blue-700" strokeWidth={1.5} />
+                <div className="mt-3 text-center font-medium dark:text-white">{tab.label}</div>
               </div>
             </Link>
           ))}

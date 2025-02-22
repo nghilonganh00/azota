@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { EyeOff, QrCode } from "lucide-react";
+import { EyeOff } from "lucide-react";
 
 import { Link, useNavigate } from "react-router-dom";
 import AuthAPI from "../../../API/authAPI";
@@ -30,13 +30,13 @@ const Login = () => {
     const response = await AuthAPI.login(username, password);
 
     if (response?.status === 200) {
-      const responseObj = await response.json();
+      const loginData = response.data;
 
-      if (responseObj.accessToken) {
-        localStorage.setItem("accessToken", responseObj.accessToken);
+      if (loginData.accessToken) {
+        localStorage.setItem("accessToken", loginData.accessToken);
       }
 
-      navigate(responseObj.user.role === "TEACHER" ? "/teacher/dashboard" : "/student/classroom");
+      navigate(loginData.user.role === "TEACHER" ? "/teacher/dashboard" : "/student/classroom");
     }
   };
 

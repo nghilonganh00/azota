@@ -11,7 +11,7 @@ const RecommendHomeworks: React.FC<RecommendHomeworksProps> = (props) => {
 
   return (
     <div className={`${className}`}>
-      <div className="mb-4 text-lg font-semibold">Được đề xuất</div>
+      <div className="mb-4 text-lg font-semibold dark:text-slate-300">Được đề xuất</div>
 
       <div className="grid grid-cols-12 gap-6">
         {listHomework?.map((homework) => {

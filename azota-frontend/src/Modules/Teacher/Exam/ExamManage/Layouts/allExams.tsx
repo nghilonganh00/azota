@@ -13,12 +13,12 @@ const AllExams: React.FC<AllExamsProps> = (props) => {
 
   return (
     <div className="text-gray-800">
-      <div className="mb-4 text-lg font-medium">Tất cả</div>
+      <div className="mb-4 text-lg font-medium text-slate-300">Tất cả</div>
 
-      <div className="relative min-w-[1100px] overflow-x-auto bg-white pb-8 shadow-md sm:rounded-lg">
+      <div className="relative min-w-[1100px] overflow-x-auto bg-white pb-8 shadow-md dark:bg-[rgb(var(--color-darkmode-600))] sm:rounded-lg">
         <table className="w-full text-left text-sm">
           <thead className="">
-            <tr className="text-gray-600">
+            <tr className="text-gray-600 dark:text-gray-400">
               <td scope="col" className="py-3 pl-6">
                 <input type="checkbox" className="size-4 text-blue-800" />
               </td>
@@ -52,14 +52,14 @@ const AllExams: React.FC<AllExamsProps> = (props) => {
             </tr>
           </thead>
           <tbody>
-            <tr className="border-b">
-              <th scope="row" className="px-6 py-4">
+            <tr className="border-b dark:border-slate-200">
+              <td scope="row" className="px-6 py-4">
                 <input type="checkbox" className="size-4" />
-              </th>
+              </td>
               <td className="gap-3 py-4">
                 <span className="flex items-center gap-3">
                   <img src={AzotaBankIcon} alt="" className="size-6" />
-                  <div>Kho đề Azota</div>
+                  <div className="dark:text-slate-400">Kho đề Azota</div>
                   <div className="rounded-full bg-cyan-500 px-2 py-0.5 text-xs font-bold text-white">Azota</div>
                 </span>
               </td>

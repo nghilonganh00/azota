@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import { axiosInstance } from "../services/axiosInstance";
 
 const accessToken = localStorage.getItem("accessToken");
 
@@ -12,7 +13,7 @@ const UserAPI = {
 
       const url = `http://localhost:8080/api/users`;
 
-      const response = await axios.get(url, {
+      const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,

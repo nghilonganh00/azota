@@ -1,5 +1,6 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { BASE_API_URL } from "../Globals/Constant/constant";
+import { axiosInstance } from "../services/axiosInstance";
 
 const accessToken = localStorage.getItem("accessToken");
 
@@ -12,7 +13,7 @@ const ClassGroupAPI = {
         throw new Error("User ID not found in localStorage.");
       }
 
-      const response = await axios.get(`${CLASSGROUP_API_URL}`, {
+      const response = await axiosInstance.get(`${CLASSGROUP_API_URL}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -32,7 +33,7 @@ const ClassGroupAPI = {
         throw new Error("User ID not found in localStorage.");
       }
 
-      const response = await axios.get(`${CLASSGROUP_API_URL}/classrooms/student-classes/id`, {
+      const response = await axiosInstance.get(`${CLASSGROUP_API_URL}/classrooms/student-classes/id`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,

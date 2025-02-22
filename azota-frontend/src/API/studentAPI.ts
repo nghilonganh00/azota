@@ -1,12 +1,13 @@
 import axios from "axios";
 import { NewStudent } from "../Modules/Teacher/Class/ClassDetail/Interface/interface";
+import { axiosInstance } from "../services/axiosInstance";
 
 const userId = localStorage.getItem("userId");
 
 const StudentAPI = {
   confirm: async (studentId: string | number) => {
     try {
-      const response = await axios.get("http://localhost:8080/api/student/confirm/" + studentId, {
+      const response = await axiosInstance.get("http://localhost:8080/api/student/confirm/" + studentId, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -21,7 +22,7 @@ const StudentAPI = {
   },
   getExamResult: async (examId: string, classroomId: string) => {
     try {
-      const response = await axios.get("http://localhost:8080/api/student/exam-result", {
+      const response = await axiosInstance.get("http://localhost:8080/api/student/exam-result", {
         params: { examId, classroomId },
         headers: {
           "Content-Type": "application/json",
@@ -39,12 +40,15 @@ const StudentAPI = {
 
   getExamAssignments: async (classId: number, examId: number) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/student/class/${classId}/exam/${examId}/assigments`, {
-        headers: {
-          "Content-Type": "application/json",
-          // Authorization: `Bearer ${accessToken}`,
+      const response = await axiosInstance.get(
+        `http://localhost:8080/api/student/class/${classId}/exam/${examId}/assigments`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${accessToken}`,
+          },
         },
-      });
+      );
 
       const data = await response.data;
       return data.data;
@@ -68,7 +72,7 @@ const StudentAPI = {
         throw new Error("User ID not found in localStorage.");
       }
 
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         "http://localhost:8080/api/student/",
         {
           studentName,

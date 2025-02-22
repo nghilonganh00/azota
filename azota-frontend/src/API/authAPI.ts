@@ -1,3 +1,6 @@
+import { AxiosResponse } from "axios";
+import { axiosInstance } from "../services/axiosInstance";
+
 const accessToken = localStorage.getItem("accessToken");
 
 const AuthAPI = {
@@ -25,26 +28,23 @@ const AuthAPI = {
       console.log("Error in register of AuthAPI: " + error);
     }
   },
-  login: async (username: string, password: string) => {
+  login: async (username: string, password: string): Promise<AxiosResponse | null> => {
     try {
       const requestData = {
         username,
         password,
       };
 
-      const url = "http://localhost:8080/api/auth/login";
-
-      const response = await fetch(url, {
-        method: "POST",
+      const response = await axiosInstance.post("auth/login", requestData, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(requestData),
       });
 
       return response;
     } catch (error) {
       console.log("Error in login of AuthAPI: ", error);
+      return null;
     }
   },
   loginByGoogle: async (accessToken: string) => {

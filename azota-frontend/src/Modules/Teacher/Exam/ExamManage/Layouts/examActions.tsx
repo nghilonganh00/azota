@@ -7,10 +7,10 @@ const ExamActions = () => {
       <div className="relative">
         <input
           type="text"
-          className="w-60 rounded-md px-2 py-2 text-sm"
-          placeholder="Tìm kiếm theo tên lớp"
+          className="w-60 rounded-md px-2 py-2 text-sm dark:bg-[rgb(var(--color-darkmode-800))]"
+          placeholder="Tìm kiếm"
         />
-        <Search className="absolute right-3 top-2.5 size-4 text-slate-600" />
+        <Search className="absolute right-3 top-2.5 size-4 text-slate-600 dark:text-slate-400" />
       </div>
       <div className="flex flex-col items-center justify-between gap-2 lg:flex-row">
         <div className="flex h-10 items-center gap-2 rounded-md bg-cyan-500 px-8 text-sm font-bold text-white">

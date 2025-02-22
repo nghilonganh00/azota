@@ -13,13 +13,13 @@ const ExamBox: React.FC<ExamBoxProps> = (props) => {
   return (
     <Link
       to={`/teacher/exam/exam-results-list/${examPreview.id}`}
-      className="tra col-span-12 rounded-md bg-white p-2 shadow-sm hover:scale-105 hover:cursor-pointer md:col-span-3"
+      className="tra col-span-12 rounded-md bg-white p-2 shadow-sm hover:scale-105 hover:cursor-pointer dark:bg-[rgb(var(--color-darkmode-600))] md:col-span-3"
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <FileCheck strokeWidth={1.5} size={40} className="text-orange-500" />
           <div className="space-y-1">
-            <div className="text-sm font-medium text-slate-900">{examPreview.title}</div>
+            <div className="text-sm font-medium text-slate-900 dark:text-slate-300">{examPreview.title}</div>
             <div>
               <div className="text-xs text-slate-500">
                 {`Ngày tạo: ${isoDateUtil.toDateAndTime(examPreview.createdAt, DateTimeFormat.FULL_DATE_TIME_FORMAT)}`}

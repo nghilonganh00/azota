@@ -1,8 +1,9 @@
-import axios, { Axios, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { NewHomework } from "../Modules/Teacher/Homework/AddHomework/libs/interfaces";
 import FirebaseStorage from "../Firebase/firebaseStorage";
 import { Homework } from "../Globals/Interfaces/homework.interface";
 import { BASE_API_URL } from "../Globals/Constant/constant";
+import { axiosInstance } from "../services/axiosInstance";
 
 const accessToken = localStorage.getItem("accessToken");
 const HOMEWORK_API_URL = `${BASE_API_URL}/homeworks`;
@@ -28,7 +29,7 @@ const HomeworkAPI = {
         searchKeyword,
       };
 
-      const response = await axios.get(url, {
+      const response = await axiosInstance.get(url, {
         params,
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +69,7 @@ const HomeworkAPI = {
     try {
       const url = `http://localhost:8080/api/homeworks/${homeworkId}`;
 
-      const response = await axios.get(url, {
+      const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -84,7 +85,7 @@ const HomeworkAPI = {
     try {
       const url = `http://localhost:8080/api/homeworks/hash/${hashId}`;
 
-      const response = await axios.get(url, {
+      const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -117,7 +118,7 @@ const HomeworkAPI = {
     try {
       const url = `http://localhost:8080/api/homeworks/${homeworkId}/submission`;
 
-      const response = await axios.get(url, {
+      const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -197,7 +198,7 @@ const HomeworkAPI = {
         }),
       );
 
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         "http://localhost:8080/api/homeworks/",
         { ...newHomework, homeworkFiles: homeworkFileObj },
         {
@@ -217,7 +218,7 @@ const HomeworkAPI = {
 
   update: async (homework: Homework): Promise<AxiosResponse> => {
     try {
-      const response = await axios.put(`${HOMEWORK_API_URL}/${homework.id}`, homework, {
+      const response = await axiosInstance.put(`${HOMEWORK_API_URL}/${homework.id}`, homework, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -232,7 +233,7 @@ const HomeworkAPI = {
 
   updateContent: async (homeworkId: string, content: string): Promise<AxiosResponse | null> => {
     try {
-      const response = await axios.patch(
+      const response = await axiosInstance.patch(
         `${HOMEWORK_API_URL}/${homeworkId}/content`,
         { content },
         {
@@ -252,7 +253,7 @@ const HomeworkAPI = {
 
   remove: async (homeworkId: string | number): Promise<AxiosResponse | null> => {
     try {
-      const response = await axios.delete(`${HOMEWORK_API_URL}/${homeworkId}`, {
+      const response = await axiosInstance.delete(`${HOMEWORK_API_URL}/${homeworkId}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,

@@ -11,7 +11,7 @@ const RecommendExams: React.FC<RecommendExamsProps> = (props) => {
 
   return (
     <div className="">
-      <div className="mb-4 text-lg font-medium text-gray-800">Được đề xuất</div>
+      <div className="mb-4 text-lg font-medium text-gray-800 dark:text-slate-300">Được đề xuất</div>
 
       <div className="grid grid-cols-12 gap-6">
         {listExamPrevies

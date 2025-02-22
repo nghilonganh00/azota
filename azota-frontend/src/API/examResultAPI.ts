@@ -1,5 +1,6 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { BASE_API_URL } from "../Globals/Constant/constant";
+import { axiosInstance } from "../services/axiosInstance";
 
 const accessToken = localStorage.getItem("accessToken");
 
@@ -12,7 +13,7 @@ const ExamResultAPI = {
         throw new Error("Access token not found in localStorage.");
       }
 
-      const response = await axios.get(`${EXAM_RESULT_API_URL}/${examResultId}/detail`, {
+      const response = await axiosInstance.get(`${EXAM_RESULT_API_URL}/${examResultId}/detail`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -31,7 +32,7 @@ const ExamResultAPI = {
         throw new Error("Access token not found in localStorage.");
       }
 
-      const response = await axios.get(`${EXAM_RESULT_API_URL}/${examResultId}/score`, {
+      const response = await axiosInstance.get(`${EXAM_RESULT_API_URL}/${examResultId}/score`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -104,7 +105,7 @@ const ExamResultAPI = {
         throw new Error("Access token not found in localStorage.");
       }
 
-      const response = await axios.get(`${EXAM_RESULT_API_URL}/exam/${examId}/student/${studentId}/history`, {
+      const response = await axiosInstance.get(`${EXAM_RESULT_API_URL}/exam/${examId}/student/${studentId}/history`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -127,7 +128,7 @@ const ExamResultAPI = {
 
       const url = `http://localhost:8080/api/exam-results/latest/exam/${examId}/classroom/${classroomIdParam}`;
 
-      const response = await axios.get(url, {
+      const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -173,7 +174,7 @@ const ExamResultAPI = {
         throw new Error("Access token not found in localStorage.");
       }
 
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         `${EXAM_RESULT_API_URL}`,
         { hashId, answer, startedAt },
         {
