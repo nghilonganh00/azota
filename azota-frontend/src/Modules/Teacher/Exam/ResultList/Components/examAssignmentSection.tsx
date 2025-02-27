@@ -25,10 +25,8 @@ const ExamAssignmentBox = ({ exam }: { exam: Exam }) => {
 
     default:
       return (
-        <div className="grid grid-cols-12 gap-2">
-          <div className="col-span-12 flex items-center justify-center rounded-md border border-gray-300 py-2">
-            <div className="text-sm font-semibold text-gray-500">Tất cả mọi người</div>
-          </div>
+        <div className="flex w-full items-center justify-center rounded-md border border-gray-300 py-2 dark:border-darkmode-400">
+          <div className="text-sm font-semibold text-gray-500">Tất cả mọi người</div>
         </div>
       );
   }
@@ -42,10 +40,13 @@ export const ExamAssignmentSection: React.FC<ExamAssignmentSectionProps> = (prop
       <div className="flex items-center justify-between">
         <div className="text-sm font-semibold">Giao cho</div>
 
-        <div className="flex gap-2 rounded-md px-2 py-1 hover:cursor-pointer hover:bg-blue-50">
-          <PenSquare strokeWidth={1.5} className="size-4 text-blue-800" />
-          <div className="text-xs font-semibold text-blue-900">Sửa</div>
-        </div>
+        <button
+          type="button"
+          className="flex gap-2 rounded-md px-2 py-1 text-blue-800 hover:cursor-pointer hover:bg-blue-50 dark:text-blue-700 dark:hover:bg-darkmode-400"
+        >
+          <PenSquare strokeWidth={1.5} className="size-4" />
+          <div className="text-xs font-semibold">Sửa</div>
+        </button>
       </div>
 
       <ExamAssignmentBox exam={exam} />

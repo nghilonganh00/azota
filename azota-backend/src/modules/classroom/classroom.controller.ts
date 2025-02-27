@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  Param,
-  Post,
-  Query,
-  UseGuards,
-} from "@nestjs/common";
+import { Body, Controller, Get, Inject, Param, Post, Query, UseGuards } from "@nestjs/common";
 import { REQUEST } from "@nestjs/core";
 import { ClassroomService } from "./classroom.service";
 import { ApiBearerAuth, ApiParam, ApiSecurity, ApiTags } from "@nestjs/swagger";
@@ -35,20 +26,15 @@ export class ClassroomController {
   @Roles([UserRole.TEACHER])
   @Get(":classroomId/students")
   async getStudentsByClassroomId(@Param("classroomId") classroomId: number) {
-    const userId = this.request["user"]["sub"];
+    const userId = this?.request["user"]["sub"];
 
-    return this.classroomService.getDetailStudentsByClassroomId(
-      userId,
-      classroomId
-    );
+    return this.classroomService.getDetailStudentsByClassroomId(userId, classroomId);
   }
 
   @ApiBearerAuth()
   @Roles([UserRole.TEACHER])
   @Get("/homeworks")
-  async getHomeworks(
-    @Query() query: QueryParamsDto
-  ): Promise<ClassroomWithHomeworksDto[]> {
+  async getHomeworks(@Query() query: QueryParamsDto): Promise<ClassroomWithHomeworksDto[]> {
     const userId = this.request?.user?.sub;
 
     return this.classroomService.getHomeworks(userId, query);
@@ -64,6 +50,6 @@ export class ClassroomController {
   }
 
   // @ApiBearerAuth()
-  // @Roles([UserRole.TEACHER]) 
+  // @Roles([UserRole.TEACHER])
   // @Get("/:classroomId/exam/:examId/")
 }

@@ -9,7 +9,6 @@ import SubjectDropdown from "./Components/subjectDropdown";
 import { Tab } from "../../../../Globals/Interfaces/interface";
 import PurposeDropdown from "./Components/purposeDropdown";
 import { CreateExam as ICreateExam } from "./libs/interface";
-import { resolve } from "path";
 
 const CreateExam = () => {
   const navigate = useNavigate();
@@ -50,14 +49,15 @@ const CreateExam = () => {
   };
 
   return (
-    <div className="mx-auto w-[1000px] max-w-[94vw] py-4">
+    <div className="mx-auto h-full w-[1000px] max-w-[94vw] py-4 dark:text-slate-300">
       <Helmet>
         <title>Azota - Nền Tảng Tạo Đề Thi, Bài Tập Online</title>
       </Helmet>
 
       <h3 className="mb-2 text-sm font-semibold uppercase">Cấu hình chung</h3>
-      <form action="">
-        <div className="space-y-4 rounded-md bg-white p-5 shadow-md">
+
+      <form onSubmit={handleSubmit}>
+        <div className="space-y-4 rounded-md bg-white p-5 shadow-md dark:bg-darkmode-600">
           <ExamNameConfig values={newExam} onChange={handleChangeTextInput} />
 
           <div className="grid grid-cols-12 gap-4">

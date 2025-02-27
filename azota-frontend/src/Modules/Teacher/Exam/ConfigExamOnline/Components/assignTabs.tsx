@@ -60,7 +60,7 @@ const AssignTabs: React.FC<AssignTabsProp> = (props) => {
   return (
     <div className="grid grid-cols-12 gap-2">
       <div className="col-span-12 lg:col-span-5">
-        <div className="text-sm font-medium">Ai được phép làm</div>
+        <div className="text-sm font-medium ">Ai được phép làm</div>
       </div>
 
       <div className="col-span-12 lg:col-span-5">

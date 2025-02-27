@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString } from "class-validator";
+import { ArrayNotEmpty, IsArray, IsInt, IsNotEmpty, IsNumber, IsString } from "class-validator";
 import { Exclude } from "class-transformer";
 import { HomeworkFile } from "../../homeworkFile/homeworkFile.entity";
 import { Teacher } from "../../teacher/teacher.entity";
@@ -47,6 +47,11 @@ export class HomeworkDto {
 }
 
 export class createHomeworkResDto {
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsInt({ each: true })
+  classroomIds: number[];
+
   @Exclude()
   homeworkFiles: HomeworkFile[];
 

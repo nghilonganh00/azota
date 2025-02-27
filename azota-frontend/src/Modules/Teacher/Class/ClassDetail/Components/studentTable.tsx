@@ -10,12 +10,11 @@ interface StudentTableProps {
 
 const StudentTable: React.FC<StudentTableProps> = (props) => {
   const { homeworkTotal, listStudent } = props;
-  console.log(`listStudent: ${listStudent}`);
 
   return (
-    <table className="w-full border-separate border-spacing-x-0 border-spacing-y-3 text-sm">
+    <table className="w-full border-separate border-spacing-x-0 border-spacing-y-3 bg-white text-sm dark:bg-darkmode-600 dark:text-slate-300">
       <thead className="">
-        <tr className="bg-white">
+        <tr className="">
           <th className="p-2">
             <input type="checkbox" />
           </th>
@@ -42,9 +41,12 @@ const StudentTable: React.FC<StudentTableProps> = (props) => {
 
       <tbody>
         {listStudent?.map((studentClass, key) => (
-          <tr className="rounded-md bg-white text-center" key={studentClass.id}>
+          <tr className="rounded-md text-center" key={studentClass.id}>
             <td className="py-6">
-              <input type="checkbox" className="size-4" />
+              <input
+                type="checkbox"
+                className="h-4 w-4 rounded border-gray-300 bg-darkmode-800 checked:bg-blue-500 focus:ring-0"
+              />
             </td>
 
             <td>
@@ -52,7 +54,7 @@ const StudentTable: React.FC<StudentTableProps> = (props) => {
                 <input
                   value={key + 1}
                   type="text"
-                  className="w-12 rounded-md px-2 py-1 text-center text-sm font-normal shadow"
+                  className="w-12 rounded-md px-2 py-1 text-center text-sm font-normal shadow dark:bg-darkmode-800"
                 />
                 <ChevronDown className="mt-1 size-5" />
               </div>
@@ -65,7 +67,7 @@ const StudentTable: React.FC<StudentTableProps> = (props) => {
                 </div>
 
                 <div className="flex items-center">
-                  <div className="font-semibold text-gray-900">{studentClass.fullname}</div>
+                  <div className="font-semibold text-gray-900 dark:text-slate-300">{studentClass.fullname}</div>
 
                   <span
                     className={

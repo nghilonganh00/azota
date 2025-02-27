@@ -26,9 +26,15 @@ import { QuestionPartModule } from "./modules/questionPart/questionPart.module";
 import { QuestionModule } from "./modules/question/question.module";
 import { OptionModule } from "./modules/option/option.module";
 import { ExamResultModule } from "./modules/examResult/examResult.module";
+import { ConfigModule } from "@nestjs/config";
+import googleOauthConfig from "./modules/auth/config/google-oauth.config";
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [googleOauthConfig],
+    }),
     TypeOrmModule.forRoot(typeormConfig),
     SharedModule,
     AuthModule,

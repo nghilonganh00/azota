@@ -45,6 +45,28 @@ input[type="checkbox"] {
   accent-color: #1e40af;
 }
 
+button {
+  border: none;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 :root {
   --color-success: 104 204 0;
   --color-primary: 29 78 216;

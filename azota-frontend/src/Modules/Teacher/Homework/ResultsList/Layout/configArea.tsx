@@ -14,7 +14,7 @@ interface ConfigAreaProps {
 const ConfigArea: React.FC<ConfigAreaProps> = (props) => {
   const navigate = useNavigate();
   const { homework, setHomework } = props;
-  const { id, hashId, title, content, startDate, endDate, isShowResult, isMustLogin, createdAt, classroom } = homework;
+  const { id, hashId, title, startDate, endDate, createdAt, classroom } = homework;
 
   const handleCopy = () => {
     navigator.clipboard
@@ -29,7 +29,6 @@ const ConfigArea: React.FC<ConfigAreaProps> = (props) => {
   };
 
   const handleRemove = async () => {
-    console.log("remove");
     if (!id) return;
 
     const response = await HomeworkAPI.remove(id);
@@ -41,7 +40,7 @@ const ConfigArea: React.FC<ConfigAreaProps> = (props) => {
   };
 
   return (
-    <div className="space-y-3 rounded-md bg-white px-3 py-4 shadow-md">
+    <div className="space-y-3 rounded-md bg-white px-3 py-4 shadow-md dark:bg-darkmode-600 dark:text-slate-300">
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div className="text-sm font-semibold">{title}</div>
@@ -76,26 +75,26 @@ const ConfigArea: React.FC<ConfigAreaProps> = (props) => {
           </div>
         </div>
 
-        <div className="inline-flex items-center gap-2 rounded-md border border-gray-300 px-2 py-1">
-          <Share2 className="size-4 text-gray-500" strokeWidth={1.5} />
-          <div className="text-xs font-semibold text-gray-500">Chia sẻ</div>
+        <div className="inline-flex items-center gap-2 rounded-md border border-gray-300 px-2 py-1 text-gray-500 dark:border-darkmode-200 dark:text-slate-300">
+          <Share2 className="size-4" strokeWidth={1.5} />
+          <div className="text-xs font-semibold">Chia sẻ</div>
         </div>
       </div>
 
       <div className="space-y-2">
         <div className="text-sm font-semibold">Menu</div>
 
-        <div className="rounded-md bg-gray-100 p-2">
+        <div className="rounded-md bg-gray-100 p-2 shadow dark:bg-darkmode-600">
           <Link
             to={`/teacher/homework/config-homework/${id}`}
-            className="flex items-center gap-2 rounded-md p-2 hover:cursor-pointer hover:bg-gray-200"
+            className="flex items-center gap-2 rounded-md p-2 hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-darkmode-400"
           >
-            <Settings strokeWidth={1.5} className="size-4 text-gray-800" />
+            <Settings strokeWidth={1.5} className="size-4 text-gray-800 dark:text-slate-300" />
             <div className="text-sm">Cài đặt</div>
           </Link>
 
           <div
-            className="flex items-center gap-2 rounded-md p-2 hover:cursor-pointer hover:bg-gray-200"
+            className="flex items-center gap-2 rounded-md p-2 hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-darkmode-400"
             onClick={handleRemove}
           >
             <Trash2 strokeWidth={1.5} className="size-4 text-red-600" />

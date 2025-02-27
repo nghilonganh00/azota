@@ -2,7 +2,7 @@ import { Controller, Get, Inject } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { REQUEST } from "@nestjs/core";
 import { ApiBearerAuth } from "@nestjs/swagger";
-import { UserDto } from "./user.dto";
+import { UserDto } from "./dtos/user.dto";
 import { plainToClass } from "class-transformer";
 import { UserRole } from "src/shared/constant";
 

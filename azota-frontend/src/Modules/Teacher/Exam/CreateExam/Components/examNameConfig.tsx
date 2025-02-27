@@ -22,7 +22,7 @@ const ExamNameConfig: React.FC<ExamNameConfigProps> = (props) => {
           value={values["examName"]}
           onChange={(e) => onChange("examName", e.target.value)}
           placeholder="Nhập tên ..."
-          className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm shadow-sm"
+          className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm shadow-sm dark:border-none dark:bg-darkmode-800"
         />
       </div>
     </div>

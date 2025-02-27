@@ -30,7 +30,7 @@ const QuestionBox: React.FC<QuestionBoxProps> = (props) => {
   };
 
   return (
-    <div className="w-full rounded-md border border-gray-400 bg-white py-6">
+    <div className="w-full rounded-md border border-gray-400 bg-white py-6 dark:bg-darkmode-600 dark:text-slate-300">
       <div className="flex items-center gap-2 px-7 text-sm">
         <div className="rounded-sm border border-gray-400 px-3 py-0.5">
           <div className="text-sm font-semibold text-blue-600">{questionKey}</div>
@@ -44,20 +44,20 @@ const QuestionBox: React.FC<QuestionBoxProps> = (props) => {
           <div>Audio </div>
         </div>
 
-        <div className="flex items-end border-r border-gray-400 py-0.5 pr-3 text-gray-500">
+        <div className="flex items-end rounded border-r border-gray-400 py-0.5 pr-3 text-gray-500 dark:text-gray-800">
           <div>Trắc nghiệm</div>
           <ChevronDown strokeWidth={1.5} className="size-4" />
         </div>
 
         <div className="border-r border-gray-300 py-0.5 pr-3">
-          <div className="flex items-center gap-1 rounded-full bg-gray-300 px-3 py-0.5">
+          <div className="flex items-center gap-1 rounded-full bg-gray-300 px-3 py-0.5 text-gray-600">
             <div className="text-xs font-semibold">NB</div>
-            <CircleX className="size-4 text-gray-600" />
+            <CircleX className="size-4" />
           </div>
         </div>
 
         <div className="hover:cursor-pointer hover:bg-gray-100">
-          <EllipsisVertical className="size-4 text-gray-700" strokeWidth={1.5} />
+          <EllipsisVertical className="size-4 text-gray-700 dark:text-blue-600" strokeWidth={1.5} />
         </div>
       </div>
 
@@ -104,7 +104,7 @@ const QuestionBox: React.FC<QuestionBoxProps> = (props) => {
           <span className="bg-white px-2">HƯỚNG DẪN GIẢI</span>
         </div>
 
-        <div className="text-[13px]/5 text-slate-600">
+        <div className="text-[13px]/5 text-slate-600 dark:text-slate-400">
           <div>(NB):</div>
           <div>Phương pháp: SGK Lịch sử 12, trang 76-77</div>
           <div>

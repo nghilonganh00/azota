@@ -2,11 +2,9 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
-  NotFoundException,
   SetMetadata,
   UnauthorizedException,
 } from "@nestjs/common";
-import { HomeworkService } from "src/modules/homework/homework.service";
 import { IS_PUBLIC_KEY } from "../decorators/public.decorator";
 import { Reflector } from "@nestjs/core";
 import { SharedService } from "src/shared/shared.service";

@@ -7,11 +7,11 @@ const CommonLayout = () => {
   return (
     <div className="flex h-screen overflow-hidden">
       <LeftNavbar />
-      <div className="flex h-full flex-1 flex-col overflow-hidden px-4">
+      <div className="grid h-full flex-1 grid-rows-[auto_1fr] overflow-hidden px-4">
         <MobileMenuBar />
-        <div className="dark:bg-[rgb(var(--color-darkmode-700))] rounded-3xl">
+        <div className="grid min-h-0 grid-rows-[auto_1fr] rounded-3xl dark:bg-[rgb(var(--color-darkmode-700))]">
           <TopBar />
-          <div className="flex-1 overflow-y-auto">
+          <div className="scrollbar h-full overflow-y-auto">
             <Outlet />
           </div>
         </div>

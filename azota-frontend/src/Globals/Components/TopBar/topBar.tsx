@@ -19,7 +19,7 @@ const TopBar = () => {
     if (!accessToken) {
       if (["teacher", "student"].includes(firstSegment)) {
         console.log(`firstSegment: ${firstSegment}`);
-        navigate(`/auth/login`);
+        // navigate(`/auth/login`);
       }
     }
   }, []);

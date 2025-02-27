@@ -35,9 +35,9 @@ const ConfigContent: React.FC<ConfigContentProps> = (props) => {
       </div>
 
       <div className="col-span-12">
-        <label className="inline-flex items-center gap-2 rounded-md bg-blue-900/20 p-2 hover:cursor-pointer">
-          <Plus className="size-4 text-blue-900" />
-          <div className="text-xs font-semibold text-blue-900">Thêm file bài tập</div>
+        <label className="inline-flex items-center gap-2 rounded-md border-blue-700 bg-blue-900/20 p-2 text-blue-900 hover:cursor-pointer dark:border dark:bg-blue-900/40 dark:text-blue-700">
+          <Plus className="size-4" />
+          <div className="text-xs font-semibold">Thêm file bài tập</div>
           <input type="file" className="hidden" onChange={handleAddFile} />
         </label>
       </div>
@@ -72,17 +72,11 @@ const ConfigContent: React.FC<ConfigContentProps> = (props) => {
             toolbar:
               "blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
             tinycomments_mode: "embedded",
-            tinycomments_author: "Author name",
-            mergetags_list: [
-              { value: "First.Name", title: "First Name" },
-              { value: "Email", title: "Email" },
-            ],
             ai_request: (request: any, respondWith: any) =>
               respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+            content_style: "body { background-color: #f0f8ff; color: #333; }",
           }}
-          onEditorChange={() =>
-            editorRef.current && onChangeText("homeworkContent", editorRef.current?.getContent())
-          }
+          onEditorChange={() => editorRef.current && onChangeText("homeworkContent", editorRef.current?.getContent())}
           initialValue=""
         />
       </div>

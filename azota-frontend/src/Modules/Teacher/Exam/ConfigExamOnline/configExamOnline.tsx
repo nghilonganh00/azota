@@ -50,12 +50,11 @@ const ConfigExamOnline = () => {
     fetchExamData();
   }, []);
 
-  console.log("exam: ", examConfig);
   return (
-    <div className="w-full px-5">
+    <div className="w-full px-5 dark:text-slate-300">
       {examConfig && Object.keys(examConfig).length !== 0 && (
         <div className="mx-auto max-w-[1150px] space-y-6 text-sm">
-          <div className="mb-6 text-center font-semibold text-gray-800">{`Tên đề thi: ${examConfig.title} - Mã đề: ${examConfig.hashId}`}</div>
+          <div className="pt-4 text-center font-semibold text-gray-800 dark:text-slate-300">{`Tên đề thi: ${examConfig.title} - Mã đề: ${examConfig.hashId}`}</div>
           <ConfigType examConfig={examConfig} setExamConfig={setExamConfig} handleChangeConfig={handleChangeConfig} />
           <ConfigGeneral
             examConfig={examConfig}

@@ -12,8 +12,10 @@ const ConfigAnswerAndQuestion: React.FC<ConfigAnswerAndQuestionProps> = (props) 
   const { showAnswer, showResult } = examConfig;
 
   return (
-    <div className="rounded-md bg-white px-5 py-6 text-gray-800 shadow">
-      <div className="border-b border-gray-200 pb-4 text-base font-medium">Điểm và đáp án khi làm xong</div>
+    <div className="rounded-md bg-white px-5 py-6 text-gray-800 shadow dark:bg-darkmode-600 dark:text-slate-300">
+      <div className="border-b border-gray-200 pb-4 text-base font-medium dark:border-darkmode-400">
+        Điểm và đáp án khi làm xong
+      </div>
 
       <div className="mt-4 space-y-5">
         <div className="grid grid-cols-12 gap-2">

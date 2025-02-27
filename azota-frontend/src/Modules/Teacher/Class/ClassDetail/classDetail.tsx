@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CalendarCheck, Newspaper, ScrollText, User } from "lucide-react";
+import { CalendarCheck, Newspaper, User } from "lucide-react";
 import ListStudent from "./Layouts/ListStudent";
 import ListHomeworkAndExam from "./Layouts/listHomeworkAndExam";
 
@@ -25,7 +25,7 @@ const ClassDetail = () => {
 
   return (
     <div className="grid grid-cols-12">
-      <div className="sticky top-0 col-span-2 h-[660px] border-r border-gray-300">
+      <div className="sticky top-0 col-span-2 h-[660px] border-r border-gray-300 dark:border-darkmode-400">
         <div className="pl-6 pr-3 pt-6">
           {TABS.map((tab, key) => (
             <div

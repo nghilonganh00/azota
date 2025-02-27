@@ -68,7 +68,7 @@ export const MarkArea: React.FC<MarkAreaProps> = (props) => {
 
   return (
     <div className="col-span-4">
-      <div className="space-y-3 rounded-md bg-white p-2 shadow-sm">
+      <div className="space-y-3 rounded-md bg-white p-2 shadow-sm dark:bg-darkmode-600 dark:text-slate-300">
         <div className="text-sm font-semibold">{homeworkSubmission?.homework?.title || ""}</div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -82,15 +82,17 @@ export const MarkArea: React.FC<MarkAreaProps> = (props) => {
             type="text"
             value={updateHomeworkSubmission?.point || ""}
             onChange={(e) => handleMark(e.target.value)}
-            className="w-48 rounded-md border border-gray-200 p-2 text-sm font-semibold shadow-sm"
+            className="w-48 rounded-md border border-gray-200 p-2 text-sm font-semibold shadow-sm dark:border-none dark:bg-darkmode-800"
             placeholder="Nhập điểm"
           />
         </div>
-        <div className="w-full bg-slate-200 py-2 text-center text-sm">Chưa có số câu đúng, câu sai</div>
-        <div className="flex items-center justify-center gap-2 lg:gap-10">
+        <div className="w-full bg-slate-200 py-2 text-center text-sm dark:bg-darkmode-400">
+          Chưa có số câu đúng, câu sai
+        </div>
+        <div className="flex items-center justify-center gap-2 lg:justify-around">
           {Object.values(PointTypes).map((point, key) => (
             <div
-              className="flex size-10 items-center justify-center rounded-full border border-gray-200 shadow-sm hover:cursor-pointer hover:bg-slate-200"
+              className="flex size-10 items-center justify-center rounded-full border border-gray-200 shadow-sm hover:cursor-pointer hover:bg-slate-200 dark:border-darkmode-400"
               key={key}
             >
               <div className="text-sm font-semibold" onClick={() => handleMark(point)}>
@@ -145,7 +147,7 @@ export const MarkArea: React.FC<MarkAreaProps> = (props) => {
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-6">
             <div
-              className="rounded-md border border-gray-200 bg-gray-100 py-2.5 shadow-sm"
+              className="rounded-md border border-gray-200 bg-gray-100 py-2.5 shadow-sm dark:border-none dark:bg-darkmode-400"
               onClick={() => navigate(-1)}
             >
               <div className="text-center text-sm font-semibold text-gray-500">Quay lại</div>
@@ -153,7 +155,7 @@ export const MarkArea: React.FC<MarkAreaProps> = (props) => {
           </div>
           <div className="col-span-6">
             <div
-              className="rounded-md border border-gray-200 bg-blue-800 py-2.5 shadow-sm hover:cursor-pointer"
+              className="rounded-md border border-none border-gray-200 bg-blue-800 py-2.5 shadow-sm hover:cursor-pointer"
               onClick={handleSave}
             >
               <div className="text-center text-sm font-semibold text-white">Lưu dữ liệu</div>

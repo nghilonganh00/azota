@@ -31,12 +31,12 @@ const ExamMenu = () => {
     <div className="space-y-2">
       <div className="text-sm font-semibold">Menu</div>
 
-      <div className="rounded-md bg-gray-100 p-2">
-        {MENU_ITEMS.map((item, key) => (
+      <div className="rounded-md bg-gray-100 p-2 shadow dark:bg-inherit">
+        {MENU_ITEMS?.map((item, key) => (
           <Link
             to={`${item.link}/${examId}`}
             key={key}
-            className={"flex items-center gap-2 rounded-md p-2 hover:cursor-pointer hover:bg-gray-200"}
+            className="flex items-center gap-2 rounded-md p-2 transition-colors duration-300 ease-in-out hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-darkmode-400 dark:hover:text-black"
           >
             <item.icon strokeWidth={1.5} className="size-4" />
             <div className="text-sm">{item.label}</div>
@@ -44,7 +44,9 @@ const ExamMenu = () => {
         ))}
 
         <div
-          className={"flex items-center gap-2 rounded-md p-2 text-red-600 hover:cursor-pointer hover:bg-gray-200"}
+          className={
+            "flex items-center gap-2 rounded-md p-2 text-red-600 transition-colors duration-200 ease-in-out hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-darkmode-400 dark:hover:text-black"
+          }
           onClick={handleRemove}
         >
           <Trash2 strokeWidth={1.5} className="size-4" />

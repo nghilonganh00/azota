@@ -17,7 +17,6 @@ export class HomeworkSubmissionController {
   ) {}
 
   @Get("/:homeworkSubmissionId")
-  @UseGuards(HomeworkMustLoginGuard)
   async findOne(@Param("homeworkSubmissionId") homeworkSubmissionId: number): Promise<HomeworkSubmissionDto> {
     const userId = this.request?.user?.sub;
     return this.homeworkSubmissionService.findOne(userId, homeworkSubmissionId);
@@ -39,12 +38,11 @@ export class HomeworkSubmissionController {
     return this.homeworkSubmissionService.getStatus(userId, homeworkId);
   }
 
-  @Post("/:homeworkSubmissionId/submit")
-  @UseGuards(HomeworkMustLoginGuard)
-  async submit(@Body() submitReqDto: SubmitReqDto): Promise<HomeworkSubmissionDto> {
+  @Post("/:id/submit")
+  async submit(@Param("id") id: number, @Body() submitReqDto: SubmitReqDto): Promise<HomeworkSubmissionDto> {
     const userId = this.request?.user?.sub;
 
-    return this.homeworkSubmissionService.submit(userId, submitReqDto);
+    return this.homeworkSubmissionService.submit(userId, id, submitReqDto);
   }
 
   @Patch("/:homeworkSubmissionId/mark")

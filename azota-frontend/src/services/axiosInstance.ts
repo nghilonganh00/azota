@@ -1,4 +1,4 @@
-import axios, { AxiosError,  AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
@@ -9,7 +9,6 @@ let failedRequestsQueue: any[] = [];
 
 export const axiosInstance = axios.create({
   baseURL: "http://localhost:8080/api",
-  withCredentials: true,
 });
 
 const getAccessToken = () => localStorage.getItem("accessToken");
@@ -59,7 +58,7 @@ axiosInstance.interceptors.response.use(
             failedRequestsQueue.forEach((request) => request.reject(err));
             failedRequestsQueue = [];
             localStorage.removeItem("accessToken");
-            // window.location.href = "/auth/login";
+            window.location.href = "/auth/login";
             reject(err);
           })
           .finally(() => {

@@ -21,7 +21,7 @@ const EditorTopBar = () => {
   }, [path]);
 
   return (
-    <div className="w-full border-b border-solid border-slate-200 bg-white px-3 py-4">
+    <div className="w-full border-b border-solid border-slate-200 bg-white px-3 py-4 dark:border-darkmode-400 dark:bg-darkmode-600">
       <div className="grid grid-cols-12">
         <div className="col-span-2">
           <div className="flex">
@@ -42,22 +42,23 @@ const EditorTopBar = () => {
                 <input
                   type="text"
                   placeholder="Nhập tên ..."
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                  className="w-full rounded-md border border-none border-gray-300 px-3 py-2 text-sm dark:bg-darkmode-800 dark:text-slate-300"
                   value={examName}
                   onChange={(e) => setExamName(e.target.value)}
                 />
               </div>
 
-              <div className="rounded-md bg-gray-200 px-6 py-2.5 shadow-sm">
-                <div className="text-sm font-medium text-gray-600">Hủy</div>
-              </div>
+              <button type="button" className="rounded-md bg-gray-200 px-6 py-2.5 shadow-sm dark:bg-darkmode-400">
+                <div className="text-sm font-medium text-gray-600 dark:text-slate-300">Hủy</div>
+              </button>
 
-              <div
+              <button
+                type="button"
                 onClick={handleClickContinue}
                 className="rounded-md bg-blue-800 px-3 py-2.5 shadow-sm hover:cursor-pointer hover:bg-blue-700"
               >
                 <div className="text-sm font-semibold text-white">Tiếp tục</div>
-              </div>
+              </button>
             </div>
           )}
         </div>

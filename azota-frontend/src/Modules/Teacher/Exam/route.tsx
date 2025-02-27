@@ -2,7 +2,7 @@ import CommonLayout from "../../../Globals/Layouts/teacherLayout";
 import EditorLayout from "../../../Globals/Layouts/editorLayout";
 import AddExam from "./AddExam/addExam";
 import Editor from "./Editor/editor";
-import ExamManage from "./ExamManage/examMange";
+import ExamManage from "./ExamManage/examManagement";
 import ResultsList from "./ResultList/resultList";
 import CreateExam from "./CreateExam/createExam";
 import ActionOnlineOffline from "./ActionOnlineOffline/actionOnlineOffine";

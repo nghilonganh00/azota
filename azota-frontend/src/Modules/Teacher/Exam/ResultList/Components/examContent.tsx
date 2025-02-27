@@ -33,14 +33,17 @@ export const ExamContent: React.FC<ExamContentProps> = (props) => {
     <div className="space-y-2">
       <div className="flex items-center justify-between">
         <div className="text-sm font-semibold">Nội dung</div>
-        <div className="flex gap-2">
-          <PenSquare strokeWidth={1.5} className="size-4 text-blue-800" />
-          <div className="text-xs font-semibold text-blue-900">Sửa</div>
-        </div>
+        <button
+          type="button"
+          className="flex gap-2 rounded-md px-2 py-1 text-blue-800 hover:cursor-pointer hover:bg-blue-50 dark:text-blue-700 dark:hover:bg-darkmode-400"
+        >
+          <PenSquare strokeWidth={1.5} className="size-4" />
+          <div className="text-xs font-semibold">Sửa</div>
+        </button>
       </div>
 
       <div
-        className="flex items-center gap-2 text-blue-800 hover:cursor-pointer hover:opacity-80"
+        className="flex items-center gap-2 text-blue-800 hover:cursor-pointer hover:opacity-80 dark:text-blue-700"
         onClick={handleTogglePopup}
       >
         <FileText className="size-4" />

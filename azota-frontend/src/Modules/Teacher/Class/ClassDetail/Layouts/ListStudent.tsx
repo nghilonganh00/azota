@@ -33,17 +33,17 @@ const ListStudent = () => {
     <div className="space-y-6 px-4 py-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div>
-            <span className="mr-2 text-xl font-semibold text-gray-800">{classroom?.className}</span>
-            <span className="text-gray-800">{classroom?.classYear}</span>
+          <div className="text-gray-800 dark:text-slate-300">
+            <span className="mr-2 text-xl font-semibold">{classroom?.className}</span>
+            <span className="">{classroom?.classYear}</span>
           </div>
 
           <QrCode className="text-blue-800" />
         </div>
 
-        <div className="inline-flex items-center gap-2 rounded-md border border-gray-300 px-2 py-1">
-          <Share2 className="size-4 text-gray-500" strokeWidth={1.5} />
-          <div className="text-xs font-semibold text-gray-500">Chia sẻ</div>
+        <div className="inline-flex items-center gap-2 rounded-md border border-gray-300 px-2 py-1 text-gray-500 dark:text-slate-300">
+          <Share2 className="size-4" strokeWidth={1.5} />
+          <div className="text-xs font-semibold">Chia sẻ</div>
         </div>
       </div>
 
@@ -51,10 +51,10 @@ const ListStudent = () => {
         <div className="relative">
           <input
             type="text"
-            className="w-60 rounded-md border border-gray-300 px-2.5 py-2 text-sm"
+            className="w-60 rounded-md border border-gray-300 px-2.5 py-2 text-sm dark:border-none dark:border-darkmode-300 dark:bg-darkmode-800"
             placeholder="Tìm theo tên, sđt, email"
           />
-          <Search className="absolute right-2.5 top-3 size-4 text-slate-600" />
+          <Search className="absolute right-2.5 top-3 size-4 text-slate-600 dark:text-slate-300" />
         </div>
 
         <div className="flex items-center gap-2">
@@ -70,8 +70,8 @@ const ListStudent = () => {
 
           <AddStudent />
 
-          <div className="rounded-md bg-white p-2 shadow">
-            <Settings strokeWidth={1.5} className="size-5" />
+          <div className="rounded-md bg-white p-2 shadow dark:bg-darkmode-600">
+            <Settings strokeWidth={1.5} className="size-5 dark:text-slate-300" />
           </div>
         </div>
       </div>

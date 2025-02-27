@@ -38,7 +38,6 @@ const AddHomework = () => {
   const handlePublish = async () => {
     try {
       const createdHomework = await HomeworkAPI.create(newHomework);
-      // const hashIds = createdHomework.Assignments.map((assignment: any) => assignment.hashId);
 
       navigation(`/teacher/homework/publish-homework/${createdHomework.id}`);
     } catch (error) {
@@ -59,14 +58,14 @@ const AddHomework = () => {
   }, []);
 
   return (
-    <div className="mx-auto w-11/12 py-4 md:w-9/12">
+    <div className="mx-auto max-w-[1000px] p-4 dark:text-slate-300">
       <Helmet>
         <title>Thêm bài tập</title>
       </Helmet>
 
       <h3 className="mb-2 text-sm font-semibold">TẠO BÀI TẬP MỚI</h3>
-      <form action="">
-        <div className="space-y-4 rounded-md bg-white p-5 shadow-md">
+      <form onSubmit={handlePublish}>
+        <div className="space-y-4 rounded-md bg-white p-5 shadow-md dark:bg-[rgb(var(--color-darkmode-600))]">
           <ConfigName values={newHomework} onChange={handleChangeTextInput} />
           <ConfigTime values={newHomework} onChange={handleChangeTextInput} />
           <ConfigContent

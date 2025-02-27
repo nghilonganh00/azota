@@ -1,3 +1,4 @@
+import { Expose } from "class-transformer";
 import { Homework } from "../../homework/homework.entity";
 import { HomeworkSubmissionFile } from "../../homeworkSubmissionFile/homeworkSubmissionFile.entity";
 import { StudentClass } from "../../stutentClass/studentClass.entity";

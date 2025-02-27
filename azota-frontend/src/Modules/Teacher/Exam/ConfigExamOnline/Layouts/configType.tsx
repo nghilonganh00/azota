@@ -19,23 +19,25 @@ const ConfigType: React.FC<ConfigTypeProp> = (props) => {
   };
 
   return (
-    <div className="rounded-md bg-white px-5 py-6 text-gray-800 shadow">
+    <div className="rounded-md bg-white px-5 py-6 text-gray-800 shadow dark:bg-darkmode-600 dark:text-slate-300">
       <div className="relative flex flex-col items-center justify-center">
         <div className="absolute left-0 top-2 font-medium">Loại cấu hình</div>
 
-        <div className="relative top-0 inline-flex items-center rounded-full border border-gray-400 hover:cursor-pointer">
-          <div
+        <div className="relative top-0 inline-flex items-center rounded-full border border-gray-400 hover:cursor-pointer dark:border-none dark:bg-darkmode-800">
+          <button
+            type="button"
             onClick={() => toggleSwitch(ExamType.TEST)}
-            className={`z-10 w-24 px-3 py-2 text-center font-medium transition duration-200 ${examType === "TEST" ? "text-white" : "text-gray-800"}`}
+            className={`z-10 w-24 px-3 py-2 text-center font-medium transition duration-200 ${examType === "TEST" ? "text-white" : "text-gray-800 dark:text-slate-300"}`}
           >
             Kiểm tra
-          </div>
-          <div
+          </button>
+          <button
+            type="button"
             onClick={() => toggleSwitch(ExamType.PRACTICE)}
-            className={`z-10 w-24 px-3 py-2 text-center font-medium transition duration-200 ${examType === "TEST" ? "text-gray-800" : "text-white"}`}
+            className={`z-10 w-24 px-3 py-2 text-center font-medium transition duration-200 ${examType === "TEST" ? "text-gray-800 dark:text-slate-300" : "text-white"}`}
           >
             Luyện tập
-          </div>
+          </button>
           <span
             className={`absolute left-0 top-0 h-9 w-[96px] rounded-full transition-transform duration-200 ease-linear ${examType === "TEST" ? "translate-x-0 transform bg-blue-800" : "translate-x-full transform bg-blue-800"}`}
           ></span>

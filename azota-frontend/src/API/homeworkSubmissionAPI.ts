@@ -4,7 +4,7 @@ import FirebaseStorage from "../Firebase/firebaseStorage";
 import { axiosInstance } from "../services/axiosInstance";
 
 const accessToken = localStorage.getItem("accessToken");
-const HOMEWORK_SUBMISSION_API_URL = `${BASE_API_URL}/homework-submissions`;
+const HOMEWORK_SUBMISSION_API_URL = `/homework-submissions`;
 
 export const HomeworkSubmissionAPI = {
   getDetail: async (homeworkSubmissionId: string): Promise<AxiosResponse | null> => {

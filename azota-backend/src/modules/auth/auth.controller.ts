@@ -1,10 +1,21 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Res, UnauthorizedException } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Req,
+  Res,
+  UnauthorizedException,
+  UseGuards,
+} from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Public } from "../../common/decorators/public.decorator";
 import { SignInDto, SignUpDto, UserResponseDto } from "./auth.dto";
 import { ApiTags } from "@nestjs/swagger";
-import { sign } from "crypto";
 import { Response } from "express";
+import { GoogleAuthGuard } from "./guards/google-auth/google-auth.guard";
 
 @ApiTags("Auth")
 @Controller("auth")
@@ -19,7 +30,6 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response
   ): Promise<{ accessToken: string; user: UserResponseDto }> {
     const data = await this.authService.login(signInDto.username, signInDto.password);
-    console.log("data: ", data);
     res.cookie("refreshToken", data.refreshToken, {
       httpOnly: true,
       secure: true,
@@ -27,6 +37,26 @@ export class AuthController {
     });
 
     return { accessToken: data.accessToken, user: data.user };
+  }
+
+  @Public()
+  @UseGuards(GoogleAuthGuard)
+  @Get("google/login")
+  async googleLogin() {}
+
+  @Public()
+  @UseGuards(GoogleAuthGuard)
+  @Get("google/callback")
+  async googleCallback(@Req() req, @Res({ passthrough: true }) res: Response) {
+    const response = await this.authService.validateGoogleCallback(req.user.id);
+
+    res.cookie("refreshToken", response.refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
+
+    res.redirect(`http://localhost:3000?token=${response.accessToken}`);
   }
 
   @Public()

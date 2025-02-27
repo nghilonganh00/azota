@@ -40,7 +40,7 @@ const Menu = () => {
 
   const [user, setUser] = useState<User>({} as User);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(localStorage.getItem("currentTheme") || "light");
 
   const handleRefresh = () => {
     window.location.reload();
@@ -56,6 +56,14 @@ const Menu = () => {
   };
 
   const handleToggleTheme = async () => {
+    if (theme === "dark") {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("currentTheme", "light");
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("currentTheme", "dark");
+    }
+
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
@@ -89,14 +97,6 @@ const Menu = () => {
 
     fetchUserInfoData();
   }, []);
-
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
 
   return (
     <div

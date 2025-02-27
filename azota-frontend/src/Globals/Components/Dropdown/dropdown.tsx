@@ -36,14 +36,12 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
 
           <div
             id="multi-dropdown"
-            className="absolute left-0 top-10 z-20 max-h-72 w-full divide-y divide-gray-100 overflow-y-scroll rounded-lg border border-gray-200 bg-white shadow-lg"
+            className="scrollbar absolute left-0 top-10 z-20 max-h-72 w-full divide-y divide-gray-100 overflow-y-scroll rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-800 dark:bg-darkmode-600"
           >
             <ul className="py-2 text-sm" aria-labelledby="multiLevelDropdownButton">
               {title && (
-                <li className="my-2 flex items-center justify-between text-gray-300">
-                  <a href="#" className="block px-4 py-3">
-                    {title}
-                  </a>
+                <li className="my-2 flex items-center justify-between px-4 py-3 text-gray-300 dark:text-gray-900">
+                  {title}
                 </li>
               )}
 
@@ -52,7 +50,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
                   <li
                     key={key}
                     onClick={() => handleChangeValue(option)}
-                    className={`flex items-center justify-between hover:cursor-pointer ${selectedValue?.value === option.value ? "bg-zinc-100 text-blue-900" : "hover:bg-gray-100"}`}
+                    className={`flex items-center justify-between hover:cursor-pointer hover:bg-darkmode-700 dark:text-black ${selectedValue?.value === option.value ? "bg-zinc-100 text-blue-900 dark:bg-darkmode-700 dark:text-blue-700" : "hover:bg-gray-100"}`}
                   >
                     <a href="#" className="block px-4 py-3">
                       {option.name}

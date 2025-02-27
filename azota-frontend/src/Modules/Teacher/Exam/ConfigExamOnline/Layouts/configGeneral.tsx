@@ -27,9 +27,11 @@ const ConfigGeneral: React.FC<ConfigGeneralProp> = (props) => {
   console.log("end date: ", examConfig.endDate);
 
   return (
-    <div className="rounded-md bg-white px-5 py-6 text-gray-800 shadow">
+    <div className="rounded-md bg-white px-5 py-6 text-gray-800 shadow dark:bg-darkmode-600 dark:text-slate-300">
       <form action="">
-        <div className="border-b border-gray-200 pb-4 text-base font-medium">Cấu hình chung</div>
+        <div className="border-b border-gray-200 pb-4 text-base font-medium dark:border-darkmode-400">
+          Cấu hình chung
+        </div>
 
         <div className="mt-4 space-y-4">
           <div>
@@ -39,7 +41,7 @@ const ConfigGeneral: React.FC<ConfigGeneralProp> = (props) => {
               placeholder="Nhập tên đề thi ..."
               value={title}
               onChange={(e) => handleChangeConfig("title", e.target.value)}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-none dark:bg-darkmode-800"
             />
           </div>
 
@@ -52,10 +54,10 @@ const ConfigGeneral: React.FC<ConfigGeneralProp> = (props) => {
 
           <div className="grid grid-cols-12">
             <div className="col-span-12">
-              <label htmlFor="new-hw-name" className="mb-2 flex items-center gap-1 text-sm font-medium">
+              <label htmlFor="exam-duration" className="mb-2 flex items-center gap-1 text-sm font-medium">
                 Thời gian làm bài (phút)
                 <span className="c-lucide">
-                  <CircleAlert strokeWidth={1.5} className="size-4 text-gray-900" />
+                  <CircleAlert strokeWidth={1.5} className="size-4 text-gray-900 dark:text-slate-300" />
                 </span>
               </label>
             </div>
@@ -66,7 +68,7 @@ const ConfigGeneral: React.FC<ConfigGeneralProp> = (props) => {
                 value={duration}
                 onChange={(e) => handleChangeConfig("examDuration", e.target.value)}
                 placeholder="Nhập thời gian ..."
-                className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm shadow-sm"
+                className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm shadow-sm dark:border-none dark:bg-darkmode-800"
               />
             </div>
             <div className="col-span-12 mt-1 text-xs text-slate-500">Nhập 0 để không giới hạn thời gian</div>
@@ -86,7 +88,7 @@ const ConfigGeneral: React.FC<ConfigGeneralProp> = (props) => {
                   type="datetime-local"
                   value={examConfig.startDate?.slice(0, 16)}
                   onChange={(e) => handleChangeConfig("startDate", e.target.value)}
-                  className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm font-medium shadow-sm"
+                  className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm font-medium shadow-sm dark:border-none dark:bg-darkmode-800"
                 />
               </div>
 
@@ -95,23 +97,25 @@ const ConfigGeneral: React.FC<ConfigGeneralProp> = (props) => {
                   type="datetime-local"
                   value={examConfig.endDate?.slice(0, 16)}
                   onChange={(e) => handleChangeConfig("endDate", e.target.value)}
-                  className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm font-medium shadow-sm"
+                  className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm font-medium shadow-sm dark:border-none dark:bg-darkmode-800"
                 />
               </div>
 
               <div className="col-span-2">
-                <div className="flex w-full items-center justify-center gap-2 rounded-md border border-gray-200 px-1 py-2 shadow-sm hover:cursor-pointer hover:bg-gray-100">
+                <div className="flex w-full items-center justify-center gap-2 rounded-md border border-gray-200 px-1 py-2 shadow-sm hover:cursor-pointer hover:bg-gray-100 dark:border-darkmode-400">
                   <History className="size-4 text-gray-500" strokeWidth={1.5} />
-                  <div className="text-sm font-semibold text-gray-500">Đặt lại</div>
+                  <div className="text-sm font-semibold text-gray-500 dark:text-slate-300">Đặt lại</div>
                 </div>
               </div>
 
-              <div className="col-span-12 mt-1 text-xs text-slate-500">
+              <div className="col-span-12 mt-1 text-xs text-slate-500 dark:text-slate-400">
                 Chỉ được phép gia hạn thêm 'Thời gian giao đề' hoặc 'Thời gian làm bài'. Việc sửa cấu hình lùi thời gian
                 khi học sinh đã thi có thể làm mất dữ liệu bài làm của học sinh.
               </div>
 
-              <div className="col-span-12 mt-1 text-xs text-slate-500">Bỏ trống nếu không muốn giới hạn thời gian.</div>
+              <div className="col-span-12 mt-1 text-xs text-slate-500 dark:text-slate-400">
+                Bỏ trống nếu không muốn giới hạn thời gian.
+              </div>
             </div>
           )}
 

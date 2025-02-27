@@ -57,7 +57,7 @@ const AzotaEditor: React.FC<AzotaEditorProps> = (props) => {
 
   return (
     <MonacoEditor
-      height="580"
+      height="560"
       options={options}
       language="mysql"
       value={value}

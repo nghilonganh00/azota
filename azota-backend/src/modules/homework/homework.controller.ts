@@ -47,7 +47,6 @@ export class HomeworkController {
     const userId = this.request?.user?.sub;
 
     const { homeworkFiles, ...homeworkData } = homeworkDto;
-    console.log("homeworkFiles: " + homeworkFiles);
 
     return this.homeworkService.create(userId, homeworkDto);
   }

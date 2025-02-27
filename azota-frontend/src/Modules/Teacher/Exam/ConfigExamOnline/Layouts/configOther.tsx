@@ -18,18 +18,14 @@ const ConfigOther: React.FC<ConfigOtherProps> = (props) => {
 
   const editorRef = useRef<TinyMCEEditor | null>(null);
 
-  //   if (!openHeader) {
-  //     handleChangeConfig("header", "");
-  //   }
-
   const handleEditorChange = (content: string) => {
     setExamHeader(content);
     handleChangeConfig("header", content);
   };
 
   return (
-    <div className="rounded-md bg-white px-5 py-6 text-gray-800 shadow">
-      <div className="border-b border-gray-200 pb-4 text-base font-medium">Khác</div>
+    <div className="rounded-md bg-white px-5 py-6 text-gray-800 shadow dark:bg-darkmode-600 dark:text-slate-300">
+      <div className="border-b border-gray-200 pb-4 text-base font-medium dark:border-darkmode-400">Khác</div>
 
       <div className="my-3 grid grid-cols-12">
         <div className="col-span-5">

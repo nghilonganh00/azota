@@ -13,7 +13,9 @@ const CreateClassGroup: React.FC<CreateClassGroupProps> = (props) => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const [classgroupName, setclassgroupName] = useState<string>("");
 
-  const handleCreateClassGroup = async () => {
+  const handleCreateClassGroup = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    // e.preventDefault();
+
     const response = await ClassGroupAPI.create(classgroupName);
     const newClassGroup = response;
 
@@ -39,20 +41,19 @@ const CreateClassGroup: React.FC<CreateClassGroupProps> = (props) => {
             type="text"
             value={classgroupName}
             onChange={(e) => setclassgroupName(e.target.value)}
-            className="w-48 rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm"
+            className="dark:bg-darkmode-800 w-48 rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm dark:border-none"
             placeholder="Tên nhóm, VD: khối 1, khối"
           />
-          <div
+          <button
+            type="button"
             className="ml-2 rounded-md bg-blue-800 px-3.5 py-2 hover:cursor-pointer hover:bg-blue-700"
+            // disabled={classgroupName === ""}
             onClick={handleCreateClassGroup}
           >
             <div className="text-sm font-medium text-white">Tạo nhóm</div>
-          </div>
+          </button>
 
-          <div
-            className="rounded-md bg-slate-200 p-3 hover:cursor-pointer"
-            onClick={() => setOpen(false)}
-          >
+          <div className="rounded-md bg-slate-200 p-3 hover:cursor-pointer" onClick={() => setOpen(false)}>
             <X className="size-4 text-slate-600" />
           </div>
         </div>

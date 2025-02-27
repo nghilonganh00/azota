@@ -44,7 +44,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         </div>
       </div>
 
-      <div className="mt-40 flex items-center gap-4 pl-6">
+      <div className="mt-36 flex items-center gap-4 pl-6">
         <div className="rounded-md p-3 hover:cursor-pointer hover:bg-slate-300">
           <LuCircleAlert className="size-6 text-blue-800" />
         </div>

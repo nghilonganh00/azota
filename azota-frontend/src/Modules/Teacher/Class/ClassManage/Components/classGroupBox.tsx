@@ -13,10 +13,10 @@ const ClassGroupBox: React.FC<ClassGroupBoxProps> = (props) => {
     <div>
       <div className="flex items-center py-3">
         <ChevronDown className="text-slate-600" />
-        <div className="font-medium">{`${classGroup.classgroupName} (${classGroup.classrooms.length} lớp)`}</div>
+        <div className="font-medium">{`${classGroup.classgroupName} (${classGroup?.classrooms?.length || 0} lớp)`}</div>
       </div>
       <div className="grid grid-cols-12 gap-6">
-        {classGroup.classrooms.map((classroom) => (
+        {classGroup?.classrooms?.map((classroom) => (
           <ClassBox classroom={classroom} key={classGroup.id} />
         ))}
       </div>

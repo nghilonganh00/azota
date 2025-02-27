@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 const MENU_TABS = [
   { icon: CircleArrowRight, label: "Đăng ký", link: "/auth/register" },
   { icon: LogOut, label: "Đăng nhập", link: "/auth/login" },
-  { icon: Moon, label: "Chế độ tối", link: "" },
+  { icon: Moon, label: "axiosInstance. tối", link: "" },
 ];
 
 const AnonymousMenu = () => {
@@ -35,10 +35,7 @@ const AnonymousMenu = () => {
       </div>
 
       {isDropdownVisible && (
-        <div
-          className="absolute right-2 top-9 w-56 rounded-md bg-white shadow-md"
-          id="menu-dropdown"
-        >
+        <div className="absolute right-2 top-9 w-56 rounded-md bg-white shadow-md" id="menu-dropdown">
           <div className="border-b border-gray-100 p-2">
             {MENU_TABS.map((tab, key) => (
               <Link

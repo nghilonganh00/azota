@@ -10,19 +10,19 @@ const CreateUpLevelClass = () => {
     <Fragment>
       <div
         onClick={() => setOpen(true)}
-        className="flex h-10 items-center gap-2 rounded-md bg-white px-2 text-sm font-semibold shadow-md hover:cursor-pointer hover:bg-slate-100"
+        className="flex h-10 items-center gap-2 rounded-md bg-white px-2 text-sm font-semibold shadow-md hover:cursor-pointer hover:bg-slate-100 dark:bg-[rgb(var(--color-darkmode-600))]"
       >
         <PlusIcon className="size-4 text-gray-600" />
         <span>Tạo lớp cho khóa mới</span>
       </div>
 
       <Popup isOpen={isOpen} setOpen={setOpen}>
-        <form className="max-w-[80vw] rounded-md bg-white p-3 shadow">
+        <form className="max-w-[80vw] rounded-md bg-white p-3 shadow dark:bg-[rgb(var(--color-darkmode-600))]">
           <div className="">
             <div className="font-semibold">Tạo lớp cho khóa mới</div>
             <div className="text-xs text-gray-600">
-              Khi tạo lớp cho khóa mới hệ thống sẽ tự động tạo lớp mới và copy danh sách học sinh từ
-              các lớp ở khóa cũ. Chọn các lớp bên dưới để thực hiện tạo lớp mới
+              Khi tạo lớp cho khóa mới hệ thống sẽ tự động tạo lớp mới và copy danh sách học sinh từ các lớp ở khóa cũ.
+              Chọn các lớp bên dưới để thực hiện tạo lớp mới
             </div>
           </div>
 
@@ -39,9 +39,7 @@ const CreateUpLevelClass = () => {
                 </div>
 
                 <div className="p-2">
-                  <div className="rounded-md bg-blue-900 p-2 text-sm font-semibold text-white">
-                    Tất cả (0/2)
-                  </div>
+                  <div className="rounded-md bg-blue-900 p-2 text-sm font-semibold text-white">Tất cả (0/2)</div>
                 </div>
               </div>
             </div>
@@ -89,9 +87,7 @@ const CreateUpLevelClass = () => {
           </div>
 
           <div className="mt-8 rounded-md border border-gray-200">
-            <div className="bg-slate-200 p-3 text-sm font-semibold">
-              Các lớp tương ứng sẽ tạo (1 lớp)
-            </div>
+            <div className="bg-slate-200 p-3 text-sm font-semibold">Các lớp tương ứng sẽ tạo (1 lớp)</div>
 
             <div className="grid grid-cols-12 gap-5 px-4 pb-10 pt-4">
               <div className="col-span-6">

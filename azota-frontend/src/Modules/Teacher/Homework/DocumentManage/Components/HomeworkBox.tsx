@@ -9,7 +9,7 @@ interface HomeworkBoxProps {
 
 const HomeworkBox: React.FC<HomeworkBoxProps> = (props) => {
   const { homework } = props;
-  const { id: homeworkId, title, content, startDate, endDate, createdAt, classroomId } = homework;
+  const { id: homeworkId, title, endDate, createdAt } = homework;
 
   return (
     <Link to={`/teacher/homework/${homeworkId}/submissions`} className="col-span-12 md:col-span-6 lg:col-span-3">

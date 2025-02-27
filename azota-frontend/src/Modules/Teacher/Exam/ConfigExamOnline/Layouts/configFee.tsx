@@ -11,7 +11,7 @@ const ConfigFee: React.FC<ConfigFeeProps> = (props) => {
   const { fee } = examConfig;
 
   return (
-    <div className="rounded-md bg-white px-5 py-6 text-gray-800 shadow">
+    <div className="rounded-md bg-white px-5 py-6 text-gray-800 shadow dark:bg-darkmode-600 dark:text-slate-300">
       <div className="grid grid-cols-12">
         <div className="col-span-12 xl:col-span-5">
           <div className="text-sm font-medium">Cấu hình giá</div>

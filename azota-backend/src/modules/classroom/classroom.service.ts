@@ -59,7 +59,7 @@ export class ClassroomService {
         "studentClasses.student",
         "studentClasses.student.user",
         "studentClasses.homeworkSubmissions",
-        "studentClasses.student.examStudents",
+        "studentClasses.examStudents",
       ],
     });
 

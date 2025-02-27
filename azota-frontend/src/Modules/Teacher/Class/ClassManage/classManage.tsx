@@ -3,11 +3,9 @@ import ClassActions from "./Layout/classActions";
 import ClassList from "./Layout/classList";
 import ClassGroupAPI from "../../../../API/classGroupAPI";
 import { ClassGroup } from "../../Homework/AddHomework/libs/interfaces";
-import { useParams } from "react-router";
 import { Helmet } from "react-helmet";
 
 const ClassManage = () => {
-  const { classId } = useParams();
   const [classGroupList, setClassGroupList] = useState<ClassGroup[]>([]);
 
   useEffect(() => {
@@ -23,7 +21,7 @@ const ClassManage = () => {
   }, []);
 
   return (
-    <div className="space-y-4 p-6">
+    <div className="space-y-4 p-6 dark:text-slate-200">
       <Helmet>
         <title>Quản lý lớp học</title>
       </Helmet>

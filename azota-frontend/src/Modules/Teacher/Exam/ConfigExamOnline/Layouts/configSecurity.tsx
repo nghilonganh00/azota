@@ -13,8 +13,8 @@ const ConfigSecurity: React.FC<ConfigSecurityProps> = (props) => {
   const [isVerifyStudent, setVerityStudent] = useState(false);
 
   return (
-    <div className="rounded-md bg-white px-5 py-6 text-gray-800 shadow">
-      <div className="mb-6 border-b border-gray-200 pb-4 text-base font-medium">Bảo mật</div>
+    <div className="rounded-md bg-white px-5 py-6 text-gray-800 shadow dark:bg-darkmode-600 dark:text-slate-300">
+      <div className="mb-6 border-b border-gray-200 pb-4 text-base font-medium dark:border-darkmode-400">Bảo mật</div>
 
       <div className="space-y-4">
         <div className="grid grid-cols-12 gap-2">
@@ -26,11 +26,11 @@ const ConfigSecurity: React.FC<ConfigSecurityProps> = (props) => {
             <input
               type="text"
               // placeholder="Nhập tên ..."
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-none dark:bg-darkmode-800"
               // value={examName}
               // onChange={(e) => setExamName(e.target.value)}
             />
-            <div className="col-span-12 mt-1 text-xs text-slate-500">
+            <div className="col-span-12 mt-1 text-xs text-slate-500 dark:text-slate-400">
               *Nhập 0 hoặc để trống để không giới hạn số lượt làm đề thi
             </div>
           </div>
@@ -45,7 +45,7 @@ const ConfigSecurity: React.FC<ConfigSecurityProps> = (props) => {
             <input
               type="text"
               placeholder="Nhập mật khẩu ..."
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-none dark:bg-darkmode-800"
               // value={examName}
               // onChange={(e) => setExamName(e.target.value)}
             />

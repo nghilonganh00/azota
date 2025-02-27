@@ -26,12 +26,15 @@ const SubjectDropdown: React.FC<ConfigDropdownProps> = (props) => {
     fetchSubject();
   }, [selectedGradeId]);
 
-  console.log(subjects);
-
   return (
     <div className="col-span-6">
       <span className="mb-2 flex text-sm font-medium">Môn học</span>
-      <Dropdown title="---Chọn môn học---" options={subjects} selectedValue={selectedValue} setSelectedValue={setSelectValue} />
+      <Dropdown
+        title="---Chọn môn học---"
+        options={subjects}
+        selectedValue={selectedValue}
+        setSelectedValue={setSelectValue}
+      />
     </div>
   );
 };

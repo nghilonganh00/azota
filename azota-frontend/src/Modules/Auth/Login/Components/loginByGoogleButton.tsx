@@ -10,34 +10,9 @@ const LoginByGoogleButton = () => {
 
   const [user, setUser] = useState<TokenResponse | null>(null);
 
-  const handleLoginByGoogle = useGoogleLogin({
-    onSuccess: (codeResponse) => {
-      setUser(codeResponse);
-    },
-    onError: (error) => console.log("Login Failed:", error),
-  });
-
-  useEffect(() => {
-    const loginByGoogle = async () => {
-      if (user) {
-        const response = await AuthAPI.loginByGoogle(user.access_token);
-        const responseObj = await response?.json();
-        const userObj: User = responseObj.data.userObj;
-        const accessToken = responseObj.data.accessToken;
-        console.log("response login by google: ", responseObj.data);
-
-        localStorage.setItem("userId", accessToken);
-
-        if (userObj.userRole === "TEACHER") {
-          navigate("/teacher/dashboard");
-        } else {
-          navigate("/student/classroom");
-        }
-      }
-    };
-
-    loginByGoogle();
-  }, [user]);
+  const handleLoginByGoogle = () => {
+    window.location.href = 'http://localhost:8080/api/auth/google/login'
+  }
 
   return (
     <div

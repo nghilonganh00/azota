@@ -11,6 +11,7 @@ import { Exam } from "../../../../Globals/Interfaces/exam.interface";
 const ResultsList = () => {
   const { examId } = useParams();
   const [exam, setExam] = useState<Exam>({} as Exam);
+  const [isOpenInfoArea, setOpenInfoArea] = useState<boolean>(true);
   const [studentResults, setStudentResults] = useState<StudentResult[]>([]);
 
   useEffect(() => {
@@ -43,12 +44,15 @@ const ResultsList = () => {
   }, []);
 
   return (
-    <div className="p-5">
-      <div className="grid grid-cols-12 gap-6">
-        <ExamInfoArea exam={exam} setExam={setExam} />
+    <div className="grid grid-cols-12 gap-6 p-5">
+      <ExamInfoArea exam={exam} setExam={setExam} isOpenInfoArea={isOpenInfoArea} />
 
-        <ResultListArea exam={exam} studentResults={studentResults} />
-      </div>
+      <ResultListArea
+        exam={exam}
+        studentResults={studentResults}
+        isOpenInfoArea={isOpenInfoArea}
+        setOpenInfoArea={setOpenInfoArea}
+      />
     </div>
   );
 };

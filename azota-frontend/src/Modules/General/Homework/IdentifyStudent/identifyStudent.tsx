@@ -39,17 +39,16 @@ const IdentifyStudent = () => {
           (studentClass: any) => studentClass?.student?.user?.id === userId,
         );
 
-        console.log(`matching student class ${JSON.stringify(matchingStudentClass.id)}`);
-
         if (matchingStudentClass) {
           const response = await HomeworkSubmissionAPI.getByHashIdAndStudentClassId(
             homeworkData.hashId,
             matchingStudentClass.id,
           );
 
-          const homeworkSubmission = response?.data;
-
-          navigate(`/student/homework-submissions/${homeworkSubmission.id}`);
+          const homeworkSubmissionId = response?.data?.id;
+          if (homeworkSubmissionId) {
+            navigate(`/student/homework-submissions/${homeworkSubmissionId}`);
+          }
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -59,12 +58,10 @@ const IdentifyStudent = () => {
     fetchData();
   }, []);
 
-  console.log("student: ", students);
-
   return (
     <div className="p-4">
-      <div className="rounded-md bg-white shadow-sm">
-        <div className="border-b border-gray-200 p-3">
+      <div className="rounded-md bg-white shadow-sm dark:bg-darkmode-600 dark:text-slate-300">
+        <div className="border-b border-gray-200 p-3 dark:border-darkmode-400">
           <div className="flex items-center justify-between">
             <div className="text-lg font-semibold">{homework.title}</div>
             <QrCode className="text-blue-800" />
@@ -81,7 +78,7 @@ const IdentifyStudent = () => {
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-              className="lucide mr-2 h-4 w-4 text-gray-800"
+              className="lucide mr-2 h-4 w-4 text-gray-800 dark:text-slate-300"
             >
               <path _ngcontent-ng-c931010807="" d="M6 20h4"></path>
               <path _ngcontent-ng-c931010807="" d="M14 10h4"></path>

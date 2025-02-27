@@ -10,13 +10,14 @@ const TITLE = "---Chọn mục đích---";
 
 const PurposeDropdown: React.FC<ConfigDropdownProps> = (props) => {
   const { selectedValue, setSelectValue } = props;
-  const [groupedPurposes, SetGroupedPurposes] = useState<Record<number, Purpose[]>>([]);
+  const [groupedPurposes, setGroupedPurposes] = useState<Record<number, Purpose[]>>([]);
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const handleChangeValue = (option: any) => {
     setSelectValue(option);
     setOpen(false);
   };
+
   useEffect(() => {
     const fetchPurpose = async () => {
       const respone = await PurposeAPI.getAll();
@@ -39,7 +40,7 @@ const PurposeDropdown: React.FC<ConfigDropdownProps> = (props) => {
         groupedPurposesData[Number(semester)].sort((a: Purpose, b: Purpose) => a.position - b.position);
       });
 
-      SetGroupedPurposes(groupedPurposesData);
+      setGroupedPurposes(groupedPurposesData);
     };
 
     fetchPurpose();
@@ -67,9 +68,9 @@ const PurposeDropdown: React.FC<ConfigDropdownProps> = (props) => {
 
             <div
               id="multi-dropdown"
-              className="absolute left-0 top-10 z-20 max-h-72 w-full divide-y divide-gray-100 overflow-y-scroll rounded-lg border border-gray-200 bg-white shadow-lg"
+              className="absolute left-0 top-10 z-20 max-h-72 w-full divide-y divide-gray-100 overflow-y-scroll rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-800 dark:bg-darkmode-600"
             >
-              <ul className="px-4 py-2 text-sm" aria-labelledby="multiLevelDropdownButton">
+              <ul className="py-2 text-sm" aria-labelledby="multiLevelDropdownButton">
                 <li className="flex items-center justify-between text-gray-300">
                   <a href="#" className="block px-4 py-3">
                     {TITLE}
@@ -81,7 +82,7 @@ const PurposeDropdown: React.FC<ConfigDropdownProps> = (props) => {
 
                   return (
                     <li key={key} className="">
-                      <div className="py-2 text-base font-medium text-gray-800">
+                      <div className="px-4 py-2 text-base font-medium text-gray-800 dark:text-black">
                         {Number(semester) === -1 ? "Mục đích khác" : `Học kỳ ${semester}`}
                       </div>
 
@@ -90,8 +91,10 @@ const PurposeDropdown: React.FC<ConfigDropdownProps> = (props) => {
                           <li
                             key={key}
                             onClick={() => handleChangeValue({ name: purpose.title, value: purpose.id } as Tab)}
-                            className={`flex items-center justify-between hover:cursor-pointer ${
-                              selectedValue?.value === purpose.id ? "bg-zinc-100 text-blue-900" : "hover:bg-gray-100"
+                            className={`flex items-center justify-between px-4 hover:cursor-pointer dark:text-black ${
+                              selectedValue?.value === purpose.id
+                                ? "bg-zinc-100 text-blue-900 dark:bg-darkmode-700"
+                                : "hover:bg-gray-100 dark:hover:bg-darkmode-700"
                             }`}
                           >
                             <a href="#" className="block px-4 py-3">

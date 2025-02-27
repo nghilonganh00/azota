@@ -16,27 +16,25 @@ const ResultStatus: React.FC<ResultStatusProps> = (props) => {
   const isConfirmed = latestResult.confirmedAt !== null;
 
   return (
-    <div>
+    <div className="text-xs">
       <div className="flex items-center justify-between">
-        <div className={`text-xs ${isConfirmed ? "text-gray-700" : "text-red-500"}`}>
+        <div className={` ${isConfirmed ? "text-gray-700 dark:text-slate-400" : "text-red-500"}`}>
           {isConfirmed ? (
             <>
               Điểm:{" "}
-              <span className="semibold text-xs font-semibold text-black">
-                {latestResult.point || ""}
-              </span>
+              <span className="semibold font-semibold text-black dark:text-white">{latestResult.point || ""}</span>
             </>
           ) : (
             "Chưa chấm"
           )}
         </div>
-        <div className="text-xs text-gray-700">
+        <div className="text-gray-700 dark:text-slate-400">
           {latestResult.confirmedAt && isoDateUtil.calculateDiffFromNow(latestResult.confirmedAt)}
         </div>
       </div>
-      <div className="flex items-center justify-between">
-        <div className="text-xs text-gray-700">Số tệp tin đã nộp:</div>
-        <div className="text-xs text-gray-700">{latestResult.files.length}</div>
+      <div className="flex items-center justify-between text-gray-700 dark:text-slate-400">
+        <div className="">Số tệp tin đã nộp:</div>
+        <div className="">{latestResult.files.length}</div>
       </div>
     </div>
   );

@@ -1,4 +1,10 @@
-import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Not, Repository } from "typeorm";
 import { plainToInstance } from "class-transformer";
@@ -54,13 +60,15 @@ export class HomeworkSubmissionService {
 
   async getOrCreate(hashId: string, studentClassId: number): Promise<HomeworkSubmissionDto> {
     try {
-      const homeworkSubmission = this.homeworkSubmissionReposity.findOne({
+      const homeworkSubmission = await this.homeworkSubmissionReposity.findOne({
         where: {
           homework: { hashId: hashId },
           studentClass: { id: studentClassId },
         },
         relations: ["homework", "studentClass"],
       });
+
+      console.log("homeworkSubmission: ", homeworkSubmission);
 
       if (homeworkSubmission) {
         return plainToInstance(HomeworkSubmissionDto, homeworkSubmission);
@@ -83,7 +91,9 @@ export class HomeworkSubmissionService {
         studentClass,
       });
 
-      return plainToInstance(HomeworkSubmissionDto, newHomeworkSubmission);
+      const savedHomeworkSubmission = await this.homeworkSubmissionReposity.save(newHomeworkSubmission);
+
+      return plainToInstance(HomeworkSubmissionDto, savedHomeworkSubmission);
     } catch (error) {
       console.error(error);
       throw error;
@@ -136,27 +146,37 @@ export class HomeworkSubmissionService {
     return plainToInstance(HomeworkSubmissionDto, savedHomeworkSubmission);
   }
 
-  async submit(userId: number, submitReqDto: SubmitReqDto): Promise<HomeworkSubmissionDto> {
+  async submit(userId: number, id: number, submitReqDto: SubmitReqDto): Promise<HomeworkSubmissionDto> {
     try {
-      const { homeworkSubmissionId, files } = submitReqDto;
+      const { files } = submitReqDto;
       const homeworkSubmission = await this.homeworkSubmissionReposity.findOne({
         where: {
-          id: homeworkSubmissionId,
+          id: id,
         },
         relations: ["homework", "studentClass.student.user"],
       });
-      console.log(`homework ${homeworkSubmission}`);
+
       if (!homeworkSubmission) {
         throw new NotFoundException("Homework submission not found");
       }
 
-      if (homeworkSubmission.homework.isMustLogin && homeworkSubmission.studentClass.student.userId !== userId) {
-        throw new UnauthorizedException();
+      const { homework, studentClass } = homeworkSubmission;
+
+      if (homework.isMustLogin && studentClass.student.userId !== userId) {
+        throw new ForbiddenException();
       }
 
-      Promise.all(
-        files.map(async (file) => {
-          const newHomeworkSubmissionFile = this.homeworkSubmissionFileService.create(
+      if (homework.startDate && new Date(homework.startDate).getTime() > Date.now()) {
+        throw new BadRequestException(`It's not time to start the assignment yet`);
+      }
+
+      if (homework.endDate && new Date(homework.endDate).getTime() < Date.now()) {
+        throw new BadRequestException(`The exam has ended`);
+      }
+
+      await Promise.all(
+        files.map((file) => {
+          this.homeworkSubmissionFileService.create(
             plainToInstance(HomeworkSubmissionFile, {
               ...file,
               homeworkSubmission,

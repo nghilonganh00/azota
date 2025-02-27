@@ -10,7 +10,7 @@ const StudentAvatar: React.FC<StudentAvatarProps> = (props) => {
 
   return (
     <div className="flex size-10 items-center justify-center rounded-full bg-zinc-300">
-      <div className="text-lg font-semibold uppercase">{convertToInitials(fullname)}</div>
+      <div className="text-lg font-semibold uppercase text-gray-800">{convertToInitials(fullname)}</div>
     </div>
   );
 };

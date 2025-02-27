@@ -10,9 +10,7 @@ interface EditStudentProps {
 
 const EditStudent: React.FC<EditStudentProps> = (props) => {
   const { studentClass } = props;
-
   const [isOpen, setOpen] = useState<boolean>(false);
-
   const [editStudent, setEditStudent] = useState<StudentClass>(studentClass);
 
   const handleChangeValue = (name: string, newValue: string) => {
@@ -22,13 +20,11 @@ const EditStudent: React.FC<EditStudentProps> = (props) => {
     setEditStudent((preValue) => ({ ...preValue, [name]: newValue }));
   };
 
-  console.log("student: ", studentClass.student);
-
   return (
     <Fragment>
       <div
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 rounded-md border border-blue-800 px-2 py-1.5 text-blue-800 hover:cursor-pointer hover:bg-slate-200"
+        className="flex items-center gap-2 rounded-md border border-blue-800 px-2 py-1.5 text-blue-800 hover:cursor-pointer hover:bg-slate-200 dark:border-blue-700 dark:text-blue-700"
       >
         <Edit className="size-4" />
         <div className="text-xs font-semibold">Sửa</div>

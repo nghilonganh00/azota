@@ -6,17 +6,9 @@ const accessToken = localStorage.getItem("accessToken");
 const UserAPI = {
   getInfo: async (): Promise<AxiosResponse | null> => {
     try {
-      if (!accessToken) {
-        console.error("Access Token isn't in LocalStorage" + accessToken);
-        throw new Error("ACCESS_TOKEN_NOT_IN_LOCALSTORAGE");
-      }
-
-      const url = `http://localhost:8080/api/users`;
-
-      const response = await axiosInstance.get(url, {
+      const response = await axiosInstance.get("users", {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
         },
       });
 

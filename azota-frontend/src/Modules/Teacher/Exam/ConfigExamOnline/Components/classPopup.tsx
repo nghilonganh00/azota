@@ -20,7 +20,6 @@ const ClassroomPopup: React.FC<ClassroomPopupProps> = (props) => {
 
   const { classroom, assignedStudentIds, setAssignedStudentIds } = props;
 
-  // Bản nháp lưu danh sách sinh viên. Nhấn "Lưu" để đồng bộ.
   const [assignedStudentIdsDraft, setAssignedStudentIdsDraft] = useState<number[]>([] as number[]);
 
   const { className } = classroom;
@@ -28,7 +27,6 @@ const ClassroomPopup: React.FC<ClassroomPopupProps> = (props) => {
   const [isOpenPopup, setOpenPopup] = useState<boolean>(false);
   const [students, setStudents] = useState<Student[]>([]);
 
-  // Cập nhật trong bản nháp
   const handleAssignStudentInDraft = (studentId: number) => {
     setAssignedStudentIdsDraft((preValue) =>
       preValue.includes(studentId) ? preValue.filter((e) => e !== studentId) : [...preValue, studentId],
@@ -77,7 +75,7 @@ const ClassroomPopup: React.FC<ClassroomPopupProps> = (props) => {
       {isOpenPopup && (
         <Popup isOpen={isOpenPopup} setOpen={setOpenPopup}>
           <div className="w-[1000px] shadow">
-            <div className="rounded-t-md bg-slate-100 px-3 py-3.5">
+            <div className="rounded-t-md bg-slate-100 px-3 py-3.5 dark:bg-darkmode-400">
               <div className="font-medium">{`${className} (Đã chọn: ${assignedStudenTotal})`}</div>
 
               <div className="mt-2 flex items-center justify-between">
@@ -101,9 +99,9 @@ const ClassroomPopup: React.FC<ClassroomPopupProps> = (props) => {
               </div>
             </div>
 
-            <div className="bg-white p-3 pt-5">
-              <div className="grid grid-cols-12 gap-y-4 rounded-b-md bg-white">
-                {students?.map((student, key) => (
+            <div className="bg-white p-3 pt-5 dark:bg-darkmode-600">
+              <div className="grid grid-cols-12 gap-y-4 rounded-b-md">
+                {students?.map((student) => (
                   <div className="col-span-4" key={student.id}>
                     <div className="flex items-center gap-1">
                       <input
