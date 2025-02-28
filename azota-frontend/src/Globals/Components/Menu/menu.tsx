@@ -5,6 +5,7 @@ import UserAPI from "../../../API/userAPI";
 import { TeacherAPI } from "../../../API/teacherAPI";
 import { User } from "../../Interfaces/user.interface";
 import { UserRole } from "../../Constant/constant";
+import AuthAPI from "../../../API/authAPI";
 
 interface RoleActionProps {
   onClick: () => void;
@@ -80,8 +81,12 @@ const Menu = () => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
+  const handleLogout = async () => {
+    const response = await AuthAPI.logout();
+    if (response?.status === 204) {
+      localStorage.removeItem("accessToken");
+      navigate("/auth/login", { replace: true });
+    }
   };
 
   useEffect(() => {
@@ -167,14 +172,13 @@ const Menu = () => {
               </Link>
             ))}
 
-            <Link
+            <button
               onClick={handleLogout}
-              to={"/auth/login"}
-              className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium"
+              className="flex w-full items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium"
             >
               <LogOut strokeWidth={1.5} className="size-4" />
               <div className="text-sm">Đăng xuất</div>
-            </Link>
+            </button>
           </div>
         </div>
       )}

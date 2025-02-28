@@ -1,6 +1,7 @@
 import { CircleArrowRight, LogOut, Moon, RefreshCcw } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import AuthAPI from "../../../API/authAPI";
 
 const MENU_TABS = [
   { icon: CircleArrowRight, label: "Đăng ký", link: "/auth/register" },
@@ -9,14 +10,19 @@ const MENU_TABS = [
 ];
 
 const AnonymousMenu = () => {
+  const navigate = useNavigate();
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const handleRefresh = () => {
     window.location.reload();
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const response = await AuthAPI.logout();
+    if (response?.status !== 200) return;
+
     localStorage.removeItem("accessToken");
+    navigate("auth/login");
   };
 
   return (
@@ -26,7 +32,7 @@ const AnonymousMenu = () => {
       onMouseLeave={() => setDropdownVisible(false)}
     >
       <img
-        className="mat-mdc-tooltip-trigger dark:border-darkmode-400 mat-mdc-tooltip-disabled h-8 w-8 rounded-full border border-slate-200"
+        className="mat-mdc-tooltip-trigger mat-mdc-tooltip-disabled h-8 w-8 rounded-full border border-slate-200 dark:border-darkmode-400"
         src="https://lh3.googleusercontent.com/a/ACg8ocJ_iFoqcbXAa93XLL5ekog96hEVyxgkeCD7oenQOr3efwaZiQ=s96-c"
       ></img>
       <div>
@@ -56,16 +62,13 @@ const AnonymousMenu = () => {
             </div>
           </div>
 
-          <div className="p-2">
-            <Link
-              onClick={handleLogout}
-              to={"/auth/login"}
-              className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium"
-            >
-              <LogOut strokeWidth={1.5} className="size-4" />
-              <div className="text-sm">Đăng xuất</div>
-            </Link>
-          </div>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium"
+          >
+            <LogOut strokeWidth={1.5} className="size-4" />
+            <div className="text-sm">Đăng xuất</div>
+          </button>
         </div>
       )}
     </div>

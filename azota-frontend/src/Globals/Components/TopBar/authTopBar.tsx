@@ -2,7 +2,7 @@ import { Moon } from "lucide-react";
 
 const AuthTopBar = () => {
   return (
-    <div className="w-full border-b border-solid border-slate-200 px-8 py-4">
+    <div className="w-full border-b border-solid border-slate-200 px-8 py-4 dark:border-darkmode-400 ">
       <div className="flex items-center justify-between">
         <img
           width="95px"

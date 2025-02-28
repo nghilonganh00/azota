@@ -48,6 +48,22 @@ const AuthAPI = {
       return null;
     }
   },
+  logout: async (): Promise<AxiosResponse | null> => {
+    try {
+      const response = await axiosInstance.post(
+        "auth/logout",
+        {},
+        {
+          withCredentials: true,
+        },
+      );
+
+      return response;
+    } catch (error) {
+      console.log("Error in login of AuthAPI: ", error);
+      return null;
+    }
+  },
   loginByGoogle: async (accessToken: string) => {
     try {
       const url = "http://localhost:8080/api/auth/login-by-google";

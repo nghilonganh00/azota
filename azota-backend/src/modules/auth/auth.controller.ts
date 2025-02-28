@@ -76,4 +76,16 @@ export class AuthController {
     const tokens = await this.authService.refreshToken(refreshToken);
     return { accessToken: tokens.accessToken };
   }
+
+  @Public()
+  @Post("logout")
+  @HttpCode(204)
+  async logout(@Res({ passthrough: true }) res: Response) {
+    res.cookie("refreshToken", "", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      expires: new Date(0),
+    });
+  }
 }

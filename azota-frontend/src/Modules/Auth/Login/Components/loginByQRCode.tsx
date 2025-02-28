@@ -10,11 +10,11 @@ const LoginByQRCode = () => {
 
   return (
     <div
-      className="flex w-full items-center justify-center gap-2 rounded-md border border-gray-200 py-2 shadow-sm hover:cursor-pointer"
+      className="flex w-full items-center justify-center gap-2 rounded-md border border-gray-200 py-2 text-gray-600 shadow-sm hover:cursor-pointer dark:border-darkmode-400 dark:text-slate-300"
       onClick={handleRedirectToQrCodePage}
     >
-      <QrCode className="size-4 text-gray-600" />
-      <div className="text-sm font-medium text-gray-600">Qrcode</div>
+      <QrCode className="size-4" />
+      <div className="text-sm font-medium">Qrcode</div>
     </div>
   );
 };
