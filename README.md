@@ -46,7 +46,7 @@ The project is divided into two main parts:
 - **Secure authentication** via **JWT and OAuth2**.
 
 ### 🗄 Database:
-- Uses **MySQL, PostgreSQL, or MongoDB** for efficient data storage.
+- Uses **MySQL, MongoDB** for efficient data storage.
 
 ---
 
