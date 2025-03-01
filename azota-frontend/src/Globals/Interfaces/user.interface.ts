@@ -6,6 +6,7 @@ export interface User {
   email: string;
   DOB: string;
   phone: string;
+  avatarURL: string;
   role: UserRole;
   gender: Gender;
 }

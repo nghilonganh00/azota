@@ -10,8 +10,8 @@ const StudentResultList: React.FC<StudentResultListProps> = (props) => {
 
   return (
     <div className="mt-6 grid grid-cols-12 gap-4">
-      {studentResults?.map((studentResult, key) => (
-        <StudentResultCard studentResult={studentResult} key={key} />
+      {studentResults?.map((studentResult) => (
+        <StudentResultCard studentResult={studentResult} key={studentResult.id} />
       ))}
     </div>
   );

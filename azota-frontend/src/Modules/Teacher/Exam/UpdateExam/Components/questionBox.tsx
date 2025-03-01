@@ -54,8 +54,8 @@ const QuestionBox: React.FC<QuestionBoxProps> = (props) => {
           <div className="text-sm font-medium">{`Câu ${rawIndex}`}</div>
           <div>{questionTopic}</div>
           <div className="mt-4 grid grid-cols-12 gap-y-4 pb-10">
-            {Options.map((option, key) => (
-              <div className="col-span-6" key={key}>
+            {Options.map((option) => (
+              <div className="col-span-6" key={option.id}>
                 <div className="text-sm">
                   <span className="font-medium">{option.key}. </span>
                   {option.optionContent}
@@ -68,13 +68,10 @@ const QuestionBox: React.FC<QuestionBoxProps> = (props) => {
         <div className="flex items-center justify-between py-3">
           <div className="flex items-center gap-2">
             {Options.map((option, key) => (
-              <OptionButton option={option} key={key} />
+              <OptionButton option={option} key={option.id} />
             ))}
           </div>
-          <div
-            className="text-sm font-medium hover:cursor-pointer"
-            onClick={() => setOpenExplain(!isOpenExplain)}
-          >
+          <div className="text-sm font-medium hover:cursor-pointer" onClick={() => setOpenExplain(!isOpenExplain)}>
             {isOpenExplain ? "Ẩn giải thích" : "Hiển giải thích"}
           </div>
         </div>
@@ -84,8 +81,8 @@ const QuestionBox: React.FC<QuestionBoxProps> = (props) => {
             <div>(NB):</div>
             <div>Phương pháp: SGK Lịch sử 12, trang 76 – 77.</div>
             <div>
-              Cách giải: Trong cuộc khai thác thuộc địa lần thứ hai ở Đông Dương (1919-1929), thực
-              dân Pháp tập trung đầu tư vào đồn điền cao su.
+              Cách giải: Trong cuộc khai thác thuộc địa lần thứ hai ở Đông Dương (1919-1929), thực dân Pháp tập trung
+              đầu tư vào đồn điền cao su.
             </div>
           </div>
         )}

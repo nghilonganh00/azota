@@ -65,8 +65,8 @@ const AllExams: React.FC<AllExamsProps> = (props) => {
               </td>
             </tr>
 
-            {listExamConfig.map((examConfig, key) => (
-              <ExamRow key={key} examConfig={examConfig} />
+            {listExamConfig.map((examConfig) => (
+              <ExamRow key={examConfig.id} examConfig={examConfig} />
             ))}
           </tbody>
         </table>

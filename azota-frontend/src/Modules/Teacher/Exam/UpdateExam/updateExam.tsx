@@ -58,11 +58,11 @@ const UpdateExam = () => {
       </div>
 
       <div className="space-y-10">
-        {parts?.map((part, key) => {
+        {parts?.map((part) => {
           const { questionPartName, questions } = part;
 
           return (
-            <div key={key}>
+            <div key={part.id}>
               <div className="relative rounded-md bg-white pb-4 pl-4 pt-8 shadow-sm">
                 <div className="text-sm font-bold text-gray-800">{questionPartName}</div>
 
@@ -72,8 +72,8 @@ const UpdateExam = () => {
               </div>
 
               <div className="mt-10 space-y-10">
-                {questions.map((question, key) => (
-                  <QuestionBox key={key} question={question} />
+                {questions.map((question) => (
+                  <QuestionBox key={question.id} question={question} />
                 ))}
               </div>
             </div>

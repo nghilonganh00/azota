@@ -127,10 +127,10 @@ const Menu = () => {
           onClick={() => setDropdownVisible(false)}
         >
           <div className="border-b border-gray-100 p-2">
-            {MENU_TABS.map((tab, key) => (
+            {MENU_TABS.map((tab, index) => (
               <Link
                 to={tab.link}
-                key={key}
+                key={index}
                 className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium"
               >
                 <tab.icon strokeWidth={1.5} className="size-4" />
@@ -161,9 +161,9 @@ const Menu = () => {
           </div>
 
           <div className="p-2">
-            {AUTH_TABS.map((tab, key) => (
+            {AUTH_TABS.map((tab, index) => (
               <Link
-                key={key}
+                key={index}
                 to={tab.link}
                 className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium"
               >

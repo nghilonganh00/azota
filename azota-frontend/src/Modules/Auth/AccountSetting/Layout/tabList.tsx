@@ -1,58 +1,31 @@
-import { User } from "lucide-react";
 import { SetStateAction } from "react";
+import { ACCOUNT_SETTINGS_TABS } from "../utils/constant";
+import { Link } from "react-router-dom";
 
 interface TabListProps {
   selectedTab: string;
-  setSelectTab: React.Dispatch<SetStateAction<string>>;
+  setSelectedTab: React.Dispatch<SetStateAction<string>>;
 }
 
-const TABS = [
-  {
-    name: "Chung",
-    value: "COMMON",
-    icon: User,
-  },
-  {
-    name: "Đổi mật khẩu",
-    value: "CHANGE_PASSWORD",
-    icon: User,
-  },
-  {
-    name: "Đơn vị đo",
-    value: "UNIT",
-    icon: User,
-  },
-  {
-    name: "Lịch sử giao dịch",
-    value: "TRANSACTION_HISTORY",
-    icon: User,
-  },
-  {
-    name: "Lịch sử rút tiền",
-    value: "WIDTHDRAW_HISTORY",
-    icon: User,
-  },
-];
-
 const TabList: React.FC<TabListProps> = (props) => {
-  const { selectedTab, setSelectTab } = props;
+  const { selectedTab, setSelectedTab } = props;
 
   return (
-    <div className="col-span-3">
-      <div className="space-y-2 rounded-md bg-white p-6 shadow-sm">
-        {TABS.map((tab, key) => (
-          <div
+    <div className="col-span-12 md:col-span-3">
+      <div className="space-y-2 rounded-md bg-white p-6 shadow-sm dark:bg-darkmode-600">
+        {ACCOUNT_SETTINGS_TABS.map((tab, index) => (
+          <Link
+            to={tab.link}
+            key={index}
             className={
               "flex items-center gap-2 rounded-md p-2 shadow-sm hover:cursor-pointer " +
-              (selectedTab === tab.value
-                ? "bg-blue-800 font-semibold text-white"
-                : "bg-white font-normal")
+              (selectedTab === tab.key ? "bg-blue-800 font-semibold text-white" : "bg-transparent font-normal")
             }
-            onClick={() => setSelectTab(tab.value)}
+            onClick={() => setSelectedTab(tab.key)}
           >
             <tab.icon strokeWidth={1.5} className="size-4" />
-            <div className="text-sm">{tab.name}</div>
-          </div>
+            <div className="text-sm">{tab.label}</div>
+          </Link>
         ))}
       </div>
     </div>

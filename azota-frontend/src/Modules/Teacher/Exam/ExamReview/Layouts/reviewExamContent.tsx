@@ -73,11 +73,11 @@ const ReviewExamContent: React.FC<ReviewExamContentProps> = (props) => {
           <div className="border-b-2 border-black px-6 py-3 font-medium">Trắc nghiệm</div>
         </div>
 
-        {questionParts?.map((questionPart, key) => (
-          <div className="mt-6 px-6 text-sm" key={key}>
+        {questionParts?.map((questionPart) => (
+          <div className="mt-6 px-6 text-sm" key={questionPart.id}>
             <div className="font-semibold text-gray-800">{questionPart.title}</div>
             <div className="space-y-14">
-              {questionPart?.questions.map((question, key) => {
+              {questionPart?.questions.map((question) => {
                 const { id, rawIndex, topic, options } = question;
                 return (
                   <div key={id}>
@@ -128,7 +128,7 @@ const ReviewExamContent: React.FC<ReviewExamContentProps> = (props) => {
                           .sort((a, b) => (a.key > b.key ? 1 : -1))
                           .map((option, key) => {
                             return (
-                              <div className="relative">
+                              <div className="relative" key={option.id}>
                                 {answer?.[String(question.id)] === option.key && (
                                   <div className="absolute">
                                     {correctQuestionIds.includes(id) ? (
@@ -138,9 +138,7 @@ const ReviewExamContent: React.FC<ReviewExamContentProps> = (props) => {
                                     )}
                                   </div>
                                 )}
-                                <div className="w-10 text-right font-medium" key={key}>
-                                  {option.key}
-                                </div>
+                                <div className="w-10 text-right font-medium">{option.key}</div>
                               </div>
                             );
                           })}

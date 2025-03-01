@@ -15,7 +15,7 @@ const ExamAssignmentBox = ({ exam }: { exam: Exam }) => {
           {exam.examClasses.map((examClass, key) => (
             <div
               className="col-span-6 flex items-center justify-center rounded-md border border-gray-300 py-2"
-              key={key}
+              key={examClass.id}
             >
               <div className="text-sm font-semibold text-gray-500">{examClass?.classroom?.className || ""}</div>
             </div>

@@ -27,9 +27,9 @@ const ClassDetail = () => {
     <div className="grid grid-cols-12">
       <div className="sticky top-0 col-span-2 h-[660px] border-r border-gray-300 dark:border-darkmode-400">
         <div className="pl-6 pr-3 pt-6">
-          {TABS.map((tab, key) => (
+          {TABS.map((tab, index) => (
             <div
-              key={key}
+              key={index}
               onClick={() => setSelectedIndex(tab.index)}
               className={
                 "flex items-center gap-2 rounded-md px-2 py-2 hover:cursor-pointer " +

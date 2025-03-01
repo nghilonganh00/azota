@@ -53,7 +53,7 @@ const AssignedByClass: React.FC<AssignedByClassProps> = (props) => {
         {showedClassGroup.classrooms?.map((classroom, key) => (
           <div
             className={`w-[20%] border-b-2 py-3 text-center hover:cursor-pointer ${showedClassroom?.id === classroom.id && "border-blue-800"}`}
-            key={key}
+            key={classroom.id}
             onClick={() => setShowClassroom(classroom)}
           >
             <div className="text-sm font-medium">{`${classroom.className}`}</div>

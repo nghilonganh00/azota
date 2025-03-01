@@ -55,7 +55,7 @@ const AssignedByStudent: React.FC<AssignedByStudentProps> = (props) => {
           return (
             <div
               className={`w-[20%] border-b-2 py-3 text-center hover:cursor-pointer ${showedClassroom?.id === classroom.id && "border-blue-800"}`}
-              key={key}
+              key={classroom.id}
               onClick={() => setShowClassroom(classroom)}
             >
               <div className="text-sm font-medium">

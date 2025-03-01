@@ -46,7 +46,7 @@ input[type="checkbox"] {
 }
 
 button {
-  border: none;
+  border-width: none;
 }
 
 .scrollbar::-webkit-scrollbar {

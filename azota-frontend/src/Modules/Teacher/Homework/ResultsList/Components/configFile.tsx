@@ -74,10 +74,10 @@ const ConfigFile: React.FC<ConfigFileProps> = (props) => {
       <div className="text-xs text-gray-600">Hỗ trợ file định dạng ảnh, pdf, word, excel, audio hoặc video</div>
 
       <div className="space-y-2">
-        {homworkFiles?.map((homeworkFile, key) => (
+        {homworkFiles?.map((homeworkFile) => (
           <div
             className="flex items-center justify-between"
-            key={key}
+            key={homeworkFile.id}
             onClick={() => handleDeleteFile(homeworkFile.id)}
           >
             <a

@@ -29,8 +29,8 @@ const ClassGroupBox: React.FC<ClassGroupBoxProps> = (props) => {
       </div>
 
       <div className="mt-4 grid grid-cols-12">
-        {classrooms.map((classroom, key) => (
-          <div className="col-span-4 flex items-center gap-2" key={key}>
+        {classrooms.map((classroom) => (
+          <div className="col-span-4 flex items-center gap-2" key={classroom.id}>
             <input
               type="checkbox"
               className="size-4"

@@ -23,7 +23,7 @@ const AuthRoutes = {
     {
       path: "account-setting",
       element: <CommonLayout />,
-      children: [{ path: "", element: <AccountSetting /> }],
+      children: [{ index: true, element: <AccountSetting /> }],
     },
   ],
 };

@@ -47,19 +47,16 @@ const ClassGroupPopup: React.FC<ClassGroupPopupProps> = (props) => {
                   className="w-full rounded-md border px-2 py-2 text-sm"
                   placeholder="Tìm kiếm theo tên lớp"
                 />
-                <Search
-                  className="absolute right-2 top-2.5 size-4 text-slate-800"
-                  strokeWidth={1.5}
-                />
+                <Search className="absolute right-2 top-2.5 size-4 text-slate-800" strokeWidth={1.5} />
               </div>
               <ChevronsDownUp className="text-gray-800" strokeWidth={1.5} />
             </div>
 
             <div className="mt-2 h-[520px] space-y-6 overflow-y-scroll rounded-md border border-gray-200 px-2 py-4 shadow">
-              {classGroups.map((classGroup, key) => (
+              {classGroups.map((classGroup) => (
                 <ClassGroupCollapse
                   classGroup={classGroup}
-                  key={key}
+                  key={classGroup.classGroupId}
                   handleSelectClassroom={handleSelectClassroom}
                 />
               ))}

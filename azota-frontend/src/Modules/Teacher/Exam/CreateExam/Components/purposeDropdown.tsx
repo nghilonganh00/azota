@@ -77,19 +77,19 @@ const PurposeDropdown: React.FC<ConfigDropdownProps> = (props) => {
                   </a>
                 </li>
 
-                {Object.keys(groupedPurposes).map((semester, key) => {
+                {Object.keys(groupedPurposes).map((semester) => {
                   const purposes = groupedPurposes[Number(semester)];
 
                   return (
-                    <li key={key} className="">
+                    <li key={semester} className="">
                       <div className="px-4 py-2 text-base font-medium text-gray-800 dark:text-black">
                         {Number(semester) === -1 ? "Mục đích khác" : `Học kỳ ${semester}`}
                       </div>
 
                       <ul>
-                        {purposes.map((purpose, key) => (
+                        {purposes.map((purpose) => (
                           <li
-                            key={key}
+                            key={purpose.id}
                             onClick={() => handleChangeValue({ name: purpose.title, value: purpose.id } as Tab)}
                             className={`flex items-center justify-between px-4 hover:cursor-pointer dark:text-black ${
                               selectedValue?.value === purpose.id

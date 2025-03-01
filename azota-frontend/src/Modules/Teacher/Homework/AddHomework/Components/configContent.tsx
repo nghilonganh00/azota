@@ -50,8 +50,8 @@ const ConfigContent: React.FC<ConfigContentProps> = (props) => {
 
       <div className="col-span-12">
         <div className="space-y-2">
-          {values["homeworkFiles"].map((file: File, key) => (
-            <div className="flex items-center gap-2" key={key}>
+          {values["homeworkFiles"].map((file: File, index) => (
+            <div className="flex items-center gap-2" key={index}>
               <X strokeWidth={1.5} className="size-4 text-gray-700" />
               <div className="text-sm text-gray-800">{file.name}</div>
             </div>

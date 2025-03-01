@@ -45,10 +45,10 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
                 </li>
               )}
 
-              {options.map((option: any, key: string) => {
+              {options.map((option: any) => {
                 return (
                   <li
-                    key={key}
+                    key={option.id}
                     onClick={() => handleChangeValue(option)}
                     className={`flex items-center justify-between hover:cursor-pointer hover:bg-darkmode-700 dark:text-black ${selectedValue?.value === option.value ? "bg-zinc-100 text-blue-900 dark:bg-darkmode-700 dark:text-blue-700" : "hover:bg-gray-100"}`}
                   >

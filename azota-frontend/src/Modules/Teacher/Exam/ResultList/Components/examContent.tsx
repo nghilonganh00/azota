@@ -74,25 +74,25 @@ export const ExamContent: React.FC<ExamContentProps> = (props) => {
           </div>
 
           <div className="round- space-y-10 overflow-y-scroll px-5 pt-8 text-gray-700 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar]:w-2">
-            {exam?.questionParts.map((part, key) => {
+            {exam?.questionParts.map((part) => {
               return (
-                <div key={key}>
+                <div key={exam.id}>
                   <h3 className="font-semibold">{part.title}</h3>
 
                   <div className="mt-4">
-                    {part?.questions.map((question, key) => {
+                    {part?.questions.map((question) => {
                       const correctOptionKeys = question?.options
                         .filter((option) => option.isCorrect)
                         .map((option) => option.key);
 
                       return (
-                        <div className="" key={key}>
+                        <div className="" key={question.id}>
                           <h1 className="font-semibold">{`Câu ${question.rawIndex}`}</h1>
                           <p className="py-1 leading-relaxed">{question.topic}</p>
 
                           <ul className="mt-6 space-y-8">
                             {question?.options.map((option, key) => (
-                              <li key={key}>
+                              <li key={question.id}>
                                 <span className="font-semibold">{option.key.toLocaleLowerCase()}. </span>
                                 {option.content}
                               </li>

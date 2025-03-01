@@ -17,7 +17,7 @@ const RecommendExams: React.FC<RecommendExamsProps> = (props) => {
         {listExamPrevies
           ?.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
           .slice(0, 4)
-          .map((examPreview, key) => <ExamBox examPreview={examPreview} key={key} />)}
+          .map((examPreview, key) => <ExamBox examPreview={examPreview} key={examPreview.id} />)}
       </div>
     </div>
   );

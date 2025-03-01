@@ -91,6 +91,23 @@ const UserAPI = {
       return {};
     }
   },
+  updateUser: async (
+    fullName: string,
+    DOB: string,
+    email: string,
+    phone: string,
+    gender: string,
+    avatarURL: string,
+  ): Promise<AxiosResponse | null> => {
+    try {
+      const response = await axiosInstance.patch("users", { fullName, DOB, email, phone, gender, avatarURL });
+
+      return response;
+    } catch (error) {
+      console.error("Error in update of UserAPI: ", error);
+      return null;
+    }
+  },
 };
 
 export default UserAPI;

@@ -90,10 +90,10 @@ export const MarkArea: React.FC<MarkAreaProps> = (props) => {
           Chưa có số câu đúng, câu sai
         </div>
         <div className="flex items-center justify-center gap-2 lg:justify-around">
-          {Object.values(PointTypes).map((point, key) => (
+          {Object.values(PointTypes).map((point, index) => (
             <div
               className="flex size-10 items-center justify-center rounded-full border border-gray-200 shadow-sm hover:cursor-pointer hover:bg-slate-200 dark:border-darkmode-400"
-              key={key}
+              key={index}
             >
               <div className="text-sm font-semibold" onClick={() => handleMark(point)}>
                 {point}

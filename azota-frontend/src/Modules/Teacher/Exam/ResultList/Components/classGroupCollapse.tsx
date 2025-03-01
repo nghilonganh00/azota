@@ -19,15 +19,13 @@ const ClassGroupCollapse: React.FC<ClassGroupCollapseProps> = (props) => {
       </div>
 
       <div className="mt-3 grid grid-cols-12 gap-2">
-        {classrooms.map((classroom, key) => {
+        {classrooms.map((classroom) => {
           const { className, studentCount } = classroom;
           return (
-            <div className="col-span-3" key={key} onClick={() => handleSelectClassroom(classroom)}>
+            <div className="col-span-3" key={classroom.id} onClick={() => handleSelectClassroom(classroom)}>
               <div className="rounded-md bg-[#c1d9f159] p-4 hover:cursor-pointer">
                 <div className="text-sm font-medium">{className}</div>
-                <div className="mt-2 text-xs font-medium text-slate-500">
-                  {`Sĩ số: ${studentCount}`}
-                </div>
+                <div className="mt-2 text-xs font-medium text-slate-500">{`Sĩ số: ${studentCount}`}</div>
               </div>
             </div>
           );

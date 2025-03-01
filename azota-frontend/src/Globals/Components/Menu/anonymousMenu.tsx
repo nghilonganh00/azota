@@ -43,10 +43,10 @@ const AnonymousMenu = () => {
       {isDropdownVisible && (
         <div className="absolute right-2 top-9 w-56 rounded-md bg-white shadow-md" id="menu-dropdown">
           <div className="border-b border-gray-100 p-2">
-            {MENU_TABS.map((tab, key) => (
+            {MENU_TABS.map((tab, index) => (
               <Link
                 to={tab.link}
-                key={key}
+                key={index}
                 className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium"
               >
                 <tab.icon strokeWidth={1.5} className="size-4" />

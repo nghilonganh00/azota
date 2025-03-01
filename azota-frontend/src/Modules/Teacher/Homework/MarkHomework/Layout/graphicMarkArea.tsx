@@ -69,8 +69,8 @@ export const GraphicMarkArea: React.FC<GraphicMarkAreaProps> = (props) => {
           </div>
 
           <div className="scrollbar h-[600px] overflow-y-auto">
-            {homeworkSubmission?.files?.map((file, key) => {
-              return <img src={file.link} key={key}></img>;
+            {homeworkSubmission?.files?.map((file) => {
+              return <img src={file.link} key={file.id}></img>;
             })}
           </div>
         </div>

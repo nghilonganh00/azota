@@ -50,21 +50,15 @@ const PublishHomework = () => {
           <div className="text-sm font-semibold">{homework.homeworkName}</div>
 
           <div className="space-y-1">
-            {classrooms.map((classroom, key) => {
-              // const homeworkURL = `http://localhost:3000/homework/${classroom.Assignments[0].hashId}`;
+            {classrooms.map((classroom) => {
               const homeworkURL = `http://localhost:3000/homework/`;
 
               return (
-                <div key={key}>
+                <div key={classroom.id}>
                   <div className="mt-3 text-sm">{classroom.className}</div>
 
                   <div className="mt-2 flex items-center justify-between bg-slate-100 pl-4">
-                    <input
-                      type="text"
-                      readOnly
-                      value={homeworkURL}
-                      className="flex-1 bg-transparent"
-                    />
+                    <input type="text" readOnly value={homeworkURL} className="flex-1 bg-transparent" />
 
                     <div className="flex items-center gap-2 rounded-e-md border border-blue-800 px-3 py-3 text-blue-800 hover:cursor-pointer hover:bg-slate-200">
                       <Copy strokeWidth={1.5} className="size-4" />

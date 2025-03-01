@@ -44,6 +44,9 @@ export class User extends BaseEntity {
   @IsNotEmpty()
   gender: Gender;
 
+  @Column({ nullable: true })
+  avatarURL: string;
+
   @Column({ type: "enum", enum: UserRole, default: UserRole.STUDENT })
   @IsEnum(UserRole)
   @IsNotEmpty()

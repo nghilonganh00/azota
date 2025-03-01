@@ -32,10 +32,10 @@ const ExamMenu = () => {
       <div className="text-sm font-semibold">Menu</div>
 
       <div className="rounded-md bg-gray-100 p-2 shadow dark:bg-inherit">
-        {MENU_ITEMS?.map((item, key) => (
+        {MENU_ITEMS?.map((item, index) => (
           <Link
             to={`${item.link}/${examId}`}
-            key={key}
+            key={index}
             className="flex items-center gap-2 rounded-md p-2 transition-colors duration-300 ease-in-out hover:cursor-pointer hover:bg-gray-200 dark:hover:bg-darkmode-400 dark:hover:text-black"
           >
             <item.icon strokeWidth={1.5} className="size-4" />
