@@ -108,6 +108,16 @@ const UserAPI = {
       return null;
     }
   },
+  changePassword: async (currentPassword: string, newPassword: string) => {
+    try {
+      const response = await axiosInstance.patch("users/change-password", { currentPassword, newPassword });
+
+      return response;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  },
 };
 
 export default UserAPI;

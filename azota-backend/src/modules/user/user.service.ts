@@ -8,6 +8,7 @@ import { UpdateUserDto } from "./dtos/update-user.dto";
 import { UserDto } from "./dtos/user.dto";
 import { plainToInstance } from "class-transformer";
 import * as bcrypt from "bcrypt";
+import { ChangePasswordDto } from "./dtos/change-password.dto";
 
 @Injectable()
 export class UserService {
@@ -82,8 +83,10 @@ export class UserService {
     }
   }
 
-  async validateChangePassword(userId: number, currentPassword: string, newPassword: string) {
+  async validateChangePassword(userId: number, changePasswordDto: ChangePasswordDto) {
     try {
+      const { currentPassword, newPassword } = changePasswordDto;
+
       const user = await this.findByPk(userId);
       if (!user) {
         throw new NotFoundException("User not authenticated");
@@ -94,7 +97,8 @@ export class UserService {
         throw new BadRequestException("Current password is incorrect");
       }
 
-      
+      user.password = await bcrypt.hash(newPassword, 10);
+      return await this.userRepository.save(user);
     } catch (error) {
       console.log(error);
       throw error;

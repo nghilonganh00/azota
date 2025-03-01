@@ -1,4 +1,4 @@
-import { Entity, Column, BeforeInsert, TableInheritance } from "typeorm";
+import { Entity, Column, BeforeInsert, TableInheritance, BeforeUpdate } from "typeorm";
 import { BaseEntity } from "src/common/mysql/base.entity";
 import { IsNotEmpty, Length, IsEmail, IsDate, IsEnum } from "class-validator";
 import * as bcrypt from "bcrypt";

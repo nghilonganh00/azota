@@ -6,6 +6,7 @@ import { UserDto } from "./dtos/user.dto";
 import { plainToClass } from "class-transformer";
 import { UserRole } from "src/shared/constant";
 import { UpdateUserDto } from "./dtos/update-user.dto";
+import { ChangePasswordDto } from "./dtos/change-password.dto";
 
 @Controller("users")
 export class UserController {
@@ -42,9 +43,9 @@ export class UserController {
 
   @Patch("change-password")
   @HttpCode(204)
-  changePassword(@Body() { currentPassword, newPassword }: { currentPassword: string; newPassword: string }) {
+  async changePassword(@Body() changePasswordDto: ChangePasswordDto) {
     const userId = this.request?.user?.sub;
 
-    
+    return await this.userService.validateChangePassword(userId, changePasswordDto);
   }
 }
