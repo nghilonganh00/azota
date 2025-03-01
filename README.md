@@ -1,65 +1,91 @@
-# Azota.vn Clone Project
+# 🚀 Azota.vn Clone Project
 
-## Giới thiệu
-**Azota.vn Clone Project** là một ứng dụng web toàn diện được xây dựng theo kiến trúc tách biệt giữa Front-end và Back-end, mô phỏng giao diện và một số chức năng chính của trang [azota.vn](https://azota.vn/). Mục tiêu của dự án là tạo ra một nền tảng hỗ trợ giáo viên trong việc soạn đề, quản lý bài kiểm tra và theo dõi kết quả học tập của học sinh, đồng thời cung cấp trải nghiệm người dùng hiện đại và thân thiện.
+## 📌 Introduction
+Azota.vn Clone Project is a **comprehensive web application** built with a separate **Front-end and Back-end architecture**, mimicking the interface and key features of the **Azota.vn** platform. The project's goal is to create a platform that assists **teachers** in:
+- **Creating exams** 📝
+- **Managing tests** 📊
+- **Tracking student performance** 🎯
 
-## Tính năng chính
-- **Đăng ký & Đăng nhập:**  
-  Xác thực người dùng với bảo mật cao, hỗ trợ khôi phục mật khẩu.
-  
-- **Quản lý đề thi & bài kiểm tra:**  
-  Giáo viên có thể tạo, chỉnh sửa và xóa đề thi, bài kiểm tra; lưu trữ và quản lý ngân hàng câu hỏi.
+While ensuring a **modern and user-friendly experience**. 🌟
 
-- **Thống kê & báo cáo:**  
-  Cung cấp các biểu đồ, báo cáo kết quả thi và phân tích hiệu suất học tập của học sinh.
+---
 
-- **Tương tác & thông báo:**  
-  Hệ thống thông báo thời gian thực giúp giáo viên và học sinh cập nhật nhanh chóng các hoạt động và thay đổi.
+## 🔥 Key Features
 
-- **Quản lý nội dung học tập:**  
-  Tích hợp chức năng lưu trữ tài liệu, bài giảng và các nội dung hỗ trợ học tập.
+### 🔑 User Registration & Login
+✅ Secure **user authentication** with high-level security. 🔒  
+✅ Supports **password recovery** for convenience. 🔄
 
-## Kiến trúc dự án
-Dự án được chia thành 2 phần chính:
+### 📝 Exam & Test Management
+✅ Teachers can **create, edit, and delete** exams and tests.  
+✅ Store and manage a **question bank** for easy access. 📚
 
-- **Front-end:**  
-  - Xây dựng giao diện người dùng hiện đại, responsive với các framework như **React**, **Vue** hoặc **Angular**.
-  - Sử dụng các thư viện CSS như **Bootstrap** hoặc **Tailwind CSS** để tối ưu hóa giao diện.
+### 📊 Statistics & Reports
+✅ Provides **charts and reports** on test results. 📈  
+✅ Analyzes **students' learning performance** effectively. 🎓
 
-- **Back-end:**  
-  - Phát triển API phục vụ cho việc xử lý logic nghiệp vụ bằng **Node.js** với framework **NestJS** hoặc **Express**.
-  - Tích hợp các giải pháp xác thực (như JWT, OAuth2) và xử lý dữ liệu an toàn.
+### 📢 Interaction & Notifications
+✅ **Real-time notifications** keep teachers and students updated. 🔔  
+✅ Ensures **timely communication** for all activities and changes. 📬
 
-- **Cơ sở dữ liệu:**  
-  - Sử dụng **MySQL**, **PostgreSQL** hoặc **MongoDB** để lưu trữ dữ liệu người dùng, đề thi, bài kiểm tra và các thông tin liên quan.
+### 📂 Learning Content Management
+✅ **Stores documents, lectures, and other learning materials**.  
+✅ Helps in creating a **centralized knowledge base**. 🏫
 
-## Công nghệ sử dụng
-- **Front-end:**
-  - Ngôn ngữ: TypeScript
-  - Framework: React
-  - CSS Framework: Tailwind CSS
+---
 
-- **Back-end:**
-  - Node.js
-  - Framework: NestJS
-  - Authentication: JWT, OAuth2
+## 🏗 Project Architecture
+The project is divided into two main parts:
 
-- **Cơ sở dữ liệu:**  
-  - MySQL
+### 🎨 Front-end:
+- **Modern & responsive UI** built with frameworks like **React, Vue, or Angular**.
+- Utilizes **Bootstrap or Tailwind CSS** for optimized styling.
 
-- **Quản lý phiên bản:**  
-  - Git và GitHub
+### ⚙️ Back-end:
+- API development using **Node.js** with **NestJS or Express**.
+- **Secure authentication** via **JWT and OAuth2**.
 
-## Hướng dẫn cài đặt và chạy dự án
+### 🗄 Database:
+- Uses **MySQL, MongoDB** for efficient data storage.
 
-### Yêu cầu hệ thống
-- Node.js (phiên bản 14 trở lên)
-- NPM hoặc Yarn
-- Cơ sở dữ liệu (MySQL)
+---
 
-### Các bước cài đặt
+## 🛠 Technology Stack
 
-1. **Clone repository:**
-   ```bash
+### 🎭 Front-end:
+- **Language:** TypeScript  
+- **Framework:** React  
+- **CSS Framework:** Tailwind CSS  
+
+### 🖥 Back-end:
+- **Node.js**  
+- **Framework:** NestJS  
+- **Authentication:** JWT, OAuth2  
+
+### 🗄 Database:
+- **MySQL**  
+
+### 🔄 Version Control:
+- **Git and GitHub** 📂
+
+---
+
+## 🚀 Installation Guide
+
+### 📌 System Requirements
+- **Node.js** (version 14 or higher)
+- **NPM or Yarn**
+- **Database:** MySQL
+
+### 📥 Installation Steps
+
+1. **Clone the repository:**  
+   ```sh
    git clone https://github.com/your_username/azota-vn-clone.git
+   ```
+2. **Navigate to the project directory:**  
+   ```sh
    cd azota-vn-clone
+   ```
+
+✅ Now you’re ready to **install dependencies and start development**! Happy coding! 🎉
