@@ -5,3 +5,9 @@ export type Tab = {
   name: string;
   value: any;
 };
+
+export interface APIErrorReponse {
+  error: string;
+  message: string;
+  detail?: string;
+}

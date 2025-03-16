@@ -39,7 +39,7 @@ const AddHomework = () => {
     try {
       const createdHomework = await HomeworkAPI.create(newHomework);
 
-      navigation(`/teacher/homework/publish-homework/${createdHomework.id}`);
+      navigation(`/teacher/homework/publish-homework/${createdHomework[0].id}`);
     } catch (error) {
       console.log("Error creating homework:", error);
     }

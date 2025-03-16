@@ -69,9 +69,9 @@ const AddClassBtn: React.FC<AddClassBtnProps> = (props) => {
       <Popup isOpen={isOpenAdd} setOpen={setOpenAdd}>
         <form
           onSubmit={handleSubmitAndClose}
-          className="dark:bg-darkmode-600 w-[550px] rounded-md bg-white shadow dark:text-slate-300"
+          className="w-[550px] rounded-md bg-white shadow dark:bg-darkmode-600 dark:text-slate-300"
         >
-          <div className="dark:border-darkmode-400 border-b border-gray-200 p-3 text-sm font-semibold">
+          <div className="border-b border-gray-200 p-3 text-sm font-semibold dark:border-darkmode-400">
             Thêm lớp học
           </div>
 
@@ -86,7 +86,7 @@ const AddClassBtn: React.FC<AddClassBtnProps> = (props) => {
                 name="className"
                 onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
                 type="text"
-                className="dark:bg-darkmode-800 w-full rounded-md border border-slate-300 px-4 py-2.5 text-sm shadow-sm dark:border-none"
+                className="w-full rounded-md border border-slate-300 px-4 py-2.5 text-sm shadow-sm dark:border-none dark:bg-darkmode-800"
                 placeholder="Nhập tên lớp"
               />
             </div>
@@ -101,25 +101,26 @@ const AddClassBtn: React.FC<AddClassBtnProps> = (props) => {
                 name="classYear"
                 onChange={(e) => handleChangeValue(e.target.name, e.target.value)}
                 type="text"
-                className="dark:bg-darkmode-800 w-full rounded-md border border-slate-300 px-4 py-2.5 text-sm shadow-sm dark:border-none"
+                className="w-full rounded-md border border-slate-300 px-4 py-2.5 text-sm shadow-sm dark:border-none dark:bg-darkmode-800"
                 placeholder="Nhập năm học"
               />
             </div>
 
-            <div className="dark:border-darkmode-400 rounded-md border border-gray-200">
-              <div className="dark:bg-darkmode-400 bg-slate-200 p-3 text-sm">Chọn nhóm lớp</div>
+            <div className="rounded-md border border-gray-200 dark:border-darkmode-400">
+              <div className="bg-slate-200 p-3 text-sm dark:bg-darkmode-400">Chọn nhóm lớp</div>
               <div className="grid grid-cols-12 gap-y-2 px-4 pt-4">
                 {classGroupList?.map((classGroup) => (
                   <div className="col-span-4" key={classGroup.id}>
                     <div className="flex items-center gap-3">
                       <input
+                        id={`classgroup-${classGroup.id}`}
                         name="classGroup"
                         type="radio"
                         checked={values["classGroupId"] === classGroup.id}
                         onChange={() => handleChangeValue("classGroupId", classGroup.id)}
-                        className="dark:bg-darkmode-800 h-4 w-4 border-gray-300 bg-gray-100 text-blue-600"
+                        className="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 dark:bg-darkmode-800"
                       />
-                      <div>{classGroup.classgroupName}</div>
+                      <label htmlFor={`classgroup-${classGroup.id}`}>{classGroup.classgroupName}</label>
                     </div>
                   </div>
                 ))}
@@ -131,7 +132,7 @@ const AddClassBtn: React.FC<AddClassBtnProps> = (props) => {
 
           <div className="flex items-center justify-end gap-2 p-3">
             <div
-              className="dark:bg-darkmode-400 dark:hover:bg-darkmode-300 rounded-md bg-gray-200 px-8 py-2.5 hover:cursor-pointer hover:bg-gray-100"
+              className="rounded-md bg-gray-200 px-8 py-2.5 hover:cursor-pointer hover:bg-gray-100 dark:bg-darkmode-400 dark:hover:bg-darkmode-300"
               onClick={handleToggleAdd}
             >
               <div className="text-sm font-semibold text-gray-500 dark:text-slate-200">Hủy</div>

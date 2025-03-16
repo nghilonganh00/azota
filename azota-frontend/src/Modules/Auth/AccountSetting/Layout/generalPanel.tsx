@@ -27,10 +27,10 @@ export const GeneralPanel = () => {
   };
 
   const handleUpdate = async () => {
-    const { fullName, DOB, email, gender, phone, avatarURL } = user;
-    if (!fullName || !gender) return;
+    const { fullname, DOB, email, gender, phone, avatarURL } = user;
+    if (!fullname || !gender) return;
 
-    const response = await UserAPI.updateUser(fullName, DOB, email, phone, gender, avatarURL);
+    const response = await UserAPI.updateUser(fullname, DOB, email, phone, gender, avatarURL);
   };
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export const GeneralPanel = () => {
             type="text"
             id="fullname"
             name="fullName"
-            value={user?.fullName}
+            value={user?.fullname}
             onChange={(e) => handleChangeUserInfo(e.target.name, e.target.value)}
             className="w-full rounded-md border px-2 py-2 text-sm dark:border-none dark:bg-darkmode-800"
             required

@@ -5,6 +5,13 @@ const accessToken = localStorage.getItem("accessToken");
 
 const UserAPI = {
   getInfo: async (): Promise<AxiosResponse | null> => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      console.warn("No access token, skipping user info fetch");
+      return null;
+    }
+    
     try {
       const response = await axiosInstance.get("users", {
         headers: {

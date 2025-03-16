@@ -52,7 +52,7 @@ const SubmitExam = () => {
                 <div className="">Thí sinh</div>
               </div>
 
-              <div className="text-sm font-medium">{examResult?.student.user.fullName}</div>
+              <div className="text-sm font-medium">{examResult?.student.user.fullname}</div>
             </div>
 
             <div className="flex items-center justify-between">

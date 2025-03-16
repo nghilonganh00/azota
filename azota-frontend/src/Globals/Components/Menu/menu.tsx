@@ -28,7 +28,7 @@ const RoleAction: React.FC<RoleActionProps> = (props) => {
   return (
     <div
       onClick={onClick}
-      className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium"
+      className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
     >
       <ShieldCheck strokeWidth={1.5} className="size-4" />
       <div className="text-sm">{label}</div>
@@ -114,7 +114,7 @@ const Menu = () => {
         src="https://lh3.googleusercontent.com/a/ACg8ocJ_iFoqcbXAa93XLL5ekog96hEVyxgkeCD7oenQOr3efwaZiQ=s96-c"
       ></img>
       <div>
-        <div className="text-sm font-medium text-slate-800 dark:text-gray-300">{user.fullName}</div>
+        <div className="text-sm font-medium text-slate-800 dark:text-gray-300">{user.fullname}</div>
         <div className="text-xs text-slate-500 dark:text-slate-400">
           {user.role === UserRole.TEACHER ? "Giáo viên" : "Học sinh"}
         </div>
@@ -122,16 +122,16 @@ const Menu = () => {
 
       {isDropdownVisible && (
         <div
-          className="absolute right-0 top-9 w-56 rounded-md bg-white shadow-md"
+          className="absolute right-0 top-9 w-56 rounded-md bg-white shadow-md dark:bg-darkmode-600 dark:text-slate-300"
           id="menu-dropdown"
           onClick={() => setDropdownVisible(false)}
         >
-          <div className="border-b border-gray-100 p-2">
+          <div className="border-b border-gray-100 p-2 dark:border-darkmode-400">
             {MENU_TABS.map((tab, index) => (
               <Link
                 to={tab.link}
                 key={index}
-                className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium"
+                className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
               >
                 <tab.icon strokeWidth={1.5} className="size-4" />
                 <div className="text-sm">{tab.label}</div>
@@ -139,14 +139,14 @@ const Menu = () => {
             ))}
 
             <div
-              className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium"
+              className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
               onClick={handleToggleTheme}
             >
               <Moon strokeWidth={1.5} className="size-4" />
               <div className="text-sm">Chế độ tối</div>
             </div>
 
-            <div className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium">
+            <div className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400">
               <RefreshCcw strokeWidth={1.5} className="size-4" />
               <div className="text-sm" onClick={handleRefresh}>
                 Refresh
@@ -165,7 +165,7 @@ const Menu = () => {
               <Link
                 key={index}
                 to={tab.link}
-                className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium"
+                className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
               >
                 <tab.icon strokeWidth={1.5} className="size-4" />
                 <div className="text-sm">{tab.label}</div>
@@ -174,7 +174,7 @@ const Menu = () => {
 
             <button
               onClick={handleLogout}
-              className="flex w-full items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium"
+              className="flex w-full items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
             >
               <LogOut strokeWidth={1.5} className="size-4" />
               <div className="text-sm">Đăng xuất</div>
