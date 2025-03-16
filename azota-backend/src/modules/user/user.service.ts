@@ -57,7 +57,7 @@ export class UserService {
 
   async validateUpdate(userId: number, updateUser: UpdateUserDto): Promise<UserDto> {
     try {
-      const { fullName, DOB, email, phone, gender, avatarURL } = updateUser;
+      const { fullname, DOB, email, phone, gender, avatarURL } = updateUser;
 
       const user = await this.userRepository.findOneBy({ id: userId });
       if (!user) {
@@ -68,7 +68,7 @@ export class UserService {
         throw new BadRequestException("Email is already in use");
       }
 
-      user.fullName = fullName ?? user.fullName;
+      user.fullname = fullname ?? user.fullname;
       user.DOB = DOB ?? user.DOB;
       user.email = email ?? user.email;
       user.phone = phone ?? user.phone;

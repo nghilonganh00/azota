@@ -25,7 +25,7 @@ export class AuthGuard implements CanActivate {
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
-      throw new UnauthorizedException("Token not found");
+      throw new UnauthorizedException({ message: "Token not found", error: "TOKEN_MISSING" });
     }
 
     try {
@@ -34,7 +34,11 @@ export class AuthGuard implements CanActivate {
       });
 
       request["user"] = payload;
-    } catch {
+    } catch (err) {
+      console.log("err: ", err);
+      if (err.name === "TokenExpiredError") {
+        throw new UnauthorizedException({ message: "Token expired", error: "TOKEN_EXPIRED" });
+      }
       throw new UnauthorizedException();
     }
 

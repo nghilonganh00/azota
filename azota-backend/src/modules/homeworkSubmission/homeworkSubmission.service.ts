@@ -17,6 +17,7 @@ import { HomeworkSubmissionFileService } from "../homeworkSubmissionFile/homewor
 import { HomeworkSubmissionFile } from "../homeworkSubmissionFile/homeworkSubmissionFile.entity";
 import { TeacherService } from "../teacher/teacher.service";
 import { MarkHomeworkSubmissionDto } from "./dto/mark-homeworkSubmission.dto";
+import { NotificationService } from "../notification/notification.service";
 
 @Injectable()
 export class HomeworkSubmissionService {
@@ -29,7 +30,8 @@ export class HomeworkSubmissionService {
     private studentClassRepository: Repository<StudentClass>,
 
     private readonly teacherService: TeacherService,
-    private readonly homeworkSubmissionFileService: HomeworkSubmissionFileService
+    private readonly homeworkSubmissionFileService: HomeworkSubmissionFileService,
+    private readonly notificationService: NotificationService
   ) {}
 
   async findOne(userId: number, homeworkSubmissionId: number): Promise<HomeworkSubmissionDto> {
@@ -143,6 +145,14 @@ export class HomeworkSubmissionService {
     });
 
     const savedHomeworkSubmission = await this.homeworkSubmissionReposity.save(newHomeworkSubmission);
+
+    await this.notificationService.sendNotification({
+      userId: homework.teacherId,
+      type: "NEW_EXAM",
+      message: `Bài thi ${homework.title} đã được tạo.`,
+      extraData: { homeworkId: homework.id },
+    });
+
     return plainToInstance(HomeworkSubmissionDto, savedHomeworkSubmission);
   }
 

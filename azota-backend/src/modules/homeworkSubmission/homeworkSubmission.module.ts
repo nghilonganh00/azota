@@ -11,6 +11,7 @@ import { HomeworkModule } from "../homework/homework.module";
 import { HomeworkSubmissionFileService } from "../homeworkSubmissionFile/homeworkSubmissionFile.service";
 import { HomeworkSubmissionFileModule } from "../homeworkSubmissionFile/homeworkSubmissionFile.module";
 import { TeacherModule } from "../teacher/teacher.module";
+import { NotificationModule } from "../notification/notification.module";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TeacherModule } from "../teacher/teacher.module";
     TeacherModule,
     forwardRef(() => HomeworkModule),
     HomeworkSubmissionFileModule,
+    NotificationModule,
   ],
   controllers: [HomeworkSubmissionController],
   providers: [HomeworkSubmissionService],

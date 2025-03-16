@@ -28,6 +28,9 @@ import { OptionModule } from "./modules/option/option.module";
 import { ExamResultModule } from "./modules/examResult/examResult.module";
 import { ConfigModule } from "@nestjs/config";
 import googleOauthConfig from "./modules/auth/config/google-oauth.config";
+import { MongooseModule } from "@nestjs/mongoose";
+import { NotificationModule } from "./modules/notification/notification.module";
+import { BullModule } from "@nestjs/bull";
 
 @Module({
   imports: [
@@ -36,6 +39,11 @@ import googleOauthConfig from "./modules/auth/config/google-oauth.config";
       load: [googleOauthConfig],
     }),
     TypeOrmModule.forRoot(typeormConfig),
+    MongooseModule.forRoot(process.env.MONGO_URI, {
+      dbName: process.env.MONGO_DB_NAME,
+    }),
+  
+    NotificationModule,
     SharedModule,
     AuthModule,
     UserModule,

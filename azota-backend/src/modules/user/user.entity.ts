@@ -25,7 +25,7 @@ export class User extends BaseEntity {
 
   @Column({ length: 50 })
   @IsNotEmpty()
-  fullName: string;
+  fullname: string;
 
   @Column({ length: 15, nullable: true })
   phone: string;
