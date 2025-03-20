@@ -64,7 +64,7 @@ export const typeormConfig: TypeOrmModuleOptions = {
     TeacherGrade,
     StudentClass,
   ],
-  logger: "advanced-console",
-  logging: "all",
+  // logger: "advanced-console",
+  // logging: "all",
   synchronize: true,
 };

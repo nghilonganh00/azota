@@ -1,48 +1,25 @@
 import { useEffect, useState } from "react";
-import { Fragment } from "react/jsx-runtime";
+import { LuBell } from "react-icons/lu";
+import { getSocket } from "../../../services/socketService";
 
-interface NotificationProps {
-  isOpen: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  message: string;
-  type: "SUCCESS" | "WARNING";
-}
-
-const Notification: React.FC<NotificationProps> = (props) => {
-  const { isOpen, setOpen, message, type } = props;
+export const Notification = () => {
+  const [notifications, setNotifications] = useState<any[]>([]);
 
   useEffect(() => {
-    if (isOpen) {
-      const timer = setTimeout(() => {
-        setOpen(false);
-      }, 3000);
+    const socket = getSocket();
 
-      return () => clearTimeout(timer);
+    if (socket) {
+      const handleNotification = (data: any) => {
+        console.log("📢 New Notification:", data.message);
+        setNotifications((prev) => [...prev, data]);
+      };
+
+      socket.on("newNotification", handleNotification);
+
+      return () => {
+        socket.off("newNotification", handleNotification);
+      };
     }
-  }, [isOpen]);
-
-  const getColor = () => {
-    switch (type) {
-      case "SUCCESS":
-        return "bg-[#68cc00]";
-      case "WARNING":
-        return "bg-[#ffcc00]";
-      default:
-        return "bg-[#68cc00]";
-    }
-  };
-
-  return (
-    <Fragment>
-      {isOpen && (
-        <div className="fixed right-0 top-0 flex w-full items-center justify-center pt-2">
-          <div className={`flex items-center ${getColor()} px-24 py-3.5 shadow-md`}>
-            <div className="text-sm font-semibold text-white">{message}</div>
-          </div>
-        </div>
-      )}
-    </Fragment>
-  );
+  }, []);
+  return <LuBell className="size-5 text-slate-600 dark:text-slate-200" />;
 };
-
-export default Notification;

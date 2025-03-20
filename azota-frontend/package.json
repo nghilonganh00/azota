@@ -40,6 +40,7 @@
     "react-router-dom": "^6.23.1",
     "react-scripts": "^5.0.1",
     "reactjs-datetime-picker": "^0.0.1",
+    "socket.io-client": "^4.8.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
