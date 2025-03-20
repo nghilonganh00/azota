@@ -16,8 +16,36 @@ export class NotificationService {
     return this.notificationModel.find({ userId }).sort({ createdAt: -1 }).exec();
   }
 
-  async sendNotification(jobData: { userId: number; type: string; message: string; extraData?: any }) {
-    await this.notificationQueue.add("sendNotification", jobData);
+  async sendNotification(
+    jobData: {
+      userId: number;
+      type: string;
+      title: string;
+      message: string;
+      extraData?: any;
+      readAt?: Date | null;
+    },
+    options: {
+      delay?: number;
+      priority?: number;
+      attempts?: number;
+      removeOnComplete?: boolean;
+      jobId?: string;
+    } = {}
+  ) {
+    const { delay = 0, priority, attempts = 3, removeOnComplete = true, jobId } = options;
+
+    await this.notificationQueue.add(
+      "sendNotification",
+      { ...jobData, createdAt: Date.now() },
+      {
+        delay,
+        priority,
+        attempts,
+        removeOnComplete,
+        jobId,
+      }
+    );
   }
 
   async markAsRead(notificationId: string) {

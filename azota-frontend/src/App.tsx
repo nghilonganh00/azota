@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import { Outlet, useNavigate, useParams } from "react-router";
 import "./index.css";
 import { useSearchParams } from "react-router-dom";
+import { connectSocket, disconnectSocket } from "./services/socketService";
 
 function App() {
+  //Change darkmode
   useEffect(() => {
     const currentTheme = localStorage.getItem("currentTheme");
 
@@ -14,6 +16,8 @@ function App() {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("currentTheme", "light");
     }
+
+    connectSocket();
   }, []);
 
   return (

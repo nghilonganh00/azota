@@ -1,10 +1,9 @@
 import { Copy, FileText, Folder } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import HomeworkAPI from "../../../../API/homeworkAPI";
-import Notification from "../../../../Globals/Components/Notification/notification";
 import ExamAPI from "../../../../API/examAPI";
 import { Exam } from "../../../../Globals/Interfaces/exam.interface";
+import { Popup } from "../../../../Globals/Components/Popup/popup";
 
 const PublishExam = () => {
   const { hashId } = useParams();
@@ -78,12 +77,7 @@ const PublishExam = () => {
         </div>
       </div>
 
-      <Notification
-        message={"Sao chép thành công"}
-        isOpen={isOpenCopyNoti}
-        setOpen={setOpenCopyNoti}
-        type={"SUCCESS"}
-      />
+      <Popup message={"Sao chép thành công"} isOpen={isOpenCopyNoti} setOpen={setOpenCopyNoti} type={"SUCCESS"} />
     </div>
   );
 };

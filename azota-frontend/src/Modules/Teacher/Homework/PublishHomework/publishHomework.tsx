@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 import HomeworkAPI from "../../../../API/homeworkAPI";
 import { Homework } from "../ConfigHomework/interface";
 import { Classroom } from "./Interfaces/interfaces";
-import Notification from "../../../../Globals/Components/Notification/notification";
+import { Popup } from "../../../../Globals/Components/Popup/popup";
 
 const PublishHomework = () => {
   const { homeworkId } = useParams();
@@ -92,7 +92,7 @@ const PublishHomework = () => {
         </div>
       </div>
 
-      <Notification
+      <Popup
         message={"Sao chép thành công"}
         isOpen={isOpenCopyNoti}
         setOpen={setOpenCopyNoti}

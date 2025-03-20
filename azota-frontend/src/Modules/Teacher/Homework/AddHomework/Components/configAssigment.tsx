@@ -35,7 +35,12 @@ const ConfigAssignment: React.FC<ConfigAssignmentProps> = (props) => {
               <li className="rounded-md bg-blue-900 p-2 text-sm font-semibold text-white dark:bg-blue-700">{`Tất cả (${values["classroomIds"].length}/${classgroups.length})`}</li>
 
               {classgroups?.map((classgroup) => {
-                return <li className="rounded-md p-2 text-sm text-white">{`${classgroup.classgroupName}`}</li>;
+                return (
+                  <li
+                    key={classgroup.id}
+                    className="rounded-md p-2 text-sm text-white"
+                  >{`${classgroup.classgroupName}`}</li>
+                );
               })}
             </ul>
           </div>
