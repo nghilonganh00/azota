@@ -11,3 +11,12 @@ export interface APIErrorReponse {
   message: string;
   detail?: string;
 }
+
+export type QueryParams = {
+  page?: number;
+  limit?: number;
+  searchField?: string;
+  searchKeyword?: string;
+  sortField?: string;
+  sortOrder?: string;
+};
