@@ -12,7 +12,7 @@ const NotificationItem = ({ notification }: { notification: INotification }) => 
       <UserAvatar fullname="Lê Văn Thiện" />
       <div className="flex-1">
         <div className="flex items-center justify-between">
-          <div className="font-semibold">Lê Văn Thiện</div>
+          <div className="font-semibold">Lê Văn Thiện 1</div>
           <div className="text-xs dark:text-slate-300">
             {notification.createdAt &&
               isoDateUtil.toDateAndTime(notification.createdAt, DateTimeFormat.FULL_DATE_TIME_FORMAT)}
