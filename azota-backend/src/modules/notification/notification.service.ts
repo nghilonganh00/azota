@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectQueue } from "@nestjs/bull";
 import { Queue } from "bull";
 import { InjectModel } from "@nestjs/mongoose";
@@ -88,7 +88,17 @@ export class NotificationService {
     );
   }
 
-  async markAsRead(notificationId: string) {
-    return this.notificationModel.findByIdAndUpdate(notificationId, { read: true });
+  async markAsRead(userId: number, notificationId: string) {
+    const notification = await this.notificationModel.findById(notificationId);
+
+    if (!notification) {
+      throw new NotFoundException("Notification not found");
+    }
+
+    if (notification.userId !== userId) {
+      throw new ForbiddenException("You cannot mark this notification as read");
+    }
+
+    return this.notificationModel.findByIdAndUpdate(notificationId, { readAt: new Date() }, { new: true });
   }
 }

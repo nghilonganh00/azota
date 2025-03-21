@@ -2,7 +2,6 @@ import { UseGuards } from "@nestjs/common";
 import { ConnectedSocket, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Server, Socket } from "socket.io";
 import { JwtWsGuard } from "../auth/guards/jwt-ws.guard";
-import { Job } from "bull";
 
 interface AuthenticatedSocket extends Socket {
   user?: { sub: string; username: string };

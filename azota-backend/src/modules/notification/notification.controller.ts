@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Query } from "@nestjs/common";
+import { Controller, Get, Inject, Param, Patch, Query } from "@nestjs/common";
 import { REQUEST } from "@nestjs/core";
 import { NotificationService } from "./notification.service";
 import { query } from "express";
@@ -19,5 +19,13 @@ export class NotificationController {
     const userId = this.request?.user?.sub;
 
     return this.notificationService.getNotifications(userId, query);
+  }
+
+  @ApiBearerAuth()
+  @Patch(":id")
+  async markAsRead(@Param("id") notificationId: string) {
+    const userId = this.request?.user?.sub;
+
+    return this.notificationService.markAsRead(userId, notificationId);
   }
 }
