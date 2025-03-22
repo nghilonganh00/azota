@@ -9,6 +9,9 @@ export class Notification {
   userId: number;
 
   @Prop({ required: true })
+  title: string;
+  
+  @Prop({ required: true })
   type: string;
 
   @Prop({ required: true })

@@ -5,6 +5,7 @@ import useGoBack from "../../Hooks/useGoBack";
 import AnonymousMenu from "../Menu/anonymousMenu";
 import { useLocation, useNavigate } from "react-router";
 import { useEffect } from "react";
+import { Notification } from "../Notification/notification";
 
 const TopBar = () => {
   const goBack = useGoBack();
@@ -37,7 +38,8 @@ const TopBar = () => {
             alt="flag/vi.svg"
             src="https://239114911.e.cdneverest.net/cdnazota/storage_public/azota_assets/flag/vi.svg"
           ></img>
-          <LuBell className="size-5 text-slate-600 dark:text-slate-200" />
+
+          <Notification />
 
           {accessToken ? <Menu /> : <AnonymousMenu />}
         </div>

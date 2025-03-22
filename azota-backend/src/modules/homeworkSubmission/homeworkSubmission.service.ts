@@ -146,13 +146,6 @@ export class HomeworkSubmissionService {
 
     const savedHomeworkSubmission = await this.homeworkSubmissionReposity.save(newHomeworkSubmission);
 
-    await this.notificationService.sendNotification({
-      userId: homework.teacherId,
-      type: "NEW_EXAM",
-      message: `Bài thi ${homework.title} đã được tạo.`,
-      extraData: { homeworkId: homework.id },
-    });
-
     return plainToInstance(HomeworkSubmissionDto, savedHomeworkSubmission);
   }
 

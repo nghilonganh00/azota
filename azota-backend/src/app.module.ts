@@ -42,8 +42,13 @@ import { BullModule } from "@nestjs/bull";
     MongooseModule.forRoot(process.env.MONGO_URI, {
       dbName: process.env.MONGO_DB_NAME,
     }),
-  
-    NotificationModule,
+    BullModule.forRoot({
+      redis: {
+        host: "localhost",
+        port: 6379,
+      },
+    }),
+
     SharedModule,
     AuthModule,
     UserModule,
@@ -63,6 +68,7 @@ import { BullModule } from "@nestjs/bull";
     QuestionModule,
     OptionModule,
     ExamResultModule,
+    NotificationModule,
   ],
   providers: [
     {

@@ -5,22 +5,19 @@ import { Notification, NotificationSchema } from "./notification.schema";
 import { NotificationController } from "./notification.controller";
 import { NotificationService } from "./notification.service";
 import { NotificationProcessor } from "./notification.processor";
+import { NotificationGateway } from "./notifications.gateway";
+import { UserModule } from "../user/user.module";
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Notification.name, schema: NotificationSchema }]),
-    BullModule.forRoot({
-      redis: {
-        host: "localhost",
-        port: 6379,
-      },
-    }),
     BullModule.registerQueue({
       name: "notificationQueue",
     }),
+    UserModule,
   ],
   controllers: [NotificationController],
-  providers: [NotificationService, NotificationProcessor],
+  providers: [NotificationService, NotificationProcessor, NotificationGateway],
   exports: [NotificationService],
 })
 export class NotificationModule {}

@@ -19,6 +19,13 @@ export class TeacherService {
     return await this.teacherRepository.findOneBy(conditions);
   }
 
+  async getDetailByUserId(userId: number): Promise<Teacher | null> {
+    return await this.teacherRepository.findOne({
+      where: { userId },
+      relations: ["user"],
+    });
+  }
+
   async register(userId: number): Promise<void> {
     const teacher = await this.findOne({ userId });
 
