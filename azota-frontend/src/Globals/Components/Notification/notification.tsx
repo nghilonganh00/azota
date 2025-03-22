@@ -6,7 +6,26 @@ import UserAvatar from "../userAvatar";
 import { Notification as INotification } from "../../Interfaces/info.interface";
 import { DateTimeFormat, isoDateUtil } from "../../../Utils/date";
 
-const NotificationItem = ({ notification }: { notification: INotification }) => {
+const NotificationItem = ({
+  notification,
+  setNotifications,
+}: {
+  notification: INotification;
+  setNotifications: React.Dispatch<React.SetStateAction<INotification[]>>;
+}) => {
+  useEffect(() => {
+    return () => {
+      if (!notification.readAt) {
+        NotificationAPI.markAsRead(notification._id);
+        setNotifications((preValue) =>
+          preValue.map((item) =>
+            item._id === notification._id ? { ...item, readAt: new Date().toISOString() } : item,
+          ),
+        );
+      }
+    };
+  }, []);
+
   return (
     <div className={`flex items-center gap-4 px-2 ${notification.readAt ? "opacity-40" : ""}`}>
       <UserAvatar fullname="Lê Văn Thiện" />
@@ -26,35 +45,21 @@ const NotificationItem = ({ notification }: { notification: INotification }) => 
 
 export const Notification = () => {
   const [notifications, setNotifications] = useState<INotification[]>([]);
-  const visibleNotifications = notifications
-    .sort(
-      (a, b) =>
-        Number(!!a.readAt) - Number(!!b.readAt) || new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    )
-    .slice(0, 4);
+  const [visibleNotifications, setVisibleNotifications] = useState<INotification[]>([]);
+
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   console.log("noti: ", notifications);
 
   useEffect(() => {
-    //When dropdown open, fetch the new notification
     const fetchNotificationData = async () => {
-      const queryParams = { page: 1, limit: 4, sortField: "readAt", sortOrder: "ASC" };
+      const queryParams = { page: 1, limit: 20, sortField: "readAt", sortOrder: "ASC" };
       const response = await NotificationAPI.get(queryParams);
       setNotifications(response?.data.data);
     };
 
-    //When dropdown closed, Mask as read the showed notifications
-    if (isOpenDropdown) {
-      fetchNotificationData();
-    } else {
-      visibleNotifications.forEach((notification) => {
-        if (!notification.readAt) {
-          NotificationAPI.markAsRead(notification._id);
-        }
-      });
-    }
+    fetchNotificationData();
 
     //When click outside, close dropdown
     const handleClickOutside = (event: MouseEvent) => {
@@ -67,23 +72,57 @@ export const Notification = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, []);
+
+  useEffect(() => {
+    if (isOpenDropdown) {
+      setVisibleNotifications(
+        [...notifications]
+          .sort(
+            (a, b) =>
+              Number(!!a.readAt) - Number(!!b.readAt) ||
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+          )
+          .slice(0, 4),
+      );
+    }
   }, [isOpenDropdown]);
 
   useEffect(() => {
-    const socket = getSocket();
+    let socketInstance: any;
+    const initializeSocket = async () => {
+      try {
+        const socket = await getSocket();
+        if (!socket) return;
+        socketInstance = socket;
 
-    if (socket) {
-      const handleNotification = (data: any) => {
-        console.log("📢 New Notification:", data.message);
-        setNotifications((prev) => [...prev, data]);
-      };
+        console.log("🔌 Connected to WebSocket");
 
-      socket.on("newNotification", handleNotification);
+        // 🔥 Ensure the event listener is not duplicated
+        socket.off("newNotification"); // ✅ Remove before adding
 
-      return () => {
-        socket.off("newNotification", handleNotification);
-      };
-    }
+        const handleNotification = (data: any) => {
+          console.log("📢 New Notification:", data);
+          setNotifications((prev) => [...prev, data]);
+        };
+
+        socket.on("newNotification", handleNotification);
+
+        return () => {
+          console.log("🔄 Cleaning up WebSocket listener");
+          socket.off("newNotification", handleNotification);
+        };
+      } catch (error) {
+        console.error("❌ WebSocket connection failed:", error);
+      }
+    };
+
+    initializeSocket();
+
+    return () => {
+      console.log("🔄 Unmounting, removing WebSocket listeners");
+      socketInstance?.off("newNotification"); // ✅ Cleanup when unmounting
+    };
   }, []);
 
   return (
@@ -91,8 +130,8 @@ export const Notification = () => {
       <div className="hover:cursor-pointer" onClick={() => setOpenDropdown(!isOpenDropdown)}>
         <LuBell className="size-5 text-slate-600 dark:text-slate-200" />
 
-        <div className="absolute -right-1 -top-2 flex size-4 items-center justify-center rounded-full bg-red-600">
-          <div className="text-xs text-white">
+        <div className="absolute -right-2 -top-2 flex size-5 items-center justify-center rounded-full bg-red-600">
+          <div className="text-center text-xs text-white">
             {notifications.filter((notification) => notification.readAt === null).length}
           </div>
         </div>
@@ -104,7 +143,11 @@ export const Notification = () => {
 
           <div className="space-y-4 px-3">
             {visibleNotifications.map((notification) => (
-              <NotificationItem key={notification._id} notification={notification} />
+              <NotificationItem
+                key={notification._id}
+                notification={notification}
+                setNotifications={setNotifications}
+              />
             ))}
           </div>
 
