@@ -19,8 +19,8 @@ export class NotificationProcessor {
     const { userId, type, message, extraData } = job.data;
     console.log("process");
 
-    this.notificationsGateway.sendNotification(userId, job.data);
+    const newNotification = await this.notificationService.create(job.data);
 
-    this.notificationService.create(job.data);
+    this.notificationsGateway.sendNotification(userId, newNotification);
   }
 }

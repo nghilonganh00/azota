@@ -51,9 +51,9 @@ export class NotificationService {
     };
   }
 
-  create(newNotification: CreateNotificationDto) {
+  async create(newNotification: CreateNotificationDto) {
     const notification = new this.notificationModel(newNotification);
-    notification.save();
+    return await notification.save();
   }
 
   async sendNotification(
