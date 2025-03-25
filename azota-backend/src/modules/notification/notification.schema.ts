@@ -8,9 +8,18 @@ export class Notification {
   @Prop({ required: true })
   userId: number;
 
+  @Prop({ required: false })
+  senderId: number;
+
+  @Prop({ required: false })
+  senderName: string;
+
+  @Prop({ required: false })
+  senderAvatar: string;
+
   @Prop({ required: true })
   title: string;
-  
+
   @Prop({ required: true })
   type: string;
 
@@ -24,7 +33,7 @@ export class Notification {
   extraData: Record<string, any>;
 
   @Prop({ default: Date.now, expires: 2592000 })
-  createdAt: Date;
+  createdAt?: Date;
 }
 
 export const NotificationSchema = SchemaFactory.createForClass(Notification);

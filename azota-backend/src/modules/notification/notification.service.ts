@@ -8,6 +8,8 @@ import { QueryParamsDto } from "src/shared/dto";
 import { UserService } from "../user/user.service";
 import { FindManyOptions } from "typeorm";
 import { CreateNotificationDto } from "./dtos/create-notification.dto";
+import { QueryNotificationParamsDto } from "./dtos/query-notification-param.dto";
+import { ExamNotification, HomeworkNotification } from "src/shared/constant";
 
 @Injectable()
 export class NotificationService {
@@ -17,8 +19,16 @@ export class NotificationService {
     private readonly userService: UserService
   ) {}
 
-  async getNotifications(userId: number, query: QueryParamsDto) {
-    const { page = 1, limit = 30, searchField, searchKeyword, sortField = "createdAt", sortOrder = "ASC" } = query;
+  async getNotifications(userId: number, query: QueryNotificationParamsDto) {
+    const {
+      page = 1,
+      limit = 30,
+      searchField,
+      searchKeyword,
+      sortField = "createdAt",
+      sortOrder = "ASC",
+      type,
+    } = query;
 
     const user = await this.userService.findByPk(userId);
     if (!user) {
@@ -30,6 +40,17 @@ export class NotificationService {
     if (searchField && searchKeyword) {
       filter[searchField] = { $regex: new RegExp(searchKeyword, "i") };
     }
+
+    const typeFilter = {
+      HOMEWORK: Object.values(HomeworkNotification),
+      EXAM: Object.values(ExamNotification),
+    };
+
+    if (type && typeFilter[type]) {
+      filter.type = typeFilter[type];
+    }
+
+    console.log("filter", filter);
 
     const sortDirection = sortOrder.toUpperCase() === "DESC" ? -1 : 1;
 
@@ -57,14 +78,7 @@ export class NotificationService {
   }
 
   async sendNotification(
-    jobData: {
-      userId: number;
-      type: string;
-      title: string;
-      message: string;
-      extraData?: any;
-      readAt?: Date | null;
-    },
+    jobData: Notification,
     options: {
       delay?: number;
       priority?: number;
@@ -74,7 +88,7 @@ export class NotificationService {
     } = {}
   ) {
     const { delay = 0, priority, attempts = 3, removeOnComplete = true, jobId } = options;
-
+    console.log("sendNotification", jobData);
     await this.notificationQueue.add(
       "sendNotification",
       { ...jobData, createdAt: Date.now() },

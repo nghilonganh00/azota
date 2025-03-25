@@ -44,3 +44,21 @@ export enum QuestionType {
   MULTIQUE_CHOICE = "MULTIQLE_CHOICE",
   ESSAY = "ESSAY",
 }
+
+// Notification Type
+export enum NotificationType {
+  Homework = "HOMEWORK",
+  Exam = "EXAM",
+}
+
+export enum ExamNotification {
+  NEW_EXAM = "NEW_EXAM",
+  SUBMIT_EXAM = "SUBMIT_EXAM",
+  MARK_EXAM = "MARK_EXAM",
+}
+
+export enum HomeworkNotification {
+  NEW_HOMEWORK = "NEW_HOMEWORK",
+  SUBMIT_HOMEWORK = "SUBMIT_HOMEWORK",
+  MARK_HOMEWORK = "MARK_HOMEWORK",
+}

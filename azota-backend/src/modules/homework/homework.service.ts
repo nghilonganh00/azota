@@ -11,6 +11,8 @@ import { UpdateHomeworkReq } from "./dto/updateHomework.dto";
 import { HomeworkSubmissionService } from "../homeworkSubmission/homeworkSubmission.service";
 import { Classroom } from "../classroom/classroom.entity";
 import { NotificationService } from "../notification/notification.service";
+import { Notification } from "../notification/notification.schema";
+import { HomeworkNotification } from "src/shared/constant";
 
 @Injectable()
 export class HomeworkService {
@@ -145,13 +147,24 @@ export class HomeworkService {
           // Send a notification to each assigned student about the new exam
           for (const studentClass of classroom.studentClasses) {
             if (studentClass?.studentId) {
-              this.notificationService.sendNotification({
+              const notificationData: Notification = {
                 userId: studentClass.studentId,
-                type: "NEW_EXAM",
+                senderId: teacher.user.id,
+                senderName: teacher.user.fullname,
+                senderAvatar: teacher.user.avatarURL,
+                type: HomeworkNotification.NEW_HOMEWORK,
                 title: `${teacher.user.fullname}`,
                 message: `Đã được tạo bài thi ${savedHomework.title}`,
-                extraData: { homeworkId: savedHomework.id, link: "" },
-              });
+                extraData: {
+                  homeworkId: savedHomework.id,
+                  homeworkTitle: savedHomework.title,
+                  startDate: savedHomework.startDate,
+                  endDate: savedHomework.endDate,
+                  classroomId: savedHomework.classroom.id,
+                  classroomName: savedHomework.classroom.className,
+                },
+              };
+              this.notificationService.sendNotification(notificationData);
             }
           }
 
