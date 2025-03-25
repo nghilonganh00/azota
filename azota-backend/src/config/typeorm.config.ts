@@ -14,6 +14,7 @@ import { HomeworkFile } from "src/modules/homeworkFile/homeworkFile.entity";
 import { HomeworkSubmission } from "src/modules/homeworkSubmission/homeworkSubmission.entity";
 import { HomeworkSubmissionFile } from "src/modules/homeworkSubmissionFile/homeworkSubmissionFile.entity";
 import { Option } from "src/modules/option/option.entity";
+import { Permission } from "src/modules/permission/permission.entity";
 import { Purpose } from "src/modules/purpose/purpose.entity";
 import { Question } from "src/modules/question/question.entity";
 import { QuestionPart } from "src/modules/questionPart/questionPart.entity";
@@ -21,6 +22,7 @@ import { School } from "src/modules/school/school.entity";
 import { Student } from "src/modules/student/student.entity";
 import { StudentClass } from "src/modules/stutentClass/studentClass.entity";
 import { Subject } from "src/modules/subject/subject.entity";
+import { TeacherPermission } from "src/modules/teacher-permission/teacher-permission.entity";
 import { Teacher } from "src/modules/teacher/teacher.entity";
 import { TeacherGrade } from "src/modules/teacherGrade/teacherGrade.entity";
 import { TeacherSubject } from "src/modules/teacherSubject/teacherSubject.entity";
@@ -63,6 +65,8 @@ export const typeormConfig: TypeOrmModuleOptions = {
     TeacherSubject,
     TeacherGrade,
     StudentClass,
+    Permission,
+    TeacherPermission,
   ],
   // logger: "advanced-console",
   // logging: "all",

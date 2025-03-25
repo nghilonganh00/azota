@@ -31,6 +31,8 @@ import googleOauthConfig from "./modules/auth/config/google-oauth.config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { NotificationModule } from "./modules/notification/notification.module";
 import { BullModule } from "@nestjs/bull";
+import { TeacherPermissionModule } from "./modules/teacher-permission/teacher-permission.module";
+import { PermissionModulue } from "./modules/permission/permission.module";
 
 @Module({
   imports: [
@@ -69,6 +71,8 @@ import { BullModule } from "@nestjs/bull";
     OptionModule,
     ExamResultModule,
     NotificationModule,
+    PermissionModulue,
+    TeacherPermissionModule,
   ],
   providers: [
     {
