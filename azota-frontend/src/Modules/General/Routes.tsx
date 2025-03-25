@@ -3,6 +3,9 @@ import IdentifyStudent from "./Homework/IdentifyStudent/identifyStudent";
 import ExamRoutes from "./Exam/Routes";
 import HomePage from "./Homepage/homepage";
 import StudentLayout from "../../Globals/Layouts/studentLayout";
+import path from "path";
+import Notification from "./Notification/notification";
+import CommonLayout from "../../Globals/Layouts/teacherLayout";
 
 const GeneralRoutes = {
   path: "",
@@ -11,9 +14,14 @@ const GeneralRoutes = {
     { ...DocumentMarketRoutes },
     { ...ExamRoutes },
     {
-      path: "homework/:hashId",
+      path: "",
+      element: <CommonLayout />,
+      children: [{ path: "notification", element: <Notification /> }],
+    },
+    {
+      path: "",
       element: <StudentLayout />,
-      children: [{ path: "", element: <IdentifyStudent /> }],
+      children: [{ path: "homework/:hashId", element: <IdentifyStudent /> }],
     },
   ],
 };

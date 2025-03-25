@@ -4,9 +4,13 @@ import { QueryParams } from "../Globals/Interfaces/interface";
 
 const API_PATH = "notifications";
 
+interface NotificationQueryParams extends QueryParams {
+  type?: string;
+}
+
 export const NotificationAPI = {
   get: async (
-    queryParams: QueryParams = { page: 1, limit: 50, sortField: "createdAt", sortOrder: "ASC" },
+    queryParams: NotificationQueryParams = { page: 1, limit: 50, sortField: "createdAt", sortOrder: "ASC" },
   ): Promise<AxiosResponse | null> => {
     try {
       const response = await axiosInstance.get(API_PATH, {

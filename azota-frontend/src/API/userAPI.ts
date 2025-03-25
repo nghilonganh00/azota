@@ -11,7 +11,7 @@ const UserAPI = {
       console.warn("No access token, skipping user info fetch");
       return null;
     }
-    
+
     try {
       const response = await axiosInstance.get("users", {
         headers: {
@@ -99,7 +99,7 @@ const UserAPI = {
     }
   },
   updateUser: async (
-    fullName: string,
+    fullname: string,
     DOB: string,
     email: string,
     phone: string,
@@ -107,7 +107,7 @@ const UserAPI = {
     avatarURL: string,
   ): Promise<AxiosResponse | null> => {
     try {
-      const response = await axiosInstance.patch("users", { fullName, DOB, email, phone, gender, avatarURL });
+      const response = await axiosInstance.patch("users", { fullname, DOB, email, phone, gender, avatarURL });
 
       return response;
     } catch (error) {

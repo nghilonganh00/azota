@@ -5,6 +5,7 @@ import { NotificationAPI } from "../../../API/notificationAPI";
 import UserAvatar from "../userAvatar";
 import { Notification as INotification } from "../../Interfaces/info.interface";
 import { DateTimeFormat, isoDateUtil } from "../../../Utils/date";
+import { Link } from "react-router-dom";
 
 const NotificationItem = ({
   notification,
@@ -151,7 +152,9 @@ export const Notification = () => {
             ))}
           </div>
 
-          <div className="p-4 text-center hover:cursor-pointer dark:text-blue-600">Xem tất cả</div>
+          <Link to={"/notification"}>
+            <div className="p-4 text-center hover:cursor-pointer dark:text-blue-600">Xem tất cả</div>
+          </Link>
         </div>
       )}
     </div>

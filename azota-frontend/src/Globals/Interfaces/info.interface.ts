@@ -57,6 +57,9 @@ export interface StudentClass {
 export interface Notification {
   _id: string;
   userId: string;
+  senderId: string;
+  senderName: string;
+  senderAvatar: string;
   title: string;
   type: string;
   message: string;

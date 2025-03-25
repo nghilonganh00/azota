@@ -77,7 +77,7 @@ export const GeneralPanel = () => {
           <input
             type="text"
             id="fullname"
-            name="fullName"
+            name="fullname"
             value={user?.fullname}
             onChange={(e) => handleChangeUserInfo(e.target.name, e.target.value)}
             className="w-full rounded-md border px-2 py-2 text-sm dark:border-none dark:bg-darkmode-800"
