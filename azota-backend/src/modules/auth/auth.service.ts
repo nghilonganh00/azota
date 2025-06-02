@@ -1,4 +1,10 @@
-import { ConflictException, Injectable, UnauthorizedException } from "@nestjs/common";
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { UserService } from "../user/user.service";
 import { JwtService } from "@nestjs/jwt";
 import { SignInDto, SignUpDto, UserResponseDto } from "./auth.dto";
@@ -46,7 +52,7 @@ export class AuthService {
   }
 
   async register(signUpDto: SignUpDto): Promise<User> {
-    const { username, password, fullName, role, email } = signUpDto;
+    const { username, password, fullname, role, email } = signUpDto;
 
     const existedUser = await this.userService.findOne(username);
 
@@ -54,7 +60,7 @@ export class AuthService {
       throw new ConflictException("Username already exists");
     }
 
-    const newUser = await this.userService.create({ username, password, fullName, role, email });
+    const newUser = await this.userService.create({ username, password, fullname, role, email });
 
     switch (role) {
       case UserRole.STUDENT:
@@ -72,7 +78,12 @@ export class AuthService {
   async refreshToken(refreshToken: string): Promise<{ accessToken: string }> {
     try {
       const payload = this.jwtService.verify(refreshToken);
-      console.log("pay load refresh token: ", payload);
+
+      const user = await this.userService.findByPk(payload.sub);
+      if (!user) {
+        throw new NotFoundException("User not exist");
+      }
+
       const newAccessToken = this.jwtService.sign(
         { sub: payload.sub, username: payload.username },
         { expiresIn: "1h" }
@@ -91,7 +102,7 @@ export class AuthService {
     return await this.register({
       username: generateRandomString(20),
       password: generateRandomString(8),
-      fullName: googleUser.fullname,
+      fullname: googleUser.fullname,
       role: UserRole.STUDENT,
       email: googleUser.email,
     });

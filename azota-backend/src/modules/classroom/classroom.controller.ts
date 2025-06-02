@@ -21,7 +21,6 @@ export class ClassroomController {
     name: "classroomId",
     example: 1,
   })
-  @UseGuards(HomeworkMustLoginGuard)
   @ApiBearerAuth()
   @Roles([UserRole.TEACHER])
   @Get(":classroomId/students")

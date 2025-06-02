@@ -16,7 +16,7 @@ import { Public } from "../../common/decorators/public.decorator";
 import { SignInDto, SignUpDto, UserResponseDto } from "./auth.dto";
 import { ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
-import { GoogleAuthGuard } from "./guards/google-auth/google-auth.guard";
+import { GoogleAuthGuard } from "./guards/google-auth.guard";
 
 @ApiTags("Auth")
 @Controller("auth")

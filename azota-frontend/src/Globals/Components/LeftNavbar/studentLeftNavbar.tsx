@@ -1,4 +1,4 @@
-import Logo from "../../logo.svg";
+import Logo from "../../../logo.svg";
 import { LuLayers } from "react-icons/lu";
 import { LuSettings } from "react-icons/lu";
 import { NavLink } from "react-router-dom";

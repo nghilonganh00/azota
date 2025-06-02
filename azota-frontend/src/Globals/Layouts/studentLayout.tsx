@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router";
 import TopBar from "../Components/TopBar/topBar";
-import StudentLeftNavbar from "../Components/studentLeftNavbar";
+import StudentLeftNavbar from "../Components/LeftNavbar/studentLeftNavbar";
 import { useEffect } from "react";
 import UserAPI from "../../API/userAPI";
 import { User } from "../Interfaces/userInterface";

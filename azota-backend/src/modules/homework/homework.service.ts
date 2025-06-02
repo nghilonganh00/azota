@@ -10,6 +10,7 @@ import { createHomeworkResDto, HomeworkDto } from "./dto/homework.dto";
 import { UpdateHomeworkReq } from "./dto/updateHomework.dto";
 import { HomeworkSubmissionService } from "../homeworkSubmission/homeworkSubmission.service";
 import { Classroom } from "../classroom/classroom.entity";
+import { NotificationService } from "../notification/notification.service";
 
 @Injectable()
 export class HomeworkService {
@@ -21,7 +22,8 @@ export class HomeworkService {
     private classroomRepository: Repository<Classroom>,
 
     private readonly teacherService: TeacherService,
-    private readonly homeworkSubmissionService: HomeworkSubmissionService
+    private readonly homeworkSubmissionService: HomeworkSubmissionService,
+    private readonly notificationService: NotificationService
   ) {}
 
   async findByPk(id: number): Promise<Homework | null> {
@@ -107,7 +109,7 @@ export class HomeworkService {
     try {
       const { homeworkFiles, classroomIds } = homeworkDto;
 
-      const teacher = await this.teacherService.findOne({ userId });
+      const teacher = await this.teacherService.getDetailByUserId(userId);
       if (!teacher) {
         throw new UnauthorizedException("Teacher not found");
       }
@@ -130,6 +132,7 @@ export class HomeworkService {
           });
           const savedHomework = await this.homeworkRepository.save(newHomework);
 
+          //Create the homework submission for each assigned student
           await Promise.all(
             classroom.studentClasses.map(async (studentClass) => {
               const newHomeworkSubmission = await this.homeworkSubmissionService.create(
@@ -138,6 +141,19 @@ export class HomeworkService {
               );
             })
           );
+
+          // Send a notification to each assigned student about the new exam
+          for (const studentClass of classroom.studentClasses) {
+            if (studentClass?.studentId) {
+              this.notificationService.sendNotification({
+                userId: studentClass.studentId,
+                type: "NEW_EXAM",
+                title: `${teacher.user.fullname}`,
+                message: `Đã được tạo bài thi ${savedHomework.title}`,
+                extraData: { homeworkId: savedHomework.id, link: "" },
+              });
+            }
+          }
 
           return savedHomework;
         })

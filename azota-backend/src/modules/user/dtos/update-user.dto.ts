@@ -3,7 +3,7 @@ import { Gender } from "src/shared/constant";
 
 export class UpdateUserDto {
   @IsNotEmpty()
-  fullName: string;
+  fullname: string;
   DOB: Date;
   email: string;
   phone: string;

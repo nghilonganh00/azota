@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { useState } from "react";
-import Notification from "./Notification/notification";
+import { Popup } from "./Popup/popup";
 
 interface CopyBoxProps {
   copyText: string;
@@ -20,12 +20,7 @@ const CopyBox: React.FC<CopyBoxProps> = (props) => {
     <div onClick={handleCopyExamURL} className="hover:cursor-pointer">
       {children}
 
-      <Notification
-        message={"Sao chép thành công"}
-        isOpen={isOpenCopyNoti}
-        setOpen={setOpenCopyNoti}
-        type={"SUCCESS"}
-      />
+      <Popup message={"Sao chép thành công"} isOpen={isOpenCopyNoti} setOpen={setOpenCopyNoti} type={"SUCCESS"} />
     </div>
   );
 };

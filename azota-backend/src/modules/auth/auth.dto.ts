@@ -34,7 +34,7 @@ export class SignUpDto {
   @ApiProperty({
     example: "Le Van Thien",
   })
-  fullName: string;
+  fullname: string;
 
   @ApiProperty({
     example: UserRole.STUDENT,

@@ -2,7 +2,7 @@ import { Gender, UserRole } from "../Constant/constant";
 
 export interface User {
   id: number;
-  fullName: string;
+  fullname: string;
   email: string;
   DOB: string;
   phone: string;

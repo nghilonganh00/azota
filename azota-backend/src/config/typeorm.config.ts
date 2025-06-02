@@ -27,12 +27,12 @@ import { TeacherSubject } from "src/modules/teacherSubject/teacherSubject.entity
 import { User } from "src/modules/user/user.entity";
 
 export const typeormConfig: TypeOrmModuleOptions = {
-  type: "mysql",
-  host: "localhost",
-  port: 3306,
-  username: "root",
-  password: "root",
-  database: "azota",
+  type: (process.env.DB_TYPE as any) || "mysql",
+  host: process.env.DB_HOST || "localhost",
+  port: parseInt(process.env.DB_PORT) || 3306,
+  username: process.env.DB_USERNAME || "root",
+  password: process.env.DB_PASSWORD || "root",
+  database: process.env.DB_NAME || "azota",
   entities: [
     Classgroup,
     Classroom,
@@ -64,7 +64,7 @@ export const typeormConfig: TypeOrmModuleOptions = {
     TeacherGrade,
     StudentClass,
   ],
-  logger: "advanced-console",
-  logging: "all",
+  // logger: "advanced-console",
+  // logging: "all",
   synchronize: true,
 };

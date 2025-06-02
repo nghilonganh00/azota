@@ -59,7 +59,7 @@ export const ExamGeneral: React.FC<ExamGeneralProps> = (props) => {
 
         <div className="flex items-center gap-2">
           <User strokeWidth={1.5} className="size-4" />
-          <div className="text-sm">{`Người tạo: ${author?.user?.fullName}`}</div>
+          <div className="text-sm">{`Người tạo: ${author?.user?.fullname}`}</div>
         </div>
 
         <div className="flex items-center gap-2">

@@ -53,3 +53,14 @@ export interface StudentClass {
   classroom: Classroom;
   homeworkResults: HomeworkResult[];
 }
+
+export interface Notification {
+  _id: string;
+  userId: string;
+  title: string;
+  type: string;
+  message: string;
+  readAt: string;
+  createdAt: string;
+  extraData: Record<string, any>;
+}
