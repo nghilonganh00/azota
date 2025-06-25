@@ -17,7 +17,7 @@ const ReviewDetail: React.FC<ReviewDetailProps> = (props) => {
   return (
     <div className="h-[800px] w-[25%] rounded-md bg-white shadow">
       <div className="flex items-center gap-2 border-b border-slate-200 p-3">
-        <StudentAvatar fullname="Lê Văn Thiện" />
+        <StudentAvatar fullname={fullname || ""} />
         <div className="text-sm font-medium">{fullname}</div>
         <span className={`material-symbols-outlined text-xl ${gender ? "text-blue-800" : "text-[#fe00a1]"}`}>
           {gender ? "male" : "female"}

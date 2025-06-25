@@ -1,14 +1,7 @@
 import {
-  AlignJustify,
-  Camera,
   ChevronDown,
-  ChevronRight,
-  FilePenLine,
   Filter,
   PanelLeftClose,
-  PanelRightClose,
-  RotateCcw,
-  Search,
 } from "lucide-react";
 import { ExamReview } from "../libs/interface";
 import { GroupedQuestionPart } from "../../../../Teacher/Exam/ExamReview/libs/interface";
@@ -25,7 +18,6 @@ const AnswerArea: React.FC<AnswerAreaProps> = (props) => {
   const correctQuestionIds = examReview.correctQuestionIds || [];
 
   const questionParts: GroupedQuestionPart[] = exam.Questions && groupQuestionsByPart(exam.Questions);
-  console.log("questions: ", questionParts);
 
   return (
     <div className="col-span-8 h-96 md:col-span-9">
@@ -81,7 +73,7 @@ const AnswerArea: React.FC<AnswerAreaProps> = (props) => {
                           }
                         >
                           {`Đáp án đúng: `}
-                          {Options.map((option, key) => option.isAnswer && option.key + " ")}
+                          {Options.map((option, key) => option.isCorrect && option.key + " ")}
                         </div>
 
                         <div

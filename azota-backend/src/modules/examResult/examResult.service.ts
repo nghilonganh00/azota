@@ -142,20 +142,14 @@ export class ExamResultService {
   async getLatestOfStudentByExamAndClass(
     userId: number,
     examId: number,
-    classroomId: number = 2,
+    classroomId: number = -1,
     queryParamsDto: QueryParamsDto
   ): Promise<MarkExamResultDto[]> {
     try {
-      const {
-        page = 1,
-        limit = 30,
-        searchField,
-        searchKeyword,
-        sortField = "createdAt",
-        sortOrder = "ASC",
-      } = queryParamsDto;
+      const { page = 1, limit = 30, sortField = "createdAt", sortOrder = "ASC" } = queryParamsDto;
 
       const teacher = await this.teacherService.findOne({ userId });
+
       if (!teacher) {
         throw new NotFoundException("Teacher not found");
       }
@@ -164,6 +158,7 @@ export class ExamResultService {
         where: { id: examId },
         relations: ["questionParts", "questionParts.questions", "questionParts.questions.options", "examClasses"],
       });
+
       if (exam.teacherId !== teacher.id) {
         throw new UnauthorizedException("Teacher unauthorized for this exam");
       }
@@ -174,18 +169,33 @@ export class ExamResultService {
         .where("subExamResult.examId = :examId", { examId: exam.id })
         .groupBy("subExamResult.studentId");
 
-      const examResults = await this.examResultRepository
-        .createQueryBuilder("examResult")
-        .innerJoinAndSelect("examResult.student", "student")
-        .innerJoin("student.studentClasses", "studentClass")
-        .leftJoinAndSelect("student.user", "user")
-        .where(`examResult.id IN (${subQuery.getQuery()})`)
-        .andWhere("studentClass.classroom = :classroomId", { classroomId: classroomId })
-        .setParameters(subQuery.getParameters())
-        .skip((page - 1) * limit)
-        .take(limit)
-        .orderBy(`examResult.${sortField}`, sortOrder.toUpperCase() as "ASC" | "DESC")
-        .getMany();
+      let examResults;
+
+      if (classroomId === -1) {
+        examResults = await this.examResultRepository
+          .createQueryBuilder("examResult")
+          .innerJoinAndSelect("examResult.student", "student")
+          .leftJoinAndSelect("student.user", "user")
+          .where(`examResult.id IN (${subQuery.getQuery()})`)
+          .setParameters(subQuery.getParameters())
+          .skip((page - 1) * limit)
+          .take(limit)
+          .orderBy(`examResult.${sortField}`, sortOrder.toUpperCase() as "ASC" | "DESC")
+          .getMany();
+      } else {
+        examResults = await this.examResultRepository
+          .createQueryBuilder("examResult")
+          .innerJoinAndSelect("examResult.student", "student")
+          .innerJoin("student.studentClasses", "studentClass")
+          .leftJoinAndSelect("student.user", "user")
+          .where(`examResult.id IN (${subQuery.getQuery()})`)
+          .andWhere("studentClass.classroom = :classroomId", { classroomId: classroomId })
+          .setParameters(subQuery.getParameters())
+          .skip((page - 1) * limit)
+          .take(limit)
+          .orderBy(`examResult.${sortField}`, sortOrder.toUpperCase() as "ASC" | "DESC")
+          .getMany();
+      }
 
       const examResultMarks = [];
       examResults.forEach((examResult) => {

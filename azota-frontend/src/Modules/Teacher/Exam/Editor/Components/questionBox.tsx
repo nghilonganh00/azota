@@ -1,18 +1,20 @@
-import { Check, ChevronDown, CircleX, EllipsisVertical, Paperclip } from "lucide-react";
+import { Check, ChevronDown, CircleX, EllipsisVertical, Paperclip, Tag } from "lucide-react";
 import EnterMark from "./enterMark";
+import LevelSelector from "./LevelSelector";
 
 interface QuestionBoxProps {
   partKey: string;
   questionKey: string;
   examJSON: any;
   setExamJSON: React.Dispatch<React.SetStateAction<any>>;
+  handleGoToLine: () => void;
 }
 
 const QuestionBox: React.FC<QuestionBoxProps> = (props) => {
-  const { partKey, questionKey, examJSON, setExamJSON } = props;
-  const { topic, options, rightAnswer } = examJSON[partKey]["questions"][questionKey];
+  const { partKey, questionKey, examJSON, setExamJSON, handleGoToLine } = props;
+  const { topic, options, rightAnswer, type, level, questionIndex } = examJSON[partKey]["questions"][questionKey];
 
-  const handleChangeRightAnswer = (partKey: string, questionKey: string, optionKey: string, isAnswer: boolean) => {
+  const handleChangeRightAnswer = (optionKey: string, isCorrect: boolean) => {
     const newExamJSON = {
       ...examJSON,
       [partKey]: {
@@ -24,13 +26,33 @@ const QuestionBox: React.FC<QuestionBoxProps> = (props) => {
       },
     };
 
-    newExamJSON[partKey]["questions"][questionKey]["options"][optionKey]["isAnswer"] = !isAnswer;
+    newExamJSON[partKey]["questions"][questionKey]["options"][optionKey]["isCorrect"] = !isCorrect;
+
+    setExamJSON(() => newExamJSON);
+  };
+
+  const handleChangeLevel = (level: string) => {
+    const newExamJSON = {
+      ...examJSON,
+      [partKey]: {
+        ...examJSON[partKey],
+        questions: {
+          ...examJSON[partKey]["questions"],
+          [questionKey]: { ...examJSON[partKey]["questions"][questionKey] },
+        },
+      },
+    };
+
+    newExamJSON[partKey]["questions"][questionKey]["level"] = level;
 
     setExamJSON(() => newExamJSON);
   };
 
   return (
-    <div className="w-full rounded-md border border-gray-400 bg-white py-6 dark:bg-darkmode-600 dark:text-slate-300">
+    <div
+      className="w-full rounded-md border border-gray-400 bg-white py-6 dark:bg-darkmode-600 dark:text-slate-300"
+      id={`question-${questionIndex}`}
+    >
       <div className="flex items-center gap-2 px-7 text-sm">
         <div className="rounded-sm border border-gray-400 px-3 py-0.5">
           <div className="text-sm font-semibold text-blue-600">{questionKey}</div>
@@ -44,17 +66,12 @@ const QuestionBox: React.FC<QuestionBoxProps> = (props) => {
           <div>Audio </div>
         </div>
 
-        <div className="flex items-end rounded border-r border-gray-400 py-0.5 pr-3 text-gray-500 dark:text-gray-800">
-          <div>Trắc nghiệm</div>
+        <div className="flex items-end border-r border-gray-400 py-0.5 pr-3 text-gray-500 dark:text-gray-800">
+          <div>{type === "MULTIQLE_CHOICE" ? "Trắc nghiệm" : "Tự luận"}</div>
           <ChevronDown strokeWidth={1.5} className="size-4" />
         </div>
 
-        <div className="border-r border-gray-300 py-0.5 pr-3">
-          <div className="flex items-center gap-1 rounded-full bg-gray-300 px-3 py-0.5 text-gray-600">
-            <div className="text-xs font-semibold">NB</div>
-            <CircleX className="size-4" />
-          </div>
-        </div>
+        <LevelSelector level={level} handleChangeLevel={handleChangeLevel} />
 
         <div className="hover:cursor-pointer hover:bg-gray-100">
           <EllipsisVertical className="size-4 text-gray-700 dark:text-blue-600" strokeWidth={1.5} />
@@ -62,25 +79,25 @@ const QuestionBox: React.FC<QuestionBoxProps> = (props) => {
       </div>
 
       <div className="mt-2 space-y-1 px-7">
-        <div className="rounded-sm border border-gray-300 p-1">
+        <div className="rounded-sm border border-gray-300 p-1 hover:cursor-pointer" onClick={handleGoToLine}>
           <div className="text-sm">{topic}</div>
         </div>
 
-        {Object.keys(options).map((optionKey, key) => {
+        {Object.keys(options).map((optionKey) => {
           const option = options[optionKey];
-          const { content, isAnswer } = option;
+          const { content, isCorrect } = option;
 
           return (
             <div
               className="relative flex items-center justify-start gap-1 hover:cursor-pointer"
               key={option.id}
-              onClick={() => handleChangeRightAnswer(partKey, questionKey, optionKey, isAnswer)}
+              onClick={() => handleChangeRightAnswer(optionKey, isCorrect)}
             >
-              {isAnswer && <Check className="-ml-4 size-3 text-blue-700" strokeWidth={5} />}
+              {isCorrect && <Check className="-ml-4 size-3 text-blue-700" strokeWidth={5} />}
 
               <div
                 className={
-                  "rounded-sm border p-1 px-1.5 " + (isAnswer ? "border-blue-700 text-blue-700" : "border-gray-300")
+                  "rounded-sm border p-1 px-1.5 " + (isCorrect ? "border-blue-700 text-blue-700" : "border-gray-300")
                 }
               >
                 <div className="text-sm font-semibold">{optionKey}</div>
@@ -89,7 +106,7 @@ const QuestionBox: React.FC<QuestionBoxProps> = (props) => {
               <div
                 className={
                   "rounded-sm border p-1 pl-1.5 pr-5 " +
-                  (isAnswer ? "border-blue-700 text-blue-700" : "border-gray-300")
+                  (isCorrect ? "border-blue-700 text-blue-700" : "border-gray-300")
                 }
               >
                 <div className="text-sm">{content}</div>

@@ -13,7 +13,7 @@ const HomeworkNotifyItem: React.FC<HomeworkNotifyItemProps> = (props) => {
   return (
     <div>
       <div className="flex justify-between rounded px-2 py-3 hover:cursor-pointer hover:bg-darkmode-400">
-        <UserAvatar fullname="Lê Văn Thiện" />
+        <UserAvatar fullname={notification?.senderName || ""} />
         <div className="ml-4 flex-1 space-y-0.5">
           <p className="font-medium dark:text-gray-300">{`${notification?.senderName || ""} đã tạo bài thi mới`}</p>
           <div className="alight-center flex gap-2 text-gray-300">

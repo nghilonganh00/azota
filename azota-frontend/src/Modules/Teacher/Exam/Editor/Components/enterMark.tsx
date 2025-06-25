@@ -9,7 +9,8 @@ interface EnterMarkProps {
 
 const EnterMark: React.FC<EnterMarkProps> = (props) => {
   const { partKey, questionKey, examJSON, setExamJSON } = props;
-  const score = examJSON[partKey]["questions"][questionKey]["scorePerQuestion"];
+  const score = Math.round(examJSON[partKey]["questions"][questionKey]["scorePerQuestion"] * 100) / 100;
+
 
   const [isOpenInput, setOpenInput] = useState(false);
 
@@ -35,22 +36,19 @@ const EnterMark: React.FC<EnterMarkProps> = (props) => {
   return (
     <div>
       {isOpenInput && (
-        <div
-          className="fixed left-0 top-0 z-40 h-screen w-screen"
-          onClick={() => setOpenInput(false)}
-        ></div>
+        <div className="fixed left-0 top-0 z-40 h-screen w-screen" onClick={() => setOpenInput(false)}></div>
       )}
 
-      <div className="relative z-50 border-r border-gray-400 pr-3">
+      <div className="relative z-40 border-r border-gray-400 pr-3">
         {!isOpenInput ? (
           <div className="text-sm text-blue-700" onClick={() => setOpenInput(true)}>
-            Nhập điểm
+            {score > 0 ? score + " Điểm" : "Nhập điểm"}
           </div>
         ) : (
           <div className="flex items-center justify-center gap-2">
             <input
               type="text"
-              className="h-6 w-[46px] rounded-md border border-blue-600 px-3 py-2 text-center text-sm"
+              className="h-6 w-[46px] rounded-md border border-blue-600 px-3 py-2 text-center text-sm dark:text-slate-800"
               value={score}
               onChange={(e) => handleEnterMark(e.target.value)}
             />

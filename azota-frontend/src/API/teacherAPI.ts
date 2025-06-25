@@ -1,3 +1,5 @@
+import { axiosInstance } from "../services/axiosInstance";
+
 const accessToken = localStorage.getItem("accessToken");
 
 export const TeacherAPI = {
@@ -7,10 +9,9 @@ export const TeacherAPI = {
         throw new Error("Access Token not found in localStorage.");
       }
 
-      const url = new URL("http://localhost:8080/api/teachers/register");
+      const url = "http://localhost:8080/api/teachers/register";
 
-      const response = await fetch(url, {
-        method: "GET",
+      const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -18,6 +19,9 @@ export const TeacherAPI = {
       });
 
       return response;
-    } catch (error) {}
+    } catch (error) {
+      // Optionally log or handle error
+      return null;
+    }
   },
 };

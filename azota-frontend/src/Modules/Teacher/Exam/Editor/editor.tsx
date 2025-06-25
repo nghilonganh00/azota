@@ -8,6 +8,12 @@ const Editor = () => {
   const savedEditorValue = localStorage.getItem("exam") ?? "";
   const [editorValue, setEditorValue] = useState(savedEditorValue);
   const [examJSON, setExamJSON] = useState<{ [key: string]: any }>();
+  console.log("examJSON: ", examJSON);
+  const [goToLine, setGoToLine] = useState<number>(1);
+
+  const handleGoToLine = (line: number) => {
+    setGoToLine(line);
+  };
 
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -43,9 +49,9 @@ const Editor = () => {
         <title>Tạo bài thi</title>
       </Helmet>
 
-      <ListQuestionPanel examJSON={examJSON} setExamJSON={setExamJSON} />
+      <ListQuestionPanel examJSON={examJSON} setExamJSON={setExamJSON} handleGoToLine={handleGoToLine} />
 
-      <EditorCode value={editorValue} setValue={setEditorValue} />
+      <EditorCode value={editorValue} setValue={setEditorValue} goToLine={goToLine} />
     </div>
   );
 };

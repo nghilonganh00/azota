@@ -22,7 +22,7 @@ export class ExamResultController {
   @Roles([UserRole.TEACHER])
   @Get("/:id/detail")
   async getById(@Param("id") examResultId: number): Promise<ExamResultDto> {
-    const userId = this.request?.user?.id;
+    const userId = this.request?.user?.sub;
 
     return this.examResultService.getById(userId, examResultId);
   }
@@ -33,7 +33,7 @@ export class ExamResultController {
     @Param("examId") examId: number,
     @Param("studentId") studentId: number
   ): Promise<PreviewExamResultDto[]> {
-    const userId = this.request?.user?.id;
+    const userId = this.request?.user?.sub;
 
     return this.examResultService.getHistory(userId, examId, studentId);
   }
@@ -42,7 +42,7 @@ export class ExamResultController {
   @Roles([UserRole.STUDENT])
   @Get("/:id/score")
   async getScore(@Param("id") id: number): Promise<MarkExamResultDto> {
-    const userId = this.request?.user?.id;
+    const userId = this.request?.user?.sub;
 
     return this.examResultService.getScore(userId, id);
   }
@@ -55,7 +55,7 @@ export class ExamResultController {
     @Param("examId") examId: number,
     @Param("classroomId") classroomId: number
   ): Promise<ExamResultDto[]> {
-    const userId = this.request?.user?.id;
+    const userId = this.request?.user?.sub;
 
     return this.examResultService.getLatestOfStudentByExamAndClass(userId, examId, classroomId, queryParamsDto);
   }

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Menu from "./Menu/menu";
 import { LuBell } from "react-icons/lu";
+import convertToJSON from "../../Modules/Teacher/Exam/Editor/Utils/formatExam";
 
 const EditorTopBar = () => {
   const navigate = useNavigate();
@@ -9,8 +10,35 @@ const EditorTopBar = () => {
 
   const [examName, setExamName] = useState<string>("");
   const [openExamNameInput, setOpenExamNameInput] = useState<boolean>(true);
+  const examJSON = convertToJSON(localStorage.getItem("exam") || "");
 
   const handleClickContinue = () => {
+    if (examJSON) {
+      let hasAllAnswers = true;
+
+      // Check each part in the exam
+      for (const partKey in examJSON) {
+        const part = examJSON[partKey];
+        if (part.questions) {
+          // Check each question in the part
+          for (const questionKey in part.questions) {
+            const question = part.questions[questionKey];
+            const hasAnswer = Object.values(question.options).some((option: any) => option.isCorrect);
+            if (!hasAnswer) {
+              hasAllAnswers = false;
+              break;
+            }
+          }
+        }
+        if (!hasAllAnswers) break;
+      }
+
+      if (!hasAllAnswers) {
+        alert("Vui lòng nhập đầy đủ đáp án cho tất cả câu hỏi!");
+        return;
+      }
+    }
+
     localStorage.setItem("exam_config", examName);
     navigate("/teacher/exam/editor/create");
   };

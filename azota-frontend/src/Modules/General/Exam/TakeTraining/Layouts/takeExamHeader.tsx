@@ -1,7 +1,9 @@
 import { Maximize, Timer, ZoomIn, ZoomOut } from "lucide-react";
 import { useCountDown } from "../libs/hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Exam } from "../libs/interface";
+import UserAPI from "../../../../../API/userAPI";
+import { User } from "../../../../../Globals/Interfaces/user.interface";
 
 interface TakeExamHeaderProps {
   exam: Exam;
@@ -12,6 +14,7 @@ const TakeExamHeader: React.FC<TakeExamHeaderProps> = (props) => {
   const { exam, handleFinish } = props;
 
   const timeLeft = useCountDown(exam.examDuration);
+  const [user, setUser] = useState<User>();
 
   useEffect(() => {
     if (timeLeft.hours === "00" && timeLeft.minutes === "00" && timeLeft.seconds === "00") {
@@ -20,9 +23,24 @@ const TakeExamHeader: React.FC<TakeExamHeaderProps> = (props) => {
     }
   }, [timeLeft]);
 
+  useEffect(() => {
+    const fetchUserInfoData = async () => {
+      const response = await UserAPI.getInfo();
+
+      if (response?.status !== 200) {
+        return;
+      }
+      const userObj = response.data;
+      console.log("userObj: ", userObj);
+      setUser(userObj);
+    };
+
+    fetchUserInfoData();
+  }, []);
+
   return (
     <div className="fixed left-0 top-0 flex w-screen items-center bg-white px-3 py-2">
-      <div className="mx-auto text-sm font-medium">Thí sinh: Lê Văn Thiện</div>
+      <div className="mx-auto text-sm font-medium">Thí sinh: {user?.fullname || ""}</div>
 
       <div className="flex items-center gap-2">
         <Timer strokeWidth={1.5} className="w-[20px]" />

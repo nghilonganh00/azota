@@ -74,7 +74,7 @@ const SubmitExam = () => {
                 <div className="">Số câu trắc nghiệm đúng</div>
               </div>
 
-              <div className="text-sm font-medium text-lime-500">{examResult?.correctQuestionTotal}</div>
+              <div className="text-sm font-medium text-lime-500">{examResult?.correctTotal}</div>
             </div>
 
             <div className="flex items-center justify-between">
@@ -84,7 +84,7 @@ const SubmitExam = () => {
               </div>
 
               <div className="text-sm font-medium text-red-600">
-                {(examResult?.questionTotal || 0) - (examResult?.correctQuestionTotal || 0)}
+                {(examResult?.questionTotal || 0) - (examResult?.correctTotal || 0)}
               </div>
             </div>
 

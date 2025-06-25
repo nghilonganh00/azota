@@ -5,12 +5,16 @@ import { useSearchParams } from "react-router-dom";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get("token");
+  // const [searchParams] = useSearchParams();
+  // const token = searchParams.get("token");
+
+  const token = localStorage.getItem("accessToken");
 
   const handleUserRedirect = async () => {
     const response = await UserAPI.getInfo();
-    if (!response) return;
+    if (!response) {
+      return navigate("/auth/login", { replace: true });
+    }
 
     const user = response?.data;
 
@@ -23,14 +27,14 @@ const HomePage = () => {
 
   useEffect(() => {
     if (token) {
-      localStorage.setItem("accessToken", token);
-      navigate("/", { replace: true });
+      handleUserRedirect();
     }
+    else {
+      navigate("/auth/login", { replace: true });
+    }
+  }, []);
 
-    handleUserRedirect();
-  }, [token]);
-
-  return <div></div>;
+  return <div>Homepage</div>;
 };
 
 export default HomePage;

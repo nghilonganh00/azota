@@ -28,19 +28,18 @@ const RoleTabs: React.FC<RoleTabsProps> = (props) => {
         <div
           onClick={() => onChange("userRole", tab.value)}
           className={
-            "flex-1 border-b-2 py-2 hover:cursor-pointer " +
+            "flex-1 border-b-2 py-2 hover:cursor-pointer dark:border-darkmode-600" +
             (values["userRole"] === tab.value ? "border-b-2 border-blue-800" : "")
           }
         >
-          <div className="flex items-center justify-center gap-2">
+          <div
+            className={
+              "flex items-center justify-center gap-2 " +
+              (values["userRole"] === tab.value ? "dark:text-slate-300" : "text-gray-600 dark:text-slate-600")
+            }
+          >
             <tab.icon strokeWidth={1.5} className="size-4" />
-            <div
-              className={
-                "text-sm font-semibold " + (values["userRole"] === tab.value ? "" : "text-gray-600")
-              }
-            >
-              {tab.label}
-            </div>
+            <div className="text-sm font-semibold">{tab.label}</div>
           </div>
         </div>
       ))}

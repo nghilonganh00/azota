@@ -91,6 +91,8 @@ export class ExamService {
         throw new NotFoundException("Student not found");
       }
 
+      console.log("hashId: ", hashId);
+
       const exam = await this.examRepository.findOne({
         where: {
           hashId: hashId,

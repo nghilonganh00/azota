@@ -98,6 +98,23 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
-
 Docker
 docker run -d --name azota-backend --network azota-network -e DB_HOST=db-mysql -e DB_PORT=3306 -e DB_USER=root -e DB_PASSWORD=root -e DB_NAME=azota -e REDIS_HOST=redis -e REDIS_PORT=6379 -p 3000:3000 azota-backend
+
+## Database Seeding
+
+The application includes a comprehensive seeder system that populates the database with initial data:
+
+```bash
+# Run the seeder
+$ npm run seed
+```
+
+This will create:
+
+- Grades (Lớp 1-12)
+- Subjects (Toán học, Ngữ văn, Tiếng Anh, etc.)
+- Sample schools, teachers, and students
+- Default users with credentials
+
+For more information, see [src/modules/database/seeder/README.md](src/modules/database/seeder/README.md).

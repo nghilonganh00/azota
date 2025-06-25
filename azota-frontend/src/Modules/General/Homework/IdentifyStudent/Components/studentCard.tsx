@@ -46,7 +46,7 @@ const StudentCard: React.FC<StudentCardProps> = (props) => {
         }
         onClick={() => handleIdenify()}
       >
-        <StudentAvatar fullname={"Lê Văn Thiện"} />
+        <StudentAvatar fullname={studentClass.fullname} />
         <div>
           <div className="mb-1 text-sm font-semibold">{studentClass.fullname}</div>
           <div className="text-xs font-medium text-gray-500">

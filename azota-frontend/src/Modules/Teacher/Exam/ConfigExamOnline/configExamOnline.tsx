@@ -29,9 +29,8 @@ const ConfigExamOnline = () => {
 
     const response: any = await ExamAPI.publish(examId, examConfig, assignedStudentIds, assignedClassIds);
 
-    if (response.ok) {
-      const responseObj = await response.json();
-      const updatedExam: Exam = responseObj.data;
+    if (response && response.status === 201) {
+      const updatedExam: Exam = response.data;
       navigate(`/teacher/exam/publish-exam/${updatedExam.hashId}`);
     }
   };

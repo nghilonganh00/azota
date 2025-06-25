@@ -6,7 +6,7 @@ export interface Option {
   id: number;
   key: string;
   optionContent: string;
-  isAnswer: boolean;
+  isCorrect: boolean;
   questionId: number;
   createdAt: string;
   updatedAt: string;

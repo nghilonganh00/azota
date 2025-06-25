@@ -72,7 +72,7 @@ export const MarkArea: React.FC<MarkAreaProps> = (props) => {
         <div className="text-sm font-semibold">{homeworkSubmission?.homework?.title || ""}</div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <UserAvatar fullname="Lê Văn Thiện" className={"size-9"} />
+            <UserAvatar fullname={homeworkSubmission?.studentClass?.fullname || ""} className={"size-9"} />
             <div>
               <div className="text-sm">{homeworkSubmission?.studentClass?.fullname || ""}</div>
               <div className="text-xs">{homeworkSubmission?.homework?.classroom?.className || ""}</div>

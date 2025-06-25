@@ -1,7 +1,8 @@
 version: "3.9"
+
 services:
   db-mysql:
-    image: mysql
+    image: mysql:8.0
     restart: always
     environment:
       - MYSQL_DATABASE=azota
@@ -20,17 +21,29 @@ services:
     volumes:
       - redis_data:/data
 
+  azota-backend:
+    build: .
+    container_name: azota-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db-mysql
+      - redis
+    environment:
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_SECRET=${GOOGLE_SECRET}
+      - GOOGLE_CALLBACK_URL=${GOOGLE_CALLBACK_URL}
+
+      - MONGO_URI=${MONGO_URI}
+      - MONGO_DB_NAME=${MONGO_DB_NAME}
+
+      - DB_TYPE=${DB_TYPE}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+
 volumes:
   mysql_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: "D:/My projects/Web/azota/azota_db"
-
   redis_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: "D:/My projects/Web/azota/redis_data"

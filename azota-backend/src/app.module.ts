@@ -33,6 +33,7 @@ import { NotificationModule } from "./modules/notification/notification.module";
 import { BullModule } from "@nestjs/bull";
 import { TeacherPermissionModule } from "./modules/teacher-permission/teacher-permission.module";
 import { PermissionModulue } from "./modules/permission/permission.module";
+import { SeederModule } from "./modules/seeder/seeder.module";
 
 @Module({
   imports: [
@@ -73,6 +74,7 @@ import { PermissionModulue } from "./modules/permission/permission.module";
     NotificationModule,
     PermissionModulue,
     TeacherPermissionModule,
+    SeederModule,
   ],
   providers: [
     {

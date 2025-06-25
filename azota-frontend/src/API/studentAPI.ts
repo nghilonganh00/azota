@@ -2,7 +2,7 @@ import axios from "axios";
 import { NewStudent } from "../Modules/Teacher/Class/ClassDetail/Interface/interface";
 import { axiosInstance } from "../services/axiosInstance";
 
-const userId = localStorage.getItem("userId");
+const accessToken = localStorage.getItem("accessToken");
 
 const StudentAPI = {
   confirm: async (studentId: string | number) => {
@@ -26,7 +26,7 @@ const StudentAPI = {
         params: { examId, classroomId },
         headers: {
           "Content-Type": "application/json",
-          Authorization: userId,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
 
@@ -68,7 +68,7 @@ const StudentAPI = {
     classId,
   }: NewStudent) => {
     try {
-      if (!userId) {
+      if (!accessToken) {
         throw new Error("User ID not found in localStorage.");
       }
 
@@ -86,7 +86,7 @@ const StudentAPI = {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: userId,
+            Authorization: `Bearer ${accessToken}`,
           },
         },
       );

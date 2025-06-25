@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "seed": "ts-node -r tsconfig-paths/register src/modules/seeder/seeder-script.ts"
   },
   "dependencies": {
     "@nestjs/bull": "^11.0.2",
@@ -40,6 +41,7 @@
     "cookie-parser": "^1.4.7",
     "crypto": "^1.0.1",
     "crypto-js": "^4.2.0",
+    "dotenv": "^16.3.1",
     "ioredis": "^5.5.0",
     "mongoose": "^8.11.0",
     "mysql2": "^3.12.0",

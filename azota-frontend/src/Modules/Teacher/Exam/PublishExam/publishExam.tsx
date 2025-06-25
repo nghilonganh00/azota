@@ -20,8 +20,12 @@ const PublishExam = () => {
   useEffect(() => {
     const fetchExamConfig = async () => {
       if (hashId) {
-        const response = await ExamAPI.getConfig(hashId);
-        setExamConfig(response?.data.examObj);
+        const response = await ExamAPI.previewByHashId(hashId);
+
+        if (response && response.status === 200) {
+          const exam: Exam = response.data;
+          setExamConfig(exam);
+        }
       }
     };
 
@@ -32,7 +36,7 @@ const PublishExam = () => {
     <div className="">
       <div className="mx-auto mt-10 w-[600px] space-y-4 text-center text-gray-900">
         <div>
-          <div className="text-lg font-semibold text-gray-800">Xuất bản thành công 🎉 </div>
+          <div className="text-lg font-semibold text-gray-900">Xuất bản thành công 🎉 </div>
 
           <div className="text-sm text-gray-900">
             Copy link bên dưới và gửi cho học sinh. Học sinh truy cập link để làm bài và nộp bài
@@ -40,10 +44,8 @@ const PublishExam = () => {
         </div>
 
         <div className="rounded-md bg-white px-3 py-3 text-left shadow-sm">
-          {/* <div className="text-sm font-semibold">{homework.homeworkName}</div> */}
-
           <div className="space-y-1">
-            <div className="mb-4 text-sm font-medium">{examConfig?.examName}</div>
+            <div className="mb-4 text-sm font-medium">{examConfig?.title}</div>
 
             <div className="mt-2 flex items-center justify-between bg-slate-100 pl-4">
               <input type="text" readOnly value={examURL} className="flex-1 bg-transparent text-sm text-blue-800" />

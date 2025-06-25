@@ -22,6 +22,8 @@ const TakeExam = () => {
     if (!exam) return;
 
     const examAnswersString = JSON.stringify(examAnswers);
+    console.log("exam: ", exam.hashId);
+    console.log("examAnswersString: ", examAnswersString);
     const response = await ExamResultAPI.create(exam.hashId, examAnswersString, examStartTime);
 
     if (response?.status !== 201) return;

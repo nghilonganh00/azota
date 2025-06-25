@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 
 import { Link, useNavigate } from "react-router-dom";
 import AuthAPI from "../../../API/authAPI";
@@ -16,30 +16,40 @@ interface LoginInfo {
 
 const Login = () => {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem("accessToken");
 
   const [values, setValues] = useState<LoginInfo>({
     username: "",
     password: "",
   });
+  const [message, setMessage] = useState<string>("");
+  const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
 
   const handleChangeInput = (name: string, newValue: string) => {
     setValues((preValues) => ({ ...preValues, [name]: newValue }));
+    setMessage("");
   };
 
   const handleLogin = async () => {
     const { username, password } = values;
 
+    if (!username || !password) {
+      setMessage("Vui lòng nhập đầy đủ thông tin");
+      return;
+    }
+
     const response = await AuthAPI.login(username, password);
 
     if (response?.status === 200) {
       const loginData = response.data;
+      console.log(loginData);
 
       if (loginData.accessToken) {
         localStorage.setItem("accessToken", loginData.accessToken);
       }
 
       navigate(loginData.user.role === "TEACHER" ? "/teacher/dashboard" : "/student/classroom");
+    } else {
+      setMessage("Tài khoản hoặc mật khẩu không chính xác");
     }
   };
 
@@ -79,11 +89,21 @@ const Login = () => {
             value={values["password"]}
             name="password"
             onChange={(e) => handleChangeInput(e.target.name, e.target.value)}
-            type="password"
-            className="w-full rounded-md border border-slate-300 px-4 py-2.5 text-sm shadow-sm"
+            type={isShowPassword ? "text" : "password"}
+            className="w-full rounded-md border border-slate-300 px-4 py-2.5 text-sm text-gray-800 shadow-sm"
             placeholder="Mật khẩu"
           />
-          <EyeOff className="absolute right-2 top-2 text-gray-600" strokeWidth={1.5} />
+          <EyeOff
+            className={`absolute right-2 top-2 text-gray-600 ${isShowPassword ? "hidden" : ""}`}
+            strokeWidth={1.5}
+            onClick={() => setIsShowPassword(!isShowPassword)}
+          />
+          <Eye
+            className={`absolute right-2 top-2 text-gray-600 ${isShowPassword ? "" : "hidden"}`}
+            strokeWidth={1.5}
+            onClick={() => setIsShowPassword(!isShowPassword)}
+          />
+          <div className="mt-1 text-xs text-red-500">{message}</div>
         </div>
         <div className="w-full">
           <div className="text-sm text-gray-800 dark:text-slate-300">Quên mật khẩu ?</div>

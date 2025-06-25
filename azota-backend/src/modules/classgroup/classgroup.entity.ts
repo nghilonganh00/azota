@@ -1,15 +1,8 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
-import { Classroom } from '../classroom/classroom.entity';
-import { BaseEntity } from 'src/common/mysql/base.entity';
-import { IsNotEmpty } from 'class-validator';
-import { Teacher } from '../teacher/teacher.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColumn } from "typeorm";
+import { Classroom } from "../classroom/classroom.entity";
+import { BaseEntity } from "src/common/mysql/base.entity";
+import { IsNotEmpty } from "class-validator";
+import { Teacher } from "../teacher/teacher.entity";
 
 @Entity()
 export class Classgroup extends BaseEntity {
@@ -17,14 +10,13 @@ export class Classgroup extends BaseEntity {
   @IsNotEmpty()
   classgroupName: string;
 
-  @Column()
-  @IsNotEmpty()
+  @Column({ nullable: true })
   teacherId: number;
 
   @ManyToOne(() => Teacher, (teacher) => teacher.classgroups, {
     nullable: false,
   })
-  @JoinColumn({ name: 'teacherId' })
+  @JoinColumn({ name: "teacherId" })
   teacher: Teacher;
 
   @OneToMany(() => Classroom, (classroom) => classroom.classgroup)

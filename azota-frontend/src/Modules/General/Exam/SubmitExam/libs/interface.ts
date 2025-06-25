@@ -7,6 +7,6 @@ export interface ExamConfig extends Exam {
 
 export interface ExamResultMark extends ExamResult {
   score: number;
-  correctQuestionTotal: number;
+  correctTotal: number;
   questionTotal: number;
 }

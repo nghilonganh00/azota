@@ -6,6 +6,7 @@ import { LuLayers } from "react-icons/lu";
 import { LuUsers } from "react-icons/lu";
 import { LuBookOpen } from "react-icons/lu";
 import { LuSettings } from "react-icons/lu";
+import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
 const TABS = [
@@ -21,7 +22,9 @@ const LeftNavbar = () => {
   return (
     <nav className="hidden h-screen w-24 bg-blue-800 dark:bg-[#1b253b] md:block">
       <div className="flex flex-col items-center pt-5">
-        <img src={Logo} alt="" className="w-10" />
+        <Link to="/">
+          <img src={Logo} alt="" className="w-10" />
+        </Link>
         <div className="mt-9 space-y-1">
           {TABS.map((tab, index) => (
             <NavLink

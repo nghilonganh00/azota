@@ -6,6 +6,7 @@ import { TeacherAPI } from "../../../API/teacherAPI";
 import { User } from "../../Interfaces/user.interface";
 import { UserRole } from "../../Constant/constant";
 import AuthAPI from "../../../API/authAPI";
+import UserAvatar from "../userAvatar";
 
 interface RoleActionProps {
   onClick: () => void;
@@ -14,7 +15,7 @@ interface RoleActionProps {
 
 const MENU_TABS = [
   { icon: UserIcon, label: "Tài Khoản", link: "/auth/account-setting" },
-  { icon: ArrowRightLeft, label: "Vào màn học sinh", link: "/student/classroom" },
+  // { icon: ArrowRightLeft, label: "Vào màn học sinh", link: "/student/classroom" },
 ];
 
 const AUTH_TABS = [
@@ -72,7 +73,7 @@ const Menu = () => {
     try {
       const response = await TeacherAPI.register();
 
-      if (response && response.ok) {
+      if (response && response.status === 200) {
         console.log("OK");
         navigate("/teacher/dashboard");
       }
@@ -109,10 +110,7 @@ const Menu = () => {
       onMouseEnter={() => setDropdownVisible(true)}
       onMouseLeave={() => setDropdownVisible(false)}
     >
-      <img
-        className="h-8 w-8 rounded-full"
-        src="https://lh3.googleusercontent.com/a/ACg8ocJ_iFoqcbXAa93XLL5ekog96hEVyxgkeCD7oenQOr3efwaZiQ=s96-c"
-      ></img>
+      {user?.fullname && <UserAvatar fullname={user.fullname} />}
       <div>
         <div className="text-sm font-medium text-slate-800 dark:text-gray-300">{user.fullname}</div>
         <div className="text-xs text-slate-500 dark:text-slate-400">
@@ -137,6 +135,24 @@ const Menu = () => {
                 <div className="text-sm">{tab.label}</div>
               </Link>
             ))}
+
+            {window.location.pathname.startsWith("/teacher") ? (
+              <Link
+                to="/student/classroom"
+                className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
+              >
+                <ArrowRightLeft strokeWidth={1.5} className="size-4" />
+                <div className="text-sm">Vào màn hình học sinh</div>
+              </Link>
+            ) : (
+              <Link
+                to="/teacher/dashboard"
+                className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
+              >
+                <ArrowRightLeft strokeWidth={1.5} className="size-4" />
+                <div className="text-sm">Vào màn hình giáo viên</div>
+              </Link>
+            )}
 
             <div
               className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
