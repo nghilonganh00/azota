@@ -64,23 +64,7 @@ const AuthAPI = {
       return null;
     }
   },
-  loginByGoogle: async (accessToken: string) => {
-    try {
-      const url = "http://localhost:8080/api/auth/login-by-google";
 
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${accessToken}`,
-        },
-      });
-
-      return response;
-    } catch (error) {
-      console.log("Error in login of AuthAPI: ", error);
-    }
-  },
   generateLoginQRCode: async (): Promise<Response> => {
     try {
       const url = "http://localhost:8080/api/auth/generate-login-qr";

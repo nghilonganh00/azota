@@ -40,6 +40,7 @@ export class AuthController {
     return { accessToken: data.accessToken, user: data.user };
   }
 
+  
   @Public()
   @UseGuards(GoogleAuthGuard)
   @Get("google/login")

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FileText, QrCode, Search, Settings, Share2 } from "lucide-react";
 import StudentTable from "../Components/studentTable";
 import { useParams } from "react-router";
-import { Classroom } from "../../../../../Globals/Interfaces/info.interface";
+import { Classroom, StudentClass } from "../../../../../Globals/Interfaces/info.interface";
 import AddStudent from "../Components/addStudent";
 import { AxiosResponse } from "axios";
 import { ClassroomAPI } from "../../../../../API/classroomAPI";
@@ -10,6 +10,7 @@ import { ClassroomAPI } from "../../../../../API/classroomAPI";
 const ListStudent = () => {
   const { classId } = useParams();
   const [classroom, setClassroom] = useState<Classroom | null>(null);
+  const [listStudent, setListStudent] = useState<StudentClass[]>([]);
   const [homeworkTotal, setHomeworkTotal] = useState<number>(0);
 
   useEffect(() => {
@@ -22,6 +23,7 @@ const ListStudent = () => {
         }
         const data = response.data;
         setClassroom(data);
+        setListStudent(data?.studentClasses || []);
         setHomeworkTotal(data?.assignments?.length || 0);
       }
     };
@@ -68,7 +70,7 @@ const ListStudent = () => {
             <div className="text-sm font-semibold text-white">Xuất bảng điểm</div>
           </div>
 
-          <AddStudent />
+          <AddStudent listStudent={listStudent} setListStudent={setListStudent} />
 
           <div className="rounded-md bg-white p-2 shadow dark:bg-darkmode-600">
             <Settings strokeWidth={1.5} className="size-5 dark:text-slate-300" />
@@ -76,7 +78,7 @@ const ListStudent = () => {
         </div>
       </div>
 
-      <StudentTable homeworkTotal={0} listStudent={classroom?.studentClasses || []} />
+      <StudentTable homeworkTotal={homeworkTotal} listStudent={listStudent} setListStudent={setListStudent} />
     </div>
   );
 };

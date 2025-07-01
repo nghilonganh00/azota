@@ -12,8 +12,8 @@ const AllExams: React.FC<AllExamsProps> = (props) => {
   const { listExamConfig } = props;
 
   return (
-    <div className="text-gray-800">
-      <div className="mb-4 text-lg font-medium text-slate-300">Tất cả</div>
+    <div className="text-gray-800 dark:text-slate-300">
+      <div className="mb-4 text-lg font-medium">Tất cả</div>
 
       <div className="relative min-w-[1100px] overflow-x-auto bg-white pb-8 shadow-md dark:bg-[rgb(var(--color-darkmode-600))] sm:rounded-lg">
         <table className="w-full text-left text-sm">

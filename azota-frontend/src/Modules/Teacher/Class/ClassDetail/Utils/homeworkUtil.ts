@@ -2,6 +2,8 @@ import { Homework } from "../Interface/interface";
 
 const HomeworkUtils = {
   groupByCreatedAt: (listHomework: Homework[]) => {
+    if (!listHomework) return {};
+
     return listHomework.reduce((groups: { [key: string]: Homework[] }, homework: Homework) => {
       const date = homework.createdAt;
       if (!groups[date]) {

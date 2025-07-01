@@ -3,18 +3,18 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import ExamAPI from "../../../../API/examAPI";
 import { Exam } from "../../../../Globals/Interfaces/exam.interface";
-import { Popup } from "../../../../Globals/Components/Popup/popup";
+import { usePopup } from "../../../../Globals/Components/Popup/popup";
 
 const PublishExam = () => {
   const { hashId } = useParams();
+  const { handleNotify, Popup } = usePopup();
 
   const [examConfig, setExamConfig] = useState<Exam>();
-  const [isOpenCopyNoti, setOpenCopyNoti] = useState<boolean>(false);
   const examURL = `http://localhost:3000/exam/${hashId}`;
 
   const handleCopyHomeworkURL = (homeworkURL: string) => {
     navigator.clipboard.writeText(homeworkURL);
-    setOpenCopyNoti(true);
+    handleNotify("Sao chép thành công", "SUCCESS");
   };
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const PublishExam = () => {
         </div>
       </div>
 
-      <Popup message={"Sao chép thành công"} isOpen={isOpenCopyNoti} setOpen={setOpenCopyNoti} type={"SUCCESS"} />
+      <Popup />
     </div>
   );
 };

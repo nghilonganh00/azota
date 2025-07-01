@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
-import { useState } from "react";
-import { Popup } from "./Popup/popup";
+import { usePopup } from "./Popup/popup";
 
 interface CopyBoxProps {
   copyText: string;
@@ -8,19 +7,19 @@ interface CopyBoxProps {
 }
 const CopyBox: React.FC<CopyBoxProps> = (props) => {
   const { copyText, children } = props;
-  const [isOpenCopyNoti, setOpenCopyNoti] = useState(false);
+  const { handleNotify, Popup } = usePopup();
 
   const handleCopyExamURL = () => {
     navigator.clipboard.writeText(copyText);
 
-    setOpenCopyNoti(true);
+    handleNotify("Sao chép thành công", "SUCCESS");
   };
 
   return (
     <div onClick={handleCopyExamURL} className="hover:cursor-pointer">
       {children}
 
-      <Popup message={"Sao chép thành công"} isOpen={isOpenCopyNoti} setOpen={setOpenCopyNoti} type={"SUCCESS"} />
+      <Popup />
     </div>
   );
 };

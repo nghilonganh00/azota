@@ -19,6 +19,13 @@ export class TeacherService {
     return await this.teacherRepository.findOneBy(conditions);
   }
 
+  async findOneByEmail(email: string): Promise<Teacher | null> {
+    return await this.teacherRepository.findOne({
+      where: { user: { email: email } },
+      relations: ["user"],
+    });
+  }
+
   async getDetailByUserId(userId: number): Promise<Teacher | null> {
     return await this.teacherRepository.findOne({
       where: { userId },

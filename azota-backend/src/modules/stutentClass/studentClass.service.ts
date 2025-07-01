@@ -162,4 +162,27 @@ export class StudentClassService {
       throw error;
     }
   }
+
+  async remove(userId: number, studentClassId: number) {
+    const studentClass = await this.studentClassRepository.findOne({
+      where: { id: studentClassId },
+      relations: ["classroom"],
+    });
+    if (!studentClass) {
+      throw new NotFoundException("Student not found");
+    }
+
+    const teacher = await this.teacherService.findOne({ userId });
+    if (!teacher) {
+      throw new NotFoundException("Teacher not found");
+    }
+
+    if (studentClass.classroom.teacherId !== teacher.id) {
+      throw new UnauthorizedException("You are not the teacher of this classroom");
+    }
+
+    await this.studentClassRepository.delete(studentClassId);
+
+    return { message: "Student removed successfully" };
+  }
 }

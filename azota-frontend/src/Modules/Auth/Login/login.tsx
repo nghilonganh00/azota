@@ -82,7 +82,7 @@ const Login = () => {
           onChange={(e) => handleChangeInput(e.target.name, e.target.value)}
           type="text"
           className="w-full rounded-md border border-slate-300 px-4 py-2.5 text-sm shadow-sm"
-          placeholder="Nhập số điện thoại, email hoặc"
+          placeholder="Nhập số điện thoại, email hoặc username"
         />
         <div className="relative w-full">
           <input

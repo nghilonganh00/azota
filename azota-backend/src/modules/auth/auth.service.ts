@@ -98,7 +98,9 @@ export class AuthService {
 
   async validateGoogleUser(googleUser: GoogleUserDto) {
     const user = await this.userService.findByEmail(googleUser.email);
+    
     if (user) return user;
+
     return await this.register({
       username: generateRandomString(20),
       password: generateRandomString(8),

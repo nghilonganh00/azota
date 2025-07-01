@@ -1,12 +1,18 @@
 import { Fragment, useState, useEffect } from "react";
 import { FileText } from "lucide-react";
 import Popup from "../../../../../Globals/Components/popup";
-import { NewStudent, NewStudentClass, Student } from "../Interface/interface";
+import { StudentClass } from "../../../../../Globals/Interfaces/info.interface";
 import { useParams } from "react-router";
 import { StudentClassroomAPI } from "../../../../../API/studentClassAPI";
 import { Gender } from "../../../../../Globals/Constant/constant";
+import { NewStudentClass } from "../Interface/interface";
 
-const AddStudent = () => {
+interface AddStudentProps {
+  listStudent: StudentClass[];
+  setListStudent: (listStudent: StudentClass[]) => void;
+}
+
+const AddStudent: React.FC<AddStudentProps> = ({ listStudent, setListStudent }) => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const { classId } = useParams();
 
@@ -28,8 +34,10 @@ const AddStudent = () => {
   };
 
   const handleSubmit = async () => {
-    const data = await StudentClassroomAPI.create(newStudent);
-    console.log(data);
+    const response = await StudentClassroomAPI.create(newStudent);
+    if (response) {
+      setListStudent([...listStudent, response.data]);  
+    }
   };
 
   console.log("new student: ", newStudent);

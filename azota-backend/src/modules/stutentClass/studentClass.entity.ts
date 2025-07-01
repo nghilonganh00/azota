@@ -6,7 +6,10 @@ import { IsDate, IsEmail, IsEnum, IsNotEmpty, IsString } from "class-validator";
 import { HomeworkSubmission } from "../homeworkSubmission/homeworkSubmission.entity";
 import { Gender, UserRole } from "src/shared/constant";
 import { ExamStudent } from "../examStudent/examStudent.entity";
-import { ExamResult } from "../examResult/examResult.entity";
+import { Unique } from "typeorm";
+
+// Ensure that identificationNumber is unique within a classroom
+@Unique(["classroomId", "identificationNumber"])
 
 @Entity()
 export class StudentClass extends BaseEntity {

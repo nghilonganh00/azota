@@ -1,5 +1,5 @@
 import { ArrowRightLeft, LogOut, Moon, QrCode, RefreshCcw, ScanLine, ShieldCheck, UserIcon } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import UserAPI from "../../../API/userAPI";
 import { TeacherAPI } from "../../../API/teacherAPI";
@@ -8,101 +8,151 @@ import { UserRole } from "../../Constant/constant";
 import AuthAPI from "../../../API/authAPI";
 import UserAvatar from "../userAvatar";
 
+interface MenuItemProps {
+  icon: any;
+  label: string;
+  onClick?: () => void;
+  to?: string;
+  className?: string;
+}
+
 interface RoleActionProps {
   onClick: () => void;
   label: string;
 }
 
-const MENU_TABS = [
-  { icon: UserIcon, label: "Tài Khoản", link: "/auth/account-setting" },
-  // { icon: ArrowRightLeft, label: "Vào màn học sinh", link: "/student/classroom" },
-];
+const MenuItem: React.FC<MenuItemProps> = ({ icon: Icon, label, onClick, to, className = "" }) => {
+  const baseClasses =
+    "flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400";
 
-const AUTH_TABS = [
-  { icon: ScanLine, label: "QR đăng nhập", link: "/auth/login-qrcode" },
-  { icon: QrCode, label: "Tạo QR quên mật khẩu", link: "" },
-];
-
-const RoleAction: React.FC<RoleActionProps> = (props) => {
-  const { onClick, label } = props;
+  if (to) {
+    return (
+      <Link to={to} className={`${baseClasses} ${className}`}>
+        <Icon strokeWidth={1.5} className="size-4" />
+        <div className="text-sm">{label}</div>
+      </Link>
+    );
+  }
 
   return (
-    <div
-      onClick={onClick}
-      className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
-    >
-      <ShieldCheck strokeWidth={1.5} className="size-4" />
+    <div onClick={onClick} className={`${baseClasses} ${className}`}>
+      <Icon strokeWidth={1.5} className="size-4" />
       <div className="text-sm">{label}</div>
     </div>
   );
 };
 
+const RoleAction: React.FC<RoleActionProps> = ({ onClick, label }) => (
+  <MenuItem icon={ShieldCheck} label={label} onClick={onClick} />
+);
+
 const Menu = () => {
   const navigate = useNavigate();
-
   const [user, setUser] = useState<User>({} as User);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const [theme, setTheme] = useState(localStorage.getItem("currentTheme") || "light");
+  const [theme, setTheme] = useState(() => localStorage.getItem("currentTheme") || "light");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleRefresh = () => {
+  const isTeacherView = window.location.pathname.startsWith("/teacher");
+  const isTeacher = user.role === UserRole.TEACHER;
+
+  const handleRefresh = useCallback(() => {
     window.location.reload();
-  };
+  }, []);
 
-  const handleRemoveTeacherRole = async () => {
-    try {
-      const response = await UserAPI.removeTeacherRole();
-      if (response.ok) navigate("/student/classroom");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const handleToggleTheme = useCallback(() => {
+    const newTheme = theme === "dark" ? "light" : "dark";
 
-  const handleToggleTheme = async () => {
-    if (theme === "dark") {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("currentTheme", "light");
-    } else {
+    if (newTheme === "dark") {
       document.documentElement.classList.add("dark");
-      localStorage.setItem("currentTheme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
 
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
+    localStorage.setItem("currentTheme", newTheme);
+    setTheme(newTheme);
+  }, [theme]);
 
-  const handleRegisterTeacherRole = async () => {
+  const handleRemoveTeacherRole = useCallback(async () => {
     try {
+      setIsLoading(true);
+      const response = await UserAPI.removeTeacherRole();
+      if (response?.status === 200) {
+        navigate("/student/classroom");
+      }
+    } catch (error) {
+      console.error("Error removing teacher role:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [navigate]);
+
+  const handleRegisterTeacherRole = useCallback(async () => {
+    try {
+      setIsLoading(true);
       const response = await TeacherAPI.register();
 
-      if (response && response.status === 200) {
-        console.log("OK");
+      if (response?.status === 200) {
         navigate("/teacher/dashboard");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error registering teacher role:", error);
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, [navigate]);
 
-  const handleLogout = async () => {
-    const response = await AuthAPI.logout();
-    if (response?.status === 204) {
-      localStorage.removeItem("accessToken");
-      navigate("/auth/login", { replace: true });
+  const handleLogout = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const response = await AuthAPI.logout();
+
+      if (response?.status === 204) {
+        localStorage.removeItem("accessToken");
+        navigate("/auth/login", { replace: true });
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, [navigate]);
 
-  useEffect(() => {
-    const fetchUserInfoData = async () => {
+  const fetchUserInfo = useCallback(async () => {
+    try {
       const response = await UserAPI.getInfo();
 
-      if (response?.status !== 200) {
-        return;
+      if (response?.status === 200) {
+        setUser(response.data);
       }
-      const userObj = response.data;
-      setUser(userObj);
-    };
-
-    fetchUserInfoData();
+    } catch (error) {
+      console.error("Error fetching user info:", error);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, [fetchUserInfo]);
+
+  const renderRoleSwitch = () => {
+    if (isTeacherView) {
+      return <MenuItem icon={ArrowRightLeft} label="Vào màn hình học sinh" to="/student/classroom" />;
+    }
+
+    if (isTeacher) {
+      return <MenuItem icon={ArrowRightLeft} label="Vào màn hình giáo viên" to="/teacher/dashboard" />;
+    }
+
+    return null;
+  };
+
+  const renderRoleAction = () => {
+    if (isTeacher) {
+      return <RoleAction onClick={handleRemoveTeacherRole} label="Bỏ quyền giáo viên" />;
+    }
+
+    return <RoleAction onClick={handleRegisterTeacherRole} label="Đăng ký quyền giáo viên" />;
+  };
 
   return (
     <div
@@ -111,11 +161,10 @@ const Menu = () => {
       onMouseLeave={() => setDropdownVisible(false)}
     >
       {user?.fullname && <UserAvatar fullname={user.fullname} />}
+
       <div>
         <div className="text-sm font-medium text-slate-800 dark:text-gray-300">{user.fullname}</div>
-        <div className="text-xs text-slate-500 dark:text-slate-400">
-          {user.role === UserRole.TEACHER ? "Giáo viên" : "Học sinh"}
-        </div>
+        <div className="text-xs text-slate-500 dark:text-slate-400">{isTeacher ? "Giáo viên" : "Học sinh"}</div>
       </div>
 
       {isDropdownVisible && (
@@ -125,76 +174,28 @@ const Menu = () => {
           onClick={() => setDropdownVisible(false)}
         >
           <div className="border-b border-gray-100 p-2 dark:border-darkmode-400">
-            {MENU_TABS.map((tab, index) => (
-              <Link
-                to={tab.link}
-                key={index}
-                className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
-              >
-                <tab.icon strokeWidth={1.5} className="size-4" />
-                <div className="text-sm">{tab.label}</div>
-              </Link>
-            ))}
+            <MenuItem icon={UserIcon} label="Tài Khoản" to="/auth/account-setting" />
 
-            {window.location.pathname.startsWith("/teacher") ? (
-              <Link
-                to="/student/classroom"
-                className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
-              >
-                <ArrowRightLeft strokeWidth={1.5} className="size-4" />
-                <div className="text-sm">Vào màn hình học sinh</div>
-              </Link>
-            ) : (
-              <Link
-                to="/teacher/dashboard"
-                className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
-              >
-                <ArrowRightLeft strokeWidth={1.5} className="size-4" />
-                <div className="text-sm">Vào màn hình giáo viên</div>
-              </Link>
-            )}
+            {renderRoleSwitch()}
 
-            <div
-              className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
-              onClick={handleToggleTheme}
-            >
-              <Moon strokeWidth={1.5} className="size-4" />
-              <div className="text-sm">Chế độ tối</div>
-            </div>
+            <MenuItem icon={Moon} label="Chế độ tối" onClick={handleToggleTheme} />
 
-            <div className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400">
-              <RefreshCcw strokeWidth={1.5} className="size-4" />
-              <div className="text-sm" onClick={handleRefresh}>
-                Refresh
-              </div>
-            </div>
+            <MenuItem icon={RefreshCcw} label="Refresh" onClick={handleRefresh} />
 
-            {user.role === UserRole.TEACHER ? (
-              <RoleAction onClick={handleRemoveTeacherRole} label="Bỏ quyền giáo viên" />
-            ) : (
-              <RoleAction onClick={handleRegisterTeacherRole} label="Đăng ký quyền giáo viên" />
-            )}
+            {renderRoleAction()}
           </div>
 
           <div className="p-2">
-            {AUTH_TABS.map((tab, index) => (
-              <Link
-                key={index}
-                to={tab.link}
-                className="flex items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
-              >
-                <tab.icon strokeWidth={1.5} className="size-4" />
-                <div className="text-sm">{tab.label}</div>
-              </Link>
-            ))}
+            <MenuItem icon={ScanLine} label="QR đăng nhập" to="/auth/login-qrcode" />
 
-            <button
+            <MenuItem icon={QrCode} label="Tạo QR quên mật khẩu" to="" />
+
+            <MenuItem
+              icon={LogOut}
+              label="Đăng xuất"
               onClick={handleLogout}
-              className="flex w-full items-center gap-3 rounded-md p-2 hover:cursor-pointer hover:bg-slate-200 hover:font-medium dark:hover:bg-darkmode-400"
-            >
-              <LogOut strokeWidth={1.5} className="size-4" />
-              <div className="text-sm">Đăng xuất</div>
-            </button>
+              className={isLoading ? "cursor-not-allowed opacity-50" : ""}
+            />
           </div>
         </div>
       )}

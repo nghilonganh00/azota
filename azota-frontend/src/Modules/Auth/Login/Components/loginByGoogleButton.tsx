@@ -1,27 +1,26 @@
-import { TokenResponse, useGoogleLogin } from "@react-oauth/google";
 import GoogleIcon from "../../../../Assets/icons/google.svg";
-import { useState, useEffect } from "react";
-import AuthAPI from "../../../../API/authAPI";
+import { useState } from "react";
 import { useNavigate } from "react-router";
-import { User } from "../../../../Globals/Interfaces/userInterface";
 
 const LoginByGoogleButton = () => {
-  const navigate = useNavigate();
-
-  const [user, setUser] = useState<TokenResponse | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLoginByGoogle = () => {
+    setIsLoading(true);
     window.location.href = "http://localhost:8080/api/auth/google/login";
   };
 
   return (
-    <div
-      onClick={() => handleLoginByGoogle()}
-      className="flex w-full items-center justify-center gap-2 rounded-md border border-gray-200 py-2 shadow-sm hover:cursor-pointer hover:bg-slate-100 dark:border-darkmode-400"
+    <button
+      onClick={handleLoginByGoogle}
+      disabled={isLoading}
+      className="flex w-full items-center justify-center gap-2 rounded-md border border-gray-200 py-2 shadow-sm transition-colors hover:cursor-pointer hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-darkmode-400 dark:hover:bg-darkmode-500"
     >
-      <img src={GoogleIcon} alt="" className="size-4" />
-      <div className="text-sm font-medium text-gray-600 dark:text-slate-300">Google</div>
-    </div>
+      <img src={GoogleIcon} alt="Google" className="size-4" />
+      <div className="text-sm font-medium text-gray-600 dark:text-slate-300">
+        {isLoading ? "Đang đăng nhập..." : "Google"}
+      </div>
+    </button>
   );
 };
 

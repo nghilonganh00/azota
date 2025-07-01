@@ -13,91 +13,45 @@ const UserAPI = {
     }
 
     try {
-      const response = await axiosInstance.get("users", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axiosInstance.get("users");
 
+      return response;
+    } catch (error) {
+      console.error("Error in getInfo of UserAPI: ", error);
+      return null;
+    }
+  },
+
+  removeTeacherRole: async (): Promise<AxiosResponse | null> => {
+    try {
+      const response = await axiosInstance.get("users/remove-teacher-role");
       return response;
     } catch (error) {
       console.error("Error in removeTeacherRole of UserAPI: ", error);
       return null;
     }
   },
-  removeTeacherRole: async (): Promise<Response> => {
+
+  registerTeacherRole: async (): Promise<AxiosResponse | null> => {
     try {
-      if (!accessToken) {
-        console.error("Access Token isn't in LocalStorage");
-        return new Response(null, { status: 401, statusText: "Unauthorized" });
-      }
-
-      const url = new URL(`http://localhost:8080/api/users/remove-teacher-role`);
-
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      return response;
-    } catch (error) {
-      console.log("Error in removeTeacherRole of UserAPI: ", error);
-      return new Response(null, {
-        status: 500,
-        statusText: "Internal Server Error",
-      });
-    }
-  },
-  registerTeacherRole: async (): Promise<Response> => {
-    try {
-      if (!accessToken) {
-        console.error("Access Token isn't in LocalStorage");
-        return new Response(null, {
-          status: 401,
-          statusText: "Unauthorized",
-        });
-      }
-
-      const url = new URL(`http://localhost:8080/api/user/register-teacher-role`);
-
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: accessToken,
-        },
-      });
-
+      const response = await axiosInstance.get("user/register-teacher-role");
       return response;
     } catch (error) {
       console.error("Error in registerTeacherRole of UserAPI: ", error);
-      return new Response(null, {
-        status: 500,
-        statusText: "Internal Server Error",
-      });
+      return null;
     }
   },
-  createAnonymous: async (fullName: string) => {
+
+  createAnonymous: async (fullName: string): Promise<AxiosResponse | null> => {
     try {
-      const url = new URL(`http://localhost:8080/api/user/anonymous`);
-
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ fullName: fullName }),
-      });
-
+      const response = await axiosInstance.post("user/anonymous", { fullName });
       return response;
     } catch (error) {
       console.error("Error in createAnonymous of UserAPI: ", error);
-      return {};
+      return null;
     }
   },
+
   updateUser: async (
     fullname: string,
     DOB: string,
@@ -107,21 +61,32 @@ const UserAPI = {
     avatarURL: string,
   ): Promise<AxiosResponse | null> => {
     try {
-      const response = await axiosInstance.patch("users", { fullname, DOB, email, phone, gender, avatarURL });
+      const response = await axiosInstance.patch("users", {
+        fullname,
+        DOB,
+        email,
+        phone,
+        gender,
+        avatarURL,
+      });
 
       return response;
     } catch (error) {
-      console.error("Error in update of UserAPI: ", error);
+      console.error("Error in updateUser of UserAPI: ", error);
       return null;
     }
   },
-  changePassword: async (currentPassword: string, newPassword: string) => {
+
+  changePassword: async (currentPassword: string, newPassword: string): Promise<AxiosResponse | null> => {
     try {
-      const response = await axiosInstance.patch("users/change-password", { currentPassword, newPassword });
+      const response = await axiosInstance.patch("users/change-password", {
+        currentPassword,
+        newPassword,
+      });
 
       return response;
     } catch (error) {
-      console.log(error);
+      console.error("Error in changePassword of UserAPI: ", error);
       return null;
     }
   },

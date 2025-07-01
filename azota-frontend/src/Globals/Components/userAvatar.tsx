@@ -7,10 +7,10 @@ interface StudentAvatarProps {
 }
 
 const UserAvatar: React.FC<StudentAvatarProps> = (props) => {
-  const { fullname, className } = props;
+  const { fullname, className = "size-10" } = props;
 
   return (
-    <div className={` flex h-10 w-10 items-center justify-center rounded-full bg-zinc-300 ${className} text-gray-800`}>
+    <div className={`flex items-center justify-center rounded-full bg-zinc-300 ${className} text-gray-800`}>
       <div className="text-lg font-semibold uppercase">{convertToInitials(fullname)}</div>
     </div>
   );

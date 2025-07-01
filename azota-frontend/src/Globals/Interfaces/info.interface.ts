@@ -1,6 +1,6 @@
 import { Gender } from "../Constant/constant";
 import { HomeworkResult } from "./homework.interface";
-import { Student } from "./user.interface";
+import { Student, Teacher } from "./user.interface";
 
 export interface Grade {
   id: string;
@@ -66,4 +66,12 @@ export interface Notification {
   readAt: string;
   createdAt: string;
   extraData: Record<string, any>;
+}
+
+export interface TeacherPermission {
+  id: number;
+  teacherId: number;
+  principalId: number;
+  teacher: Teacher;
+  principal: Teacher;
 }

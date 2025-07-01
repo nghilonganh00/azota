@@ -4,19 +4,19 @@ import { useParams } from "react-router";
 import HomeworkAPI from "../../../../API/homeworkAPI";
 import { Homework } from "../ConfigHomework/interface";
 import { Classroom } from "./Interfaces/interfaces";
-import { Popup } from "../../../../Globals/Components/Popup/popup";
+import { usePopup } from "../../../../Globals/Components/Popup/popup";
 
 const PublishHomework = () => {
   const { homeworkId } = useParams();
+  const { handleNotify, Popup } = usePopup();
 
   const [homework, setHomework] = useState<Homework>({} as Homework);
   const [classrooms, setClassrooms] = useState<Classroom[]>([]);
-  const [isOpenCopyNoti, setOpenCopyNoti] = useState<boolean>(false);
 
   const handleCopyHomeworkURL = (homeworkURL: string) => {
     navigator.clipboard.writeText(homeworkURL);
 
-    setOpenCopyNoti(true);
+    handleNotify("Sao chép thành công", "SUCCESS");
   };
 
   useEffect(() => {
@@ -92,12 +92,7 @@ const PublishHomework = () => {
         </div>
       </div>
 
-      <Popup
-        message={"Sao chép thành công"}
-        isOpen={isOpenCopyNoti}
-        setOpen={setOpenCopyNoti}
-        type={"SUCCESS"}
-      />
+      <Popup />
     </div>
   );
 };

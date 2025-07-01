@@ -95,4 +95,20 @@ export const StudentClassroomAPI = {
       return null;
     }
   },
+  delete: async (id: string | number): Promise<AxiosResponse | null> => {
+    try {
+      if (!accessToken) {
+        throw new Error("Access token not found in localStorage");
+      }
+
+      const response = await axiosInstance.delete(`${STUDENT_CLASS_API_URL}/${id}`, {
+        headers: { "Content-type": "application/json", Authorization: `Bearer ${accessToken}` },
+      });
+
+      return response;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  },
 };

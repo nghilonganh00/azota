@@ -5,6 +5,7 @@ import RoleTabs from "./Components/roleTabs";
 import { newUser } from "./interface";
 import { Link, useNavigate } from "react-router-dom";
 import AuthAPI from "../../../API/authAPI";
+import GoogleRegisterButton from "./Components/GoogleRegisterButton";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -227,13 +228,7 @@ const Register = () => {
               </div>
             </div>
 
-            <button
-              type="button"
-              className="mt-4 flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:border-darkmode-400 dark:bg-darkmode-600 dark:text-slate-300 dark:hover:bg-darkmode-500 dark:focus:ring-offset-darkmode-500"
-            >
-              <img src={GoogleIcon} alt="Google" className="h-5 w-5" />
-              Đăng ký với Google
-            </button>
+            <GoogleRegisterButton />
           </div>
         </form>
       </div>

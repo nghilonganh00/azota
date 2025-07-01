@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, Post, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Inject, Param, Post, Query } from "@nestjs/common";
 import { REQUEST } from "@nestjs/core";
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { StudentClassService } from "./studentClass.service";
@@ -71,5 +71,14 @@ export class StudentClassController {
     const fullname = reqBody.fullname;
 
     return this.studentClassService.createAnonymous(fullname);
+  }
+
+  @ApiBearerAuth()
+  @Roles([UserRole.TEACHER])
+  @Delete("/:id")
+  async remove(@Param("id") studentClassId: number) {
+    const userId = this.request?.user?.sub;
+
+    return this.studentClassService.remove(userId, studentClassId);
   }
 }

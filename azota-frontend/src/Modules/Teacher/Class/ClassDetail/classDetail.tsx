@@ -32,7 +32,7 @@ const ClassDetail = () => {
               key={index}
               onClick={() => setSelectedIndex(tab.index)}
               className={
-                "flex items-center gap-2 rounded-md px-2 py-2 hover:cursor-pointer " +
+                "flex items-center gap-2 rounded-md px-2 py-2 hover:cursor-pointer dark:text-slate-300 " +
                 (selectedIndex === tab.index && "bg-blue-800 text-white")
               }
             >

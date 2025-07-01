@@ -13,7 +13,7 @@ const ExamNameConfig: React.FC<ExamNameConfigProps> = (props) => {
       <div className="col-span-12">
         <label htmlFor="new-hw-name" className="mb-2 flex text-sm font-medium">
           Tên
-        </label>
+        </label>  
       </div>
       <div className="col-span-12">
         <input
