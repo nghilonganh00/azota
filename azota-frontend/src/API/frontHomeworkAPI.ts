@@ -1,18 +1,20 @@
+import { axiosInstance } from "../services/axiosInstance";
+
 const FrontHomeworkAPI = {
   getByHashId: async (hashId: string) => {
     try {
-      const url = new URL(`http://localhost:8080/api/front-homework`);
-      url.searchParams.append("hashId", hashId);
+      const url = `front-homework`;
 
-      const response = await fetch(url, {
-        method: "GET",
+      const response = await axiosInstance.get(url, {
+        params: {
+          hashId: hashId,
+        },
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      const responseObj = await response.json();
-      return responseObj.data;
+      return response;
     } catch (error) {
       throw error;
     }

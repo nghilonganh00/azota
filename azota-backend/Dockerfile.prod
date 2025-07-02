@@ -1,0 +1,29 @@
+# ---- Build Stage ----
+FROM node:20 AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+RUN npm run build
+
+
+# ---- Production Stage ----
+FROM node:20-slim AS prod
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+# Copy only the build output from the builder stage
+COPY --from=builder /app/dist ./dist
+
+# If you need public/static files, copy them too:
+# COPY --from=builder /app/public ./public
+
+EXPOSE 8080
+
+CMD ["npm", "run", "start:prod"]

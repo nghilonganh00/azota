@@ -6,7 +6,7 @@ const accessToken = localStorage.getItem("accessToken");
 export const ClassroomAPI = {
   getStudents: async (classId: string | number): Promise<AxiosResponse> => {
     try {
-      const response = await axiosInstance.get(`http://localhost:8080/api/classrooms/${classId}/students`, {
+      const response = await axiosInstance.get(`classrooms/${classId}/students`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -29,7 +29,7 @@ export const ClassroomAPI = {
     searchKeyword?: string,
   ): Promise<AxiosResponse> => {
     try {
-      const url = "http://localhost:8080/api/classrooms/homeworks";
+      const url = "classrooms/homeworks";
 
       const params = {
         sortField: sortParameter,
@@ -57,7 +57,7 @@ export const ClassroomAPI = {
   create: async (className: string, classYear: string, classGroupId?: number) => {
     try {
       const response = await axiosInstance.post(
-        "http://localhost:8080/api/classrooms",
+        "classrooms",
         {
           className,
           classYear,

@@ -4,7 +4,7 @@ import { axiosInstance } from "../services/axiosInstance";
 const PurposeAPI = {
   getAll: async (): Promise<AxiosResponse | null> => {
     try {
-      const response = await axiosInstance.get("http://localhost:8080/api/purposes", {
+      const response = await axiosInstance.get("purposes", {
         headers: {
           "Content-Type": "application/json",
         },

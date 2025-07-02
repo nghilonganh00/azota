@@ -17,8 +17,10 @@ const Generate: React.FC<GenerateProps> = (props) => {
 
   const fetchLoginQRCode = async () => {
     const response = await AuthAPI.generateLoginQRCode();
-    const responseObj = await response.json();
-    const { qrUrl, sessionId } = responseObj.data;
+
+    if (!response) return;
+
+    const { qrUrl, sessionId } = response.data;
 
     setQrUrl(qrUrl);
     setSessionId(sessionId);
@@ -29,10 +31,9 @@ const Generate: React.FC<GenerateProps> = (props) => {
       if (sessionId !== "") {
         const response = await AuthAPI.checkLoginQrApproval(sessionId);
 
-        if (!response.ok) return;
+        if (!response) return;
 
-        const responseObj = await response.json();
-        const { accessToken } = responseObj.data;
+        const { accessToken } = response.data;
 
         localStorage.setItem("userId", accessToken);
 

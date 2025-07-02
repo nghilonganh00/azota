@@ -4,7 +4,7 @@ import { axiosInstance } from "../services/axiosInstance";
 const SubjectAPI = {
   getByGradeId: async (gradeId: number | string): Promise<AxiosResponse | null> => {
     try {
-      const response = await axiosInstance.get(`http://localhost:8080/api/subjects/grade/${gradeId}`, {
+      const response = await axiosInstance.get(`subjects/grade/${gradeId}`, {
         headers: {
           "Content-Type": "application/json",
         },

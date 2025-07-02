@@ -20,9 +20,14 @@ const AssignedByStudent: React.FC<AssignedByStudentProps> = (props) => {
 
   const fetchResultListData = async () => {
     if (examId && showedClassroom) {
-      const data = await ExamResultAPI.getAssignedByClassLatest(examId, showedClassroom.id);
+      const response = await ExamResultAPI.getAssignedByClassLatest(examId, showedClassroom.id);
 
-      setStudentResults(data);
+      if (response && response.data) {
+        const data = response.data as StudentResult[];
+        setStudentResults(data);
+      } else {
+        setStudentResults([]);
+      }
     }
   };
 

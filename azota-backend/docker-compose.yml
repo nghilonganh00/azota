@@ -22,8 +22,7 @@ services:
       - redis_data:/data
 
   azota-backend:
-    build: .
-    container_name: azota-backend
+    image: nghilonganh00/azota-backend:latest
     ports:
       - "8080:8080"
     depends_on:
@@ -33,7 +32,6 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_SECRET=${GOOGLE_SECRET}
       - GOOGLE_CALLBACK_URL=${GOOGLE_CALLBACK_URL}
-
       - MONGO_URI=${MONGO_URI}
       - MONGO_DB_NAME=${MONGO_DB_NAME}
 

@@ -1,5 +1,3 @@
-export const BASE_API_URL = "http://localhost:8080/api";
-
 export enum UserRole {
   ADMIN = "ADMIN",
   TEACHER = "TEACHER",

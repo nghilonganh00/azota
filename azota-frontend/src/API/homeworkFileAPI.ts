@@ -7,7 +7,7 @@ const HomeworkFileAPI = {
   add: async (homeworkId: number, title: string, link: string): Promise<AxiosResponse | null> => {
     try {
       const response = await axiosInstance.post(
-        "http://localhost:8080/api/homework-files/",
+        "homework-files/",
         { homeworkId, title, link },
         {
           headers: {
@@ -26,7 +26,7 @@ const HomeworkFileAPI = {
 
   remove: async (homeworkId: number) => {
     try {
-      const response = await axiosInstance.delete("http://localhost:8080/api/homework-files/" + homeworkId, {
+      const response = await axiosInstance.delete("homework-files/" + homeworkId, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,

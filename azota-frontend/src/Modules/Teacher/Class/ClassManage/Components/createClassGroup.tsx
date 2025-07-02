@@ -17,9 +17,9 @@ const CreateClassGroup: React.FC<CreateClassGroupProps> = (props) => {
     // e.preventDefault();
 
     const response = await ClassGroupAPI.create(classgroupName);
-    const newClassGroup = response;
 
-    if (newClassGroup) {
+    if (response) {
+      const newClassGroup = response.data as ClassGroup;
       setClassGroupList((preValue) => [{ ...newClassGroup, classrooms: [] }, ...preValue]);
     }
   };

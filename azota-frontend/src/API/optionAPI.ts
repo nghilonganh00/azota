@@ -7,7 +7,7 @@ const OptionAPI = {
         throw new Error("User ID not found in localStorage.");
       }
 
-      const url = `http://localhost:8080/api/option/change-is-answer/${optionId}`;
+      const url = `option/change-is-answer/${optionId}`;
 
       const response = await fetch(url, {
         method: "GET",

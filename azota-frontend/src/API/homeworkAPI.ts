@@ -2,11 +2,10 @@ import { AxiosResponse } from "axios";
 import { NewHomework } from "../Modules/Teacher/Homework/AddHomework/libs/interfaces";
 import FirebaseStorage from "../Firebase/firebaseStorage";
 import { Homework } from "../Globals/Interfaces/homework.interface";
-import { BASE_API_URL } from "../Globals/Constant/constant";
 import { axiosInstance } from "../services/axiosInstance";
 
 const accessToken = localStorage.getItem("accessToken");
-const HOMEWORK_API_URL = `${BASE_API_URL}/homeworks`;
+const HOMEWORK_API_URL = `homeworks`;
 
 const HomeworkAPI = {
   getAll: async (
@@ -18,7 +17,7 @@ const HomeworkAPI = {
     searchKeyword?: string,
   ): Promise<AxiosResponse> => {
     try {
-      const url = "http://localhost:8080/api/homeworks";
+      const url = "homeworks";
 
       const params = {
         sortField: sortParameter,
@@ -33,7 +32,6 @@ const HomeworkAPI = {
         params,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
         },
       });
 
@@ -42,32 +40,29 @@ const HomeworkAPI = {
       throw error;
     }
   },
-  getAllByClassId: async (classId: string) => {
+  getAllByClassId: async (classId: string): Promise<AxiosResponse | null> => {
     try {
       if (!accessToken) {
         throw new Error("User ID not found in localStorage.");
       }
 
-      const url = new URL(`http://localhost:8080/api/homework/classroom/${classId}`);
+      const url = `homework/classroom/${classId}`;
 
-      const response = await fetch(url, {
-        method: "GET",
+      const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: accessToken,
         },
       });
 
-      const responseObj = await response.json();
-      return responseObj.data;
+      return response;
     } catch (error) {
       console.error(error);
-      return [];
+      return null;
     }
   },
   getDetail: async (homeworkId: string): Promise<AxiosResponse> => {
     try {
-      const url = `http://localhost:8080/api/homeworks/${homeworkId}`;
+      const url = `homeworks/${homeworkId}`;
 
       const response = await axiosInstance.get(url, {
         headers: {
@@ -83,7 +78,7 @@ const HomeworkAPI = {
   },
   getByHashId: async (hashId: string): Promise<AxiosResponse> => {
     try {
-      const url = `http://localhost:8080/api/homeworks/hash/${hashId}`;
+      const url = `homeworks/hash/${hashId}`;
 
       const response = await axiosInstance.get(url, {
         headers: {
@@ -98,17 +93,15 @@ const HomeworkAPI = {
   },
   getResultOfClass: async (homeworkId: string, classId: string) => {
     try {
-      const url = new URL(`http://localhost:8080/api/homework/${homeworkId}/homework-results`);
+      const url = `homework/${homeworkId}/homework-results`;
 
-      const response = await fetch(url, {
-        method: "GET",
+      const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      const responseObj = await response.json();
-      return responseObj.data;
+      return response;
     } catch (error) {
       console.error(error);
       return {};
@@ -116,7 +109,7 @@ const HomeworkAPI = {
   },
   getSubmissionsById: async (homeworkId: number | string): Promise<AxiosResponse> => {
     try {
-      const url = `http://localhost:8080/api/homeworks/${homeworkId}/submission`;
+      const url = `homeworks/${homeworkId}/submission`;
 
       const response = await axiosInstance.get(url, {
         headers: {
@@ -132,34 +125,30 @@ const HomeworkAPI = {
   },
   getClassWithHomework: async () => {
     try {
-      const url = new URL("http://localhost:8080/api/homework/class");
+      const url = "homework/class";
 
-      const response = await fetch(url, {
-        method: "GET",
+      const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      const responseObj = await response.json();
-      return responseObj.data;
+      return response;
     } catch (error) {
       throw error;
     }
   },
   getConfig: async (homeworkId: string) => {
     try {
-      const url = new URL(`http://localhost:8080/api/homework/${homeworkId}/config`);
+      const url = `homework/${homeworkId}/config`;
 
-      const response = await fetch(url, {
-        method: "GET",
+      const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      const responseObj = await response.json();
-      return responseObj.data;
+      return response;
     } catch (error) {
       throw error;
     }
@@ -167,17 +156,15 @@ const HomeworkAPI = {
 
   trash: async (homeworkId: string) => {
     try {
-      const url = new URL(`http://localhost:8080/api/homework/${homeworkId}/trash}`);
+      const url = `homework/${homeworkId}/trash`;
 
-      const response = await fetch(url, {
-        method: "GET",
+      const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      const responseObj = await response.json();
-      return responseObj.data;
+      return response;
     } catch (error) {
       console.log("Error in homeworkAPI.trash: ", error);
       return {};
@@ -199,7 +186,7 @@ const HomeworkAPI = {
       );
 
       const response = await axiosInstance.post(
-        "http://localhost:8080/api/homeworks/",
+        "homeworks/",
         { ...newHomework, homeworkFiles: homeworkFileObj },
         {
           headers: {
@@ -209,8 +196,7 @@ const HomeworkAPI = {
         },
       );
 
-      const responseObj = await response.data;
-      return responseObj.data;
+      return response;
     } catch (error) {
       throw error;
     }

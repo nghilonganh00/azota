@@ -1,10 +1,9 @@
 import { AxiosResponse } from "axios";
 import { NewStudentClass } from "../Modules/Teacher/Class/ClassDetail/Interface/interface";
-import { BASE_API_URL } from "../Globals/Constant/constant";
 import { axiosInstance } from "../services/axiosInstance";
 
 const accessToken = localStorage.getItem("accessToken");
-const STUDENT_CLASS_API_URL = `${BASE_API_URL}/student-classes`;
+const STUDENT_CLASS_API_URL = `student-classes`;
 
 export const StudentClassroomAPI = {
   getSubmissionsByHomeworkId: async (homeworkId: string | number): Promise<AxiosResponse> => {
@@ -13,7 +12,7 @@ export const StudentClassroomAPI = {
         throw new Error("Access token not found in localStorage");
       }
 
-      const url = `http://localhost:8080/api/student-classes/homework/${homeworkId}/submissions`;
+      const url = `student-classes/homework/${homeworkId}/submissions`;
       const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +45,7 @@ export const StudentClassroomAPI = {
         throw new Error("Access token not found in localStorage");
       }
 
-      const response = await axiosInstance.get(`http://localhost:8080/api/student-classes/${id}/identify`, {
+      const response = await axiosInstance.get(`student-classes/${id}/identify`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -65,7 +64,7 @@ export const StudentClassroomAPI = {
         throw new Error("Access token not found in localStorage");
       }
 
-      const response = await axiosInstance.post(`http://localhost:8080/api/student-classes`, studentClass, {
+      const response = await axiosInstance.post(`student-classes`, studentClass, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,

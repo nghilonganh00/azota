@@ -1,7 +1,6 @@
 import { AxiosResponse } from "axios";
 import { axiosInstance } from "../services/axiosInstance";
 
-const accessToken = localStorage.getItem("accessToken");
 
 const UserAPI = {
   getInfo: async (): Promise<AxiosResponse | null> => {

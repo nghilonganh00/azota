@@ -1,10 +1,9 @@
 import { AxiosResponse } from "axios";
-import { BASE_API_URL } from "../Globals/Constant/constant";
 import { axiosInstance } from "../services/axiosInstance";
 
 const accessToken = localStorage.getItem("accessToken");
 
-const EXAM_RESULT_API_URL = `${BASE_API_URL}/exam-results`;
+const EXAM_RESULT_API_URL = `exam-results`;
 
 const ExamResultAPI = {
   getDetailById: async (examResultId: string | number): Promise<AxiosResponse | null> => {
@@ -51,52 +50,40 @@ const ExamResultAPI = {
         throw new Error("User ID not found in localStorage.");
       }
 
-      const url = `http://localhost:8080/api/exam-result/review/${examResultId}`;
+      const url = `exam-result/review/${examResultId}`;
 
-      const response = await fetch(url, {
-        method: "GET",
+      const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
           Authorization: accessToken,
         },
       });
 
-      if (!response.ok) {
-        return [];
-      }
-
-      const responseObj = await response.json();
-      return responseObj.data;
+      return response;
     } catch (error) {
       console.error(`Error in ExamResultAPI.getReview: ${error}`);
       return {};
     }
   },
-  getAnswer: async (examResultId: string | number) => {
+  getAnswer: async (examResultId: string | number): Promise<AxiosResponse | null> => {
     try {
       if (!accessToken) {
         throw new Error("User ID not found in localStorage.");
       }
 
-      const url = `http://localhost:8080/api/exam-result/answer/${examResultId}`;
+      const url = `exam-result/answer/${examResultId}`;
 
-      const response = await fetch(url, {
-        method: "GET",
+      const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
           Authorization: accessToken,
         },
       });
 
-      if (!response.ok) {
-        return [];
-      }
-
-      const responseObj = await response.json();
-      return responseObj.data;
+      return response;
     } catch (error) {
       console.error(`Error in ExamResultAPI.getReview: ${error}`);
-      return {};
+      return null;    
     }
   },
   getHistory: async (examId: number, studentId: number): Promise<AxiosResponse | null> => {
@@ -126,7 +113,7 @@ const ExamResultAPI = {
         throw new Error("User ID not found in localStorage.");
       }
 
-      const url = `http://localhost:8080/api/exam-results/latest/exam/${examId}/classroom/${classroomIdParam}`;
+      const url = `exam-results/latest/exam/${examId}/classroom/${classroomIdParam}`;
 
       const response = await axiosInstance.get(url, {
         headers: {
@@ -141,31 +128,25 @@ const ExamResultAPI = {
       return null;
     }
   },
-  getAssignedByClassLatest: async (examId: number, classId: number) => {
+  getAssignedByClassLatest: async (examId: number, classId: number): Promise<AxiosResponse | null> => {
     try {
       if (!accessToken) {
         throw new Error("User ID not found in localStorage.");
       }
 
-      const url = `http://localhost:8080/api/exam-result/latest/assigned-by-class/${examId}/${classId}`;
+      const url = `exam-result/latest/assigned-by-class/${examId}/${classId}`;
 
-      const response = await fetch(url, {
-        method: "GET",
+          const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
           Authorization: accessToken,
         },
       });
 
-      if (!response.ok) {
-        return [];
-      }
-
-      const responseObj = await response.json();
-      return responseObj.data;
+      return response;
     } catch (error) {
       console.error(`Error in ExamAPI.getLatest: ${error}`);
-      return {};
+      return null;
     }
   },
   create: async (hashId: string, answer: string, startedAt: string): Promise<AxiosResponse | null> => {

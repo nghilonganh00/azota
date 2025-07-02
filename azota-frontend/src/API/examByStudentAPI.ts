@@ -1,18 +1,24 @@
+import { axiosInstance } from "../services/axiosInstance";
+
 const ExamByStudentAPI = {
   getAssignedExamStudentIds: async (examId: number) => {
     try {
-      const url = new URL(`http://localhost:8080/api/exam-by-student/exam/${examId}/studentids}`);
+      const accessToken = localStorage.getItem("accessToken");
 
-      const response = await fetch(url, {
-        method: "GET",
+      if (!accessToken) {
+        throw new Error("Access token not found in local storage");
+      }
+
+      const url = `exam-by-student/exam/${examId}/studentids`;
+
+      const response = await axiosInstance.get(url, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: localStorage.getItem("userId") ?? "",
+          Authorization: `Bearer ${accessToken}`,
         },
       });
 
-      const responseObj = await response.json();
-      return responseObj.data;
+      return response;
     } catch (error) {
       console.error(error);
       return [];

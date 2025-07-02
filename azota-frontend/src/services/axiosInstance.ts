@@ -8,22 +8,22 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
 let isRefreshing = false;
 let failedRequestsQueue: any[] = [];
 
+const token = localStorage.getItem("accessToken");
+
+console.log('base url: ', process.env.REACT_APP_API_BASE_URL)
+
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: process.env.REACT_APP_API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
   },
 });
 
-const getAccessToken = () => localStorage.getItem("accessToken");
-
 axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  const token = getAccessToken();
-
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-
   return config;
 });
 
@@ -58,7 +58,7 @@ axiosInstance.interceptors.response.use(
 
         try {
           const { data } = await axios.post(
-            "http://localhost:8080/api/auth/refresh-token",
+            `auth/refresh-token`,
             {},
             { withCredentials: true },
           );

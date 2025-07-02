@@ -9,7 +9,7 @@ export const TeacherAPI = {
         throw new Error("Access Token not found in localStorage.");
       }
 
-      const url = "http://localhost:8080/api/teachers/register";
+      const url = "teachers/register";
 
       const response = await axiosInstance.get(url, {
         headers: {

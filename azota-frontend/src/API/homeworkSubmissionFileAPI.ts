@@ -17,7 +17,7 @@ export const HomeworkSubmissionFileAPI = {
         }),
       );
 
-      const url = `http://localhost:8080/api/homework-submission-files`;
+      const url = `homework-submission-files`;
       const response = await axiosInstance.post(
         url,
         { files: fileObj },

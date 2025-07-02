@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ChevronDown, FileText, Filter, Plus, Search } from "lucide-react";
 import { useParams } from "react-router";
 import HomeworkAPI from "../../../../../API/homeworkAPI";
-import { GroupedHomework } from "../Interface/interface";
+import { GroupedHomework, Homework } from "../Interface/interface";
 import HomeworkUtils from "../Utils/homeworkUtil";
 import GroupedHomeworkList from "../Components/groupedHomework";
 
@@ -13,8 +13,12 @@ const ListHomeworkAndExam = () => {
   useEffect(() => {
     const fetchHomeworks = async () => {
       if (classId) {
-        const data = await HomeworkAPI.getAllByClassId(classId);
-        setGroupedHomework(() => HomeworkUtils.groupByCreatedAt(data));
+        const response = await HomeworkAPI.getAllByClassId(classId);
+
+        if (response) {
+          const data = response.data as Homework[];
+          setGroupedHomework(() => HomeworkUtils.groupByCreatedAt(data));
+        }
       }
     };
 

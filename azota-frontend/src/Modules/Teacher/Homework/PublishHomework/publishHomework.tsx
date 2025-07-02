@@ -24,8 +24,8 @@ const PublishHomework = () => {
       if (homeworkId) {
         const response = await HomeworkAPI.getConfig(homeworkId);
 
-        setClassrooms(response.classObjs);
-        setHomework(response.homeworkObj);
+        setClassrooms(response.data.classObjs);
+        setHomework(response.data.homeworkObj);
 
         console.log("classrooms: ", classrooms);
         console.log("homework: ", homework);

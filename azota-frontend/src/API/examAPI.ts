@@ -1,11 +1,10 @@
 import { AxiosResponse } from "axios";
 import { Exam } from "../Globals/Interfaces/exam.interface";
 import { CreateExam } from "../Modules/Teacher/Exam/CreateExam/libs/interface";
-import { BASE_API_URL } from "../Globals/Constant/constant";
 import { axiosInstance } from "../services/axiosInstance";
 
 const accessToken = localStorage.getItem("accessToken");
-const EXAM_API_URL = `${BASE_API_URL}/exams`;
+const EXAM_API_URL = `exams`;
 
 const ExamAPI = {
   create: async ({
@@ -49,7 +48,7 @@ const ExamAPI = {
         return null;
       }
 
-      const response = await axiosInstance.post("http://localhost:8080/api/exam/preview", {
+      const response = await axiosInstance.post("/exam/preview", {
         headers: {
           "Content-Type": "application/json",
           Authorization: accessToken,
@@ -185,15 +184,13 @@ const ExamAPI = {
         throw new Error("User ID not found in localStorage.");
       }
 
-      const url = `http://localhost:8080/api/exam/config/${exam.hashId}`;
+      const url = `exam/config/${exam.hashId}`;
 
-      const response = await fetch(url, {
-        method: "PUT",
+      const response = await axiosInstance.put(url, exam, {
         headers: {
           "Content-Type": "application/json",
           Authorization: accessToken,
         },
-        body: JSON.stringify(exam),
       });
 
       return response;

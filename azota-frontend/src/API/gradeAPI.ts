@@ -4,8 +4,7 @@ import { axiosInstance } from "../services/axiosInstance";
 const GradeAPI = {
   getAll: async (): Promise<AxiosResponse | null> => {
     try {
-      const response = await axiosInstance.get("http://localhost:8080/api/grades", {
-        method: "GET",
+      const response = await axiosInstance.get("grades", {
         headers: {
           "Content-Type": "application/json",
         },

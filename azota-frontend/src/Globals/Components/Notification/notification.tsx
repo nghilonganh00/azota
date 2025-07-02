@@ -133,7 +133,7 @@ export const Notification = () => {
 
         <div className="absolute -right-2 -top-2 flex size-5 items-center justify-center rounded-full bg-red-600">
           <div className="text-center text-xs text-white">
-            {notifications.filter((notification) => notification.readAt === null).length}
+            {notifications?.filter((notification) => notification.readAt === null).length || 0}
           </div>
         </div>
       </div>

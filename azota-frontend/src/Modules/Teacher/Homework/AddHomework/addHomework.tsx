@@ -37,9 +37,9 @@ const AddHomework = () => {
 
   const handlePublish = async () => {
     try {
-      const createdHomework = await HomeworkAPI.create(newHomework);
+      const response = await HomeworkAPI.create(newHomework);
 
-      navigation(`/teacher/homework/publish-homework/${createdHomework[0].id}`);
+      navigation(`/teacher/homework/publish-homework/${response.data[0].id}`);
     } catch (error) {
       console.log("Error creating homework:", error);
     }

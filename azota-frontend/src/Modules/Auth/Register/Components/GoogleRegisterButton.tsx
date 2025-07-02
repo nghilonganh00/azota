@@ -9,7 +9,7 @@ const GoogleRegisterButton = () => {
   const handleRegisterByGoogle = () => {
     setIsLoading(true);
     // Redirect to backend Google OAuth endpoint for registration
-    window.location.href = "http://localhost:8080/api/auth/google/login";
+    window.location.href = `${process.env.REACT_APP_API_BASE_URL}/auth/google/login`;
   };
 
   return (

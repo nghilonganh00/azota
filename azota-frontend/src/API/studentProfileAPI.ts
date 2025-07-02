@@ -1,7 +1,7 @@
 const StudentProfileAPI = {
   get: async (classId: string) => {
     try {
-      const url = new URL(`http://localhost:8080/api/student-profile/${classId}`);
+      const url = new URL(`student-profile/${classId}`);
 
       const response = await fetch(url, {
         method: "GET",

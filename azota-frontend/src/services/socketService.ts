@@ -17,7 +17,7 @@ const connectSocket = (): Promise<Socket> => {
       return resolve(socket);
     }
 
-    socket = io("http://localhost:8080", {
+    socket = io(process.env.REACT_APP_API_BASE_URL, {
       auth: { token: accessToken },
       reconnection: true,
       reconnectionAttempts: 5,

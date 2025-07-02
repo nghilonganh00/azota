@@ -7,7 +7,7 @@ const accessToken = localStorage.getItem("accessToken");
 const StudentAPI = {
   confirm: async (studentId: string | number) => {
     try {
-      const response = await axiosInstance.get("http://localhost:8080/api/student/confirm/" + studentId, {
+      const response = await axiosInstance.get("student/confirm/" + studentId, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -22,7 +22,7 @@ const StudentAPI = {
   },
   getExamResult: async (examId: string, classroomId: string) => {
     try {
-      const response = await axiosInstance.get("http://localhost:8080/api/student/exam-result", {
+      const response = await axiosInstance.get("student/exam-result", {
         params: { examId, classroomId },
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const StudentAPI = {
   getExamAssignments: async (classId: number, examId: number) => {
     try {
       const response = await axiosInstance.get(
-        `http://localhost:8080/api/student/class/${classId}/exam/${examId}/assigments`,
+        `student/class/${classId}/exam/${examId}/assigments`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -73,7 +73,7 @@ const StudentAPI = {
       }
 
       const response = await axiosInstance.post(
-        "http://localhost:8080/api/student/",
+        "student/",
         {
           studentName,
           identificationNumber,

@@ -13,14 +13,13 @@ const AuthAPI = {
         role: userRole,
       };
 
-      const url = "http://localhost:8080/api/auth/signup";
+      const url = "auth/signup";
 
-      const response = await fetch(url, {
-        method: "POST",
+      const response = await axiosInstance.post(url, requestData, {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify(requestData),
       });
 
       return response;
@@ -39,7 +38,6 @@ const AuthAPI = {
         headers: {
           "Content-Type": "application/json",
         },
-        withCredentials: true,
       });
 
       return response;
@@ -54,7 +52,6 @@ const AuthAPI = {
         "auth/logout",
         {},
         {
-          withCredentials: true,
         },
       );
 
@@ -65,70 +62,57 @@ const AuthAPI = {
     }
   },
 
-  generateLoginQRCode: async (): Promise<Response> => {
+  generateLoginQRCode: async (): Promise<AxiosResponse | null> => {
     try {
-      const url = "http://localhost:8080/api/auth/generate-login-qr";
+      const url = "auth/generate-login-qr";
 
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${accessToken}`,
+      const response = await axiosInstance.post(url, {}, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${accessToken}`,
+          },
         },
-      });
+      );
 
       return response;
     } catch (error) {
-      return new Response(null, {
-        status: 500,
-        statusText: "Internal Server Error",
-      });
+      return null;
     }
   },
-  approveLoginQrCode: async (sessionId: string): Promise<Response> => {
+  approveLoginQrCode: async (sessionId: string): Promise<AxiosResponse | null> => {
     try {
-      const url = "http://localhost:8080/api/auth/approve-login-qr";
+      const url = "auth/approve-login-qr";
 
-      const response = await fetch(url, {
-        method: "POST",
+      const response = await axiosInstance.post(url, {
+        sessionId: sessionId,
+      }, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `${accessToken}`,
         },
-        body: JSON.stringify({
-          sessionId: sessionId,
-        }),
       });
 
       return response;
     } catch (error) {
-      return new Response(null, {
-        status: 500,
-        statusText: "Internal Server Error",
-      });
+      return null;
     }
   },
-  checkLoginQrApproval: async (sessionId: string): Promise<Response> => {
+  checkLoginQrApproval: async (sessionId: string): Promise<AxiosResponse | null> => {
     try {
-      const url = "http://localhost:8080/api/auth/check-qr-login-approval";
+      const url = "auth/check-qr-login-approval";
 
-      const response = await fetch(url, {
-        method: "POST",
+      const response = await axiosInstance.post(url, {
+        sessionId: sessionId,
+      }, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `${accessToken}`,
         },
-        body: JSON.stringify({
-          sessionId: sessionId,
-        }),
       });
 
       return response;
     } catch (error) {
-      return new Response(null, {
-        status: 500,
-        statusText: "Internal Server Error",
-      });
+      return null;
     }
   },
 };

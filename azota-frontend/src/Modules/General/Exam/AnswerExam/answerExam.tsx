@@ -14,8 +14,11 @@ const AnswerExam = () => {
     const fetchExamAnswerData = async () => {
       if (!examResultId) return;
 
-      const data = await ExamResultAPI.getAnswer(examResultId);
-      setExamReview(data);
+      const response = await ExamResultAPI.getAnswer(examResultId);
+
+      if (response && response.data) {
+        setExamReview(response.data as ExamReview);
+      }
     };
 
     fetchExamAnswerData();
