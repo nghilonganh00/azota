@@ -12,6 +12,7 @@ import { Homework } from "../../../../Globals/Interfaces/homework.interface";
 const ResultsList = () => {
   const { homeworkId } = useParams();
   const [submissions, setSubmissions] = useState<StudentClassWithSubmissions[] | null>(null);
+  const [search, setSearch] = useState<string>("");
 
   const [homework, setHomework] = useState<Homework>({} as Homework);
 
@@ -43,9 +44,9 @@ const ResultsList = () => {
         <div className="col-span-3">{homework && <ConfigArea homework={homework} setHomework={setHomework} />}</div>
 
         <div className="col-span-7 h-96">
-          <SearchBar />
+          <SearchBar search={search} setSearch={setSearch} />
 
-          {submissions && <ListResultArea classroom={homework.classroom} students={submissions} />}
+          {submissions && <ListResultArea classroom={homework.classroom} students={submissions} search={search} />}
         </div>
       </div>
     </div>

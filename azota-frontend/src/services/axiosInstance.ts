@@ -10,8 +10,6 @@ let failedRequestsQueue: any[] = [];
 
 const token = localStorage.getItem("accessToken");
 
-console.log('base url: ', process.env.REACT_APP_API_BASE_URL)
-
 export const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
   headers: {
@@ -33,6 +31,7 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config as CustomAxiosRequestConfig;
 
     if (error.response?.status === 401) {
+      console.log("error.response", error.response);
       const errorData = error.response.data as APIErrorReponse | undefined;
       const errorType = errorData?.error;
 
@@ -57,11 +56,7 @@ axiosInstance.interceptors.response.use(
         isRefreshing = true;
 
         try {
-          const { data } = await axios.post(
-            `auth/refresh-token`,
-            {},
-            { withCredentials: true },
-          );
+          const { data } = await axios.post(`auth/refresh-token`, {}, { withCredentials: true });
 
           localStorage.setItem("accessToken", data.accessToken);
           axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${data.accessToken}`;

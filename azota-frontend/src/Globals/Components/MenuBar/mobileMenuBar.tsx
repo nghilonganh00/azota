@@ -21,7 +21,7 @@ export const MobileMenuBar = () => {
   };
 
   return (
-    <div className="block bg-[rgb(var(--color-darkmode-800))] py-4 md:hidden">
+    <div className="block bg-blue-800 py-4 dark:bg-[rgb(var(--color-darkmode-800))] md:hidden">
       <div className="flex items-center justify-between pl-4">
         <img src={Logo} alt="" className="w-10" />
 

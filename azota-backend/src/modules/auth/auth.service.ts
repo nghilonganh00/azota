@@ -26,6 +26,9 @@ export class AuthService {
     private teacherService: TeacherService
   ) {}
 
+  private ACCESS_TOKEN_EXPIRES_IN = "1h";
+  private REFRESH_TOKEN_EXPIRES_IN = "7d";
+
   async login(
     username: string,
     password: string
@@ -41,8 +44,8 @@ export class AuthService {
 
     const userResponseDto = plainToClass(UserResponseDto, user);
 
-    const accessToken = await this.jwtService.signAsync(payload, { expiresIn: "1h" });
-    const refreshToken = await this.jwtService.signAsync(payload, { expiresIn: "7d" });
+    const accessToken = await this.jwtService.signAsync(payload, { expiresIn: this.ACCESS_TOKEN_EXPIRES_IN });
+    const refreshToken = await this.jwtService.signAsync(payload, { expiresIn: this.REFRESH_TOKEN_EXPIRES_IN });
 
     return {
       accessToken: accessToken,
@@ -98,7 +101,7 @@ export class AuthService {
 
   async validateGoogleUser(googleUser: GoogleUserDto) {
     const user = await this.userService.findByEmail(googleUser.email);
-    
+
     if (user) return user;
 
     return await this.register({
@@ -117,8 +120,8 @@ export class AuthService {
 
     const userResponseDto = plainToClass(UserResponseDto, user);
 
-    const accessToken = await this.jwtService.signAsync(payload, { expiresIn: "1h" });
-    const refreshToken = await this.jwtService.signAsync(payload, { expiresIn: "7d" });
+    const accessToken = await this.jwtService.signAsync(payload, { expiresIn: this.ACCESS_TOKEN_EXPIRES_IN });
+    const refreshToken = await this.jwtService.signAsync(payload, { expiresIn: this.REFRESH_TOKEN_EXPIRES_IN });
 
     return {
       accessToken: accessToken,

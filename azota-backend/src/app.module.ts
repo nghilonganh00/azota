@@ -34,6 +34,7 @@ import { BullModule } from "@nestjs/bull";
 import { TeacherPermissionModule } from "./modules/teacher-permission/teacher-permission.module";
 import { PermissionModulue } from "./modules/permission/permission.module";
 import { SeederModule } from "./modules/seeder/seeder.module";
+import { VnpayModule } from "./modules/vnpay/vnpay.module";
 
 @Module({
   imports: [
@@ -75,6 +76,7 @@ import { SeederModule } from "./modules/seeder/seeder.module";
     PermissionModulue,
     TeacherPermissionModule,
     SeederModule,
+    VnpayModule,
   ],
   providers: [
     {

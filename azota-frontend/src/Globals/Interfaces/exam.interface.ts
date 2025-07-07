@@ -39,17 +39,11 @@ export interface QuestionPart {
 export interface Exam {
   id: number;
   hashId: string;
-  examName: string;
-  examAssignType: ExamAssignType;
-  examSubmitCount: number;
   teacherId: number;
   gradeId: number;
   subjectId: number;
   purposeId: number;
-  examDuration: number;
   examType: "TEST" | "PRACTICE";
-  examStart: string | null;
-  examEnd: string | null;
   isPublish: boolean;
   examLimitSubmit: number;
   isRandomQuestion: boolean;

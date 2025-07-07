@@ -3,9 +3,10 @@ import { NewHomework } from "../libs/interfaces";
 interface ConfigNameProps {
   values: NewHomework;
   onChange: (name: string, newValue: string) => void;
+  error: { title: string; date: string };
 }
 const ConfigName: React.FC<ConfigNameProps> = (props) => {
-  const { values, onChange } = props;
+  const { values, onChange, error } = props;
 
   return (
     <div className="grid grid-cols-12">
@@ -24,6 +25,7 @@ const ConfigName: React.FC<ConfigNameProps> = (props) => {
           placeholder="Nhập tên ..."
           className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm shadow-sm dark:border-none dark:bg-[rgb(var(--color-darkmode-800))]"
         />
+        {error.title && <div className="text-xs text-red-500">{error.title}</div>}
       </div>
     </div>
   );

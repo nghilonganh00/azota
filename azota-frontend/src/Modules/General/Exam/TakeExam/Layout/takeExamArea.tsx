@@ -1,4 +1,4 @@
-import { Option, Question, QuestionPart } from "../../../../../Globals/Interfaces/exam.interface";
+import { Exam, Option, Question, QuestionPart } from "../../../../../Globals/Interfaces/exam.interface";
 import { ExamAnswer } from "../../TakeTraining/libs/interface";
 import { CryptoUtil } from "../../../../../Utils/crypto";
 
@@ -6,10 +6,11 @@ interface TakeExamAreaProps {
   questionParts: QuestionPart[];
   examAnswers: ExamAnswer[];
   setExamAnswers: React.Dispatch<React.SetStateAction<ExamAnswer[]>>;
+  exam: Exam;
 }
 
 const TakeExamArea: React.FC<TakeExamAreaProps> = (props) => {
-  const { questionParts, examAnswers, setExamAnswers } = props;
+  const { questionParts, examAnswers, setExamAnswers, exam } = props;
   const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || "AZOTA-19012003-EXAM-KEY";
   console.log("encrytion key: ", ENCRYPTION_KEY);
 
@@ -73,10 +74,10 @@ const TakeExamArea: React.FC<TakeExamAreaProps> = (props) => {
           <p className="rounded-t px-4 pt-4 text-sm font-semibold shadow">{questionPart.title}</p>
 
           <div className="space-y-8">
-            {questionPart.questions?.map((question) => (
+            {questionPart.questions?.map((question, index) => (
               <div className="rounded bg-white shadow" key={question.id}>
                 <div className="relative border-b border-slate-200 p-4 pb-6">
-                  <div className="text-sm font-semibold">{`Câu ${question.rawIndex}`}</div>
+                  <div className="text-sm font-semibold">{`Câu ${index + 1}`}</div>
                   <p className="break-words text-sm">{CryptoUtil.decrypt(ENCRYPTION_KEY, question.topic)}</p>
                   <div className="absolute w-full text-center">
                     <div className="inline-block bg-white px-8 py-3.5 text-sm font-medium text-gray-600">

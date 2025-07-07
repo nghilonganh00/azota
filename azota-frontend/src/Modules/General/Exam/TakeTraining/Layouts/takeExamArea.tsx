@@ -1,5 +1,4 @@
-import { Option } from "../../../../../Globals/Interfaces/exam.interface";
-import { Question } from "../../../../Teacher/Exam/ExamReview/libs/interface";
+import { Option, Question } from "../../../../../Globals/Interfaces/exam.interface";
 
 interface TakeExamAreaProps {
   examingQuestion: Question;
@@ -11,7 +10,7 @@ interface TakeExamAreaProps {
 const TakeExamArea: React.FC<TakeExamAreaProps> = (props) => {
   const { examingQuestion, selectedOption, setSelectOption, isShowPartName } = props;
 
-  const { rawIndex, questionTopic, QuestionPart, Options } = examingQuestion;
+  const { rawIndex, topic, options } = examingQuestion;
 
   const handleSelectOption = (option: Option) => {
     setSelectOption(option);
@@ -21,9 +20,9 @@ const TakeExamArea: React.FC<TakeExamAreaProps> = (props) => {
     <div className="px-3 pt-20">
       <div className="rounded-md bg-white shadow">
         <div className="relative border-b border-slate-200 p-3">
-          <div className="mb-2 text-sm font-semibold">{isShowPartName && QuestionPart.questionPartName}</div>
+          {/* <div className="mb-2 text-sm font-semibold">{isShowPartName && questionPart?.title}</div> */}
           <div className="text-sm font-semibold">{`Câu ${rawIndex}`}</div>
-          <div className="text-sm">{questionTopic}</div>
+          <div className="text-sm">{topic}</div>
           <div className="absolute w-full text-center">
             <div className="inline-block bg-white px-4 text-sm font-medium text-gray-700">Chọn một đáp án đúng</div>
           </div>

@@ -26,7 +26,7 @@ export const GraphicMarkArea: React.FC<GraphicMarkAreaProps> = (props) => {
     <div className="col-span-8">
       <div className="over rounded-md shadow-sm">
         <div className="rounded-md bg-white dark:bg-darkmode-600 dark:text-gray-900">
-          <div className="flex items-center gap-6 border-b border-gray-200 p-2 dark:border-darkmode-400">
+          <div className="flex items-center gap-6 border-b border-gray-200 p-2 dark:border-darkmode-400 dark:text-slate-300">
             <div
               className="flex items-center gap-2 rounded-md px-2 py-3 hover:cursor-pointer hover:bg-stone-100 dark:hover:bg-darkmode-500"
               onClick={goBack}

@@ -140,7 +140,7 @@ const HomeworkAPI = {
   },
   getConfig: async (homeworkId: string) => {
     try {
-      const url = `homework/${homeworkId}/config`;
+      const url = `homeworks/${homeworkId}`;
 
       const response = await axiosInstance.get(url, {
         headers: {

@@ -6,10 +6,11 @@ interface ConfigAssignmentProps {
   classgroups: ClassGroup[];
   values: NewHomework;
   onChange: (name: string, newValue: number[]) => void;
+  error: { classroomIds: string };
 }
 
 const ConfigAssignment: React.FC<ConfigAssignmentProps> = (props) => {
-  const { classgroups, values, onChange } = props;
+  const { classgroups, values, onChange, error } = props;
 
   return (
     <div className="grid grid-cols-12 gap-2">
@@ -82,6 +83,8 @@ const ConfigAssignment: React.FC<ConfigAssignmentProps> = (props) => {
           </div>
         </div>
       </div>
+
+      {error.classroomIds && <div className="text-xs text-red-500">{error.classroomIds}</div>}
     </div>
   );
 };

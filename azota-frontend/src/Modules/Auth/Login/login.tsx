@@ -29,7 +29,8 @@ const Login = () => {
     setMessage("");
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const { username, password } = values;
 
     if (!username || !password) {
@@ -41,13 +42,11 @@ const Login = () => {
 
     if (response?.status === 200) {
       const loginData = response.data;
-      console.log(loginData);
 
       if (loginData.accessToken) {
         localStorage.setItem("accessToken", loginData.accessToken);
+        navigate(loginData.user.role === "TEACHER" ? "/teacher/dashboard" : "/student/classroom");
       }
-
-      navigate(loginData.user.role === "TEACHER" ? "/teacher/dashboard" : "/student/classroom");
     } else {
       setMessage("Tài khoản hoặc mật khẩu không chính xác");
     }
@@ -81,7 +80,7 @@ const Login = () => {
           name="username"
           onChange={(e) => handleChangeInput(e.target.name, e.target.value)}
           type="text"
-          className="w-full rounded-md border border-slate-300 px-4 py-2.5 text-sm shadow-sm"
+          className="dark: w-full rounded-md border border-slate-300 px-4 py-2.5 text-sm text-gray-800 shadow-sm"
           placeholder="Nhập số điện thoại, email hoặc username"
         />
         <div className="relative w-full">
@@ -108,12 +107,13 @@ const Login = () => {
         <div className="w-full">
           <div className="text-sm text-gray-800 dark:text-slate-300">Quên mật khẩu ?</div>
         </div>
-        <div
+        <button
+          type="submit"
           className="w-full rounded-md bg-blue-800 py-3 text-center hover:cursor-pointer hover:bg-blue-700"
-          onClick={handleLogin}
+          onClick={(e) => handleLogin(e as unknown as React.FormEvent<HTMLFormElement>)}
         >
           <div className="text-sm font-semibold text-white">Đăng nhập</div>
-        </div>
+        </button>
         <div className="flex items-center text-sm text-blue-800 dark:text-blue-600">
           <div className="text-slate-400">Bạn chưa có tài khoản?</div>
           <Link to={"/auth/register"} className="">

@@ -1,30 +1,45 @@
-import { CalendarOff, Upload, User } from "lucide-react";
+import { CalendarOff, Upload, User, X } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { HomeworkSubmission } from "../../../Globals/Interfaces/homework.interface";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { HomeworkSubmissionAPI } from "../../../API/homeworkSubmissionAPI";
 import { DateTimeFormat, isoDateUtil } from "../../../Utils/date";
+import { useNotification } from "../../../Globals/Context/NotificationContext";
 
 const Homework = () => {
+  const navigate = useNavigate();
   const { homeworkSubmissionId } = useParams();
-
+  const { addNotification } = useNotification();
   const [submissionFiles, setSubmissionFiles] = useState<File[]>([]);
-
   const [homeworkSubmission, setHomeworkSubmission] = useState<HomeworkSubmission>({} as HomeworkSubmission);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
       const fileArray = Array.from(files);
-      setSubmissionFiles(fileArray);
+      setSubmissionFiles((prevFiles) => [...prevFiles, ...fileArray]);
     }
+  };
+
+  const handleRemoveFile = (index: number) => {
+    const newFiles = [...submissionFiles];
+    newFiles.splice(index, 1);
+    setSubmissionFiles(newFiles);
   };
 
   const handleSubmit = async () => {
     if (!homeworkSubmissionId || submissionFiles.length === 0) return;
 
-    const homeworkSubmissionFile = await HomeworkSubmissionAPI.submit(homeworkSubmissionId, submissionFiles);
+    const response = await HomeworkSubmissionAPI.submit(homeworkSubmissionId, submissionFiles);
+
+    if (response?.status !== 201) {
+      addNotification("Lỗi khi nộp bài", "ERROR");
+      return;
+    }
+
+    navigate(`/student/homework-submissions/${response.data.id}`);
+    addNotification("Nộp bài thành công", "SUCCESS");
   };
 
   console.log("files: ", submissionFiles);
@@ -106,7 +121,7 @@ const Homework = () => {
             <div className="flex items-center">
               <CalendarOff strokeWidth={1.5} className="mr-2 size-4" />
               <div className="text-sm">
-                {`Ngày tạo: ${isoDateUtil.toDateAndTime(homeworkSubmission?.homework?.startDate, DateTimeFormat.FULL_DATE_FORMAT)}`}
+                {`Ngày tạo: ${isoDateUtil.toDateAndTime(homeworkSubmission?.homework?.startDate, DateTimeFormat.FULL_DATE_TIME_FORMAT)}`}
               </div>
             </div>
           )}
@@ -115,7 +130,7 @@ const Homework = () => {
             <div className="flex items-center">
               <CalendarOff strokeWidth={1.5} className="mr-2 size-4" />
               <div className="text-sm">
-                {`Hạn nộp: ${homeworkSubmission?.homework?.endDate ? `${isoDateUtil.toDateAndTime(homeworkSubmission?.homework?.endDate, DateTimeFormat.FULL_DATE_FORMAT)}` : "Không giới hạn"}`}
+                {`Hạn nộp: ${homeworkSubmission?.homework?.endDate ? `${isoDateUtil.toDateAndTime(homeworkSubmission?.homework?.endDate, DateTimeFormat.FULL_DATE_TIME_FORMAT)}` : "Không giới hạn"}`}
               </div>
             </div>
           )}
@@ -128,12 +143,14 @@ const Homework = () => {
             }}
           ></div>
           <div className="grid grid-cols-12 gap-6">
-            {homeworkSubmission?.files?.map((file) => {
+            {homeworkSubmission?.homework?.homeworkFiles?.map((file) => {
               return (
                 <div className="col-span-3" key={file.id}>
                   <a href={file.link} target="_blank">
                     <div className="flex items-center gap-2 rounded-md border border-gray-200 p-2 dark:border-darkmode-400">
-                      <div className="size-12 rounded-md bg-blue-400"></div>
+                      <div className="size-12 rounded-md bg-blue-400">
+                        <img src={file.link} alt={file.title} className="size-full" />
+                      </div>
                       <div className="space-y-1">
                         <div className="text-sm font-semibold">{file.title}</div>
                         <div className="text-xs text-gray-600">Hình ảnh</div>
@@ -144,6 +161,16 @@ const Homework = () => {
               );
             })}
           </div>
+
+          <div className="space-y-2">
+            {submissionFiles.map((file: File, index) => (
+              <div className="flex items-center gap-2 text-gray-800 dark:text-gray-300" key={index}>
+                <X strokeWidth={1.5} className="size-4 cursor-pointer" onClick={() => handleRemoveFile(index)} />
+                <div className="text-sm">{file.name}</div>
+              </div>
+            ))}
+          </div>
+
           <label className="flex w-full items-center justify-center gap-2 rounded-md border border-dashed border-gray-400 p-2 hover:cursor-pointer dark:border-darkmode-400">
             <div className="flex flex-col items-center justify-center">
               <div className="flex items-center gap-2 pt-28">

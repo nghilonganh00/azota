@@ -15,13 +15,13 @@ const TakeExamHeader: React.FC<TakeExamHeaderProps> = (props) => {
   const { exam, handleFinish } = props;
 
   const goBack = useGoBack();
-  let timeLeft = useCountDown(exam?.duration || 0 * 60);
+  let timeLeft = useCountDown((exam?.duration || 0) * 60);
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
     if (exam?.duration === 0) return;
 
-    if (timeLeft.hours === "00" && timeLeft.minutes === "00" && timeLeft.seconds === "00" && exam?.examDuration !== 0) {
+    if (timeLeft.hours === "00" && timeLeft.minutes === "00" && timeLeft.seconds === "00" && exam?.duration !== 0) {
       handleFinish();
     }
   }, [timeLeft]);

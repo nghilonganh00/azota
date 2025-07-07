@@ -40,7 +40,14 @@ export class HomeworkSubmissionService {
         where: {
           id: homeworkSubmissionId,
         },
-        relations: ["homework", "studentClass", "studentClass.student", "homework.classroom", "files"],
+        relations: [
+          "homework",
+          "studentClass",
+          "studentClass.student",
+          "homework.classroom",
+          "files",
+          "homework.homeworkFiles",
+        ],
       });
 
       if (!homeworkSubmission) {

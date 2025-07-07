@@ -64,24 +64,22 @@ const ConfigFile: React.FC<ConfigFileProps> = (props) => {
     <div className="space-y-2">
       <div className="flex items-center justify-between">
         <div className="text-sm font-semibold">File đính kèm</div>
-        <label className="hover:bg-cy inline-flex items-center gap-2 rounded-md p-2 hover:cursor-pointer">
-          <Upload strokeWidth={1.5} className="size-4 text-blue-800" />
-          <div className="text-xs font-semibold text-blue-900">Thêm File</div>
+        <label className="hover:bg-cy inline-flex items-center gap-2 rounded-md p-2 text-blue-800 hover:cursor-pointer dark:text-blue-600">
+          <Upload strokeWidth={1.5} className="size-4" />
+          <div className="text-xs font-semibold">Thêm File</div>
           <input type="file" className="hidden" multiple onChange={handleAddFile} />
         </label>
       </div>
 
-      <div className="text-xs text-gray-600">Hỗ trợ file định dạng ảnh, pdf, word, excel, audio hoặc video</div>
+      <div className="text-xs text-gray-600 dark:text-slate-300">
+        Hỗ trợ file định dạng ảnh, pdf, word, excel, audio hoặc video
+      </div>
 
       <div className="space-y-2">
         {homworkFiles?.map((homeworkFile) => (
-          <div
-            className="flex items-center justify-between"
-            key={homeworkFile.id}
-            onClick={() => handleDeleteFile(homeworkFile.id)}
-          >
+          <div className="flex items-center justify-between" key={homeworkFile.id}>
             <a
-              className="flex items-center gap-2 text-blue-900"
+              className="flex items-center gap-2 text-blue-900 dark:text-blue-600"
               href={homeworkFile.link}
               rel="noopener noreferrer"
               target="_blank"

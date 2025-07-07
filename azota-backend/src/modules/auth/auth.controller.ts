@@ -3,8 +3,6 @@ import {
   Controller,
   Get,
   HttpCode,
-  HttpStatus,
-  Patch,
   Post,
   Req,
   Res,
@@ -58,7 +56,8 @@ export class AuthController {
       sameSite: "strict",
     });
 
-    res.redirect(`http://localhost:3000?token=${response.accessToken}`);
+    const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
+    res.redirect(`${clientUrl}?token=${response.accessToken}`);
   }
 
   @Public()

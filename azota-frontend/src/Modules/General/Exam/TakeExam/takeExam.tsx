@@ -22,8 +22,7 @@ const TakeExam = () => {
     if (!exam) return;
 
     const examAnswersString = JSON.stringify(examAnswers);
-    console.log("exam: ", exam.hashId);
-    console.log("examAnswersString: ", examAnswersString);
+
     const response = await ExamResultAPI.create(exam.hashId, examAnswersString, examStartTime);
 
     if (response?.status !== 201) return;
@@ -64,11 +63,16 @@ const TakeExam = () => {
 
   return (
     <div>
-      <TakeExamHeader exam={exam} handleFinish={handleFinish} />
+      {exam && <TakeExamHeader exam={exam} handleFinish={handleFinish} />}
 
       <div className="grid h-screen grid-cols-12 gap-5 overflow-y-scroll px-2 pt-20">
         {exam && (
-          <TakeExamArea questionParts={exam.questionParts} examAnswers={examAnswers} setExamAnswers={setExamAnswers} />
+          <TakeExamArea
+            questionParts={exam.questionParts}
+            examAnswers={examAnswers}
+            setExamAnswers={setExamAnswers}
+            exam={exam}
+          />
         )}
 
         {exam && <QuestionBar questions={questions} examAnswers={examAnswers} />}

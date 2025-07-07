@@ -1,9 +1,9 @@
 import { Maximize, Timer, ZoomIn, ZoomOut } from "lucide-react";
 import { useCountDown } from "../libs/hooks";
 import { useEffect, useState } from "react";
-import { Exam } from "../libs/interface";
 import UserAPI from "../../../../../API/userAPI";
 import { User } from "../../../../../Globals/Interfaces/user.interface";
+import { Exam } from "../../../../../Globals/Interfaces/exam.interface";
 
 interface TakeExamHeaderProps {
   exam: Exam;
@@ -13,7 +13,7 @@ interface TakeExamHeaderProps {
 const TakeExamHeader: React.FC<TakeExamHeaderProps> = (props) => {
   const { exam, handleFinish } = props;
 
-  const timeLeft = useCountDown(exam.examDuration);
+  const timeLeft = useCountDown(exam.duration);
   const [user, setUser] = useState<User>();
 
   useEffect(() => {

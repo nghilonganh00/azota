@@ -1,10 +1,8 @@
 import { Check, ClipboardList, RotateCcw } from "lucide-react";
 import ActionButton from "../Components/actionButton";
 import NotificationPopup from "../Components/notificationPopup";
-import { Question } from "../../../../Teacher/Exam/ExamReview/libs/interface";
-import { Exam } from "../../../../Teacher/Exam/UpdateExam/libs/interface";
 import { QuestionResult } from "../libs/interface";
-import { Option } from "../../../../../Globals/Interfaces/exam.interface";
+import { Exam, Option, Question } from "../../../../../Globals/Interfaces/exam.interface";
 
 interface TakeExamActionProps {
   exam: Exam;
@@ -39,12 +37,12 @@ const TakeExamAction: React.FC<TakeExamActionProps> = (props) => {
 
         <div className="flex items-center gap-2 text-blue-800">
           <ClipboardList strokeWidth={1.5} className="size-5" />
-          <div className="font-medium">{`Câu ${examingQuestion?.rawIndex}/${exam?.Questions?.length}`}</div>
+          <div className="font-medium">{`Câu ${examingQuestion?.rawIndex}/${exam?.questionParts?.length}`}</div>
         </div>
 
         <div className="flex flex-1 items-center gap-2">
           <Check strokeWidth={1.5} className="size-4 text-green-500" />
-          {exam?.Questions?.map((question) => (
+          {exam?.questionParts?.map((question) => (
             <div key={question.id} className="size-2 rounded-full border-2 border-gray-400"></div>
           ))}
         </div>

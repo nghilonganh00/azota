@@ -66,7 +66,7 @@ const ConfigGeneral: React.FC<ConfigGeneralProp> = (props) => {
                 type="text"
                 id="exam-duration"
                 value={duration}
-                onChange={(e) => handleChangeConfig("examDuration", e.target.value)}
+                onChange={(e) => handleChangeConfig("duration", e.target.value)}
                 placeholder="Nhập thời gian ..."
                 className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm shadow-sm dark:border-none dark:bg-darkmode-800"
               />

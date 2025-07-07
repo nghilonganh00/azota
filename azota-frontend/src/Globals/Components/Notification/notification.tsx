@@ -131,15 +131,17 @@ export const Notification = () => {
       <div className="hover:cursor-pointer" onClick={() => setOpenDropdown(!isOpenDropdown)}>
         <LuBell className="size-5 text-slate-600 dark:text-slate-200" />
 
-        <div className="absolute -right-2 -top-2 flex size-5 items-center justify-center rounded-full bg-red-600">
-          <div className="text-center text-xs text-white">
-            {notifications?.filter((notification) => notification.readAt === null).length || 0}
+        {notifications?.filter((notification) => !notification.readAt).length > 0 && (
+          <div className="absolute -right-2 -top-2 flex size-5 items-center justify-center rounded-full bg-red-600">
+            <div className="text-center text-xs text-white">
+              {notifications?.filter((notification) => notification.readAt === null).length || 0}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {isOpenDropdown && (
-        <div className="shado absolute right-0 top-6 z-10 w-96 rounded dark:bg-darkmode-600 dark:text-slate-300">
+        <div className="shado absolute right-0 top-6 z-10 w-96 rounded bg-white dark:bg-darkmode-600 dark:text-slate-300">
           <div className="mb-2 p-3 font-semibold">Thông báo</div>
 
           <div className="space-y-4 px-3">

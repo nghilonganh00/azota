@@ -5,10 +5,11 @@ import { StudentClassWithSubmissions } from "../Interface/interface";
 interface ListResultAreaProps {
   classroom: Classroom;
   students: StudentClassWithSubmissions[];
+  search: string;
 }
 
 const ListResultArea: React.FC<ListResultAreaProps> = (props) => {
-  const { classroom, students } = props;
+  const { classroom, students, search } = props;
 
   const submittedStudentTotal = students?.filter((student) => student.homeworkSubmissions.length > 0).length;
 
@@ -20,9 +21,11 @@ const ListResultArea: React.FC<ListResultAreaProps> = (props) => {
 
       <div className="rounded-md border-gray-300 bg-white p-3 pb-28 shadow-sm dark:bg-darkmode-600">
         <div className="grid grid-cols-12 gap-4">
-          {students.map((student) => (
-            <StudentResultBox data={student} key={student.id} />
-          ))}
+          {students
+            .filter((student) => student.fullname.toLowerCase().includes(search.toLowerCase()))
+            .map((student) => (
+              <StudentResultBox data={student} key={student.id} />
+            ))}
         </div>
       </div>
     </div>

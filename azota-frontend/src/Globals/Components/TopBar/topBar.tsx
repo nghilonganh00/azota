@@ -1,6 +1,6 @@
 import { LuBell } from "react-icons/lu";
 import Menu from "../Menu/menu";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Gem } from "lucide-react";
 import useGoBack from "../../Hooks/useGoBack";
 import AnonymousMenu from "../Menu/anonymousMenu";
 import { useLocation, useNavigate } from "react-router";
@@ -34,6 +34,16 @@ const TopBar = () => {
         </div>
 
         <div className="flex items-center gap-5">
+          <div
+            className="flex items-center justify-center gap-1 rounded-md bg-blue-500 px-2 py-1.5 text-white hover:cursor-pointer"
+            style={{
+              background: "linear-gradient(-45deg, #7953cd, #0190cd, #23a6d5, #764ada)",
+              backgroundSize: "500% auto",
+            }}
+          >
+            <Gem className="size-6" strokeWidth={1.5} />
+            <p className="text-xs">Nâng VIP</p>
+          </div>
           <img
             alt="flag/vi.svg"
             src="https://239114911.e.cdneverest.net/cdnazota/storage_public/azota_assets/flag/vi.svg"

@@ -132,6 +132,7 @@ export class HomeworkService {
             teacher,
             classroom,
           });
+
           const savedHomework = await this.homeworkRepository.save(newHomework);
 
           //Create the homework submission for each assigned student
@@ -171,6 +172,8 @@ export class HomeworkService {
           return savedHomework;
         })
       );
+
+      console.log("newHomeworks", newHomeworks);
 
       return plainToInstance(createHomeworkResDto, newHomeworks);
     } catch (error) {

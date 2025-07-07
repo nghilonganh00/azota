@@ -35,11 +35,11 @@ const ConfigContent: React.FC<ConfigContentProps> = (props) => {
         <div className="flex items-center justify-between">
           <div className="text-sm font-semibold">Nội dung</div>
           <div
-            className="flex gap-2 rounded-md p-1.5 hover:cursor-pointer hover:bg-gray-200"
+            className="flex gap-2 rounded-md p-1.5 text-blue-800 hover:cursor-pointer hover:bg-gray-200 dark:text-blue-600"
             onClick={() => setOpenPopup(true)}
           >
-            <PencilLine strokeWidth={1.5} className="size-4 text-blue-800" />
-            <div className="text-xs font-semibold text-blue-900">Sửa</div>
+            <PencilLine strokeWidth={1.5} className="size-4" />
+            <div className="text-xs font-semibold">Sửa</div>
           </div>
         </div>
 

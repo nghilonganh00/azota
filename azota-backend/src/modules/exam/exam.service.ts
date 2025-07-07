@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Exam } from "./exam.entity";
-import { DataSource, Not, QueryRunner, Repository } from "typeorm";
+import { DataSource, In, Not, QueryRunner, Repository } from "typeorm";
 import { ExamDto } from "./dtos/exam.dto";
 import { CreateExamDto } from "./dtos/create-exam.dto";
 import { TeacherService } from "../teacher/teacher.service";
@@ -19,6 +19,10 @@ import { StudentService } from "../student/student.service";
 import { ExamAssignType } from "src/shared/constant";
 import { GetExamContentByHashIdDto } from "./dtos/get-examContentByHashId";
 import { CryptoUtil } from "src/common/utils/crypto.util";
+import { ClassroomService } from "../classroom/classroom.service";
+import { ExamClass } from "../examClass/examClass.entity";
+import { ExamStudent } from "../examStudent/examStudent.entity";
+import { StudentClass } from "../stutentClass/studentClass.entity";
 
 @Injectable()
 export class ExamService {
@@ -30,7 +34,8 @@ export class ExamService {
     private readonly studentService: StudentService,
     private readonly questionPartService: QuestionPartService,
     private readonly questionService: QuestionService,
-    private readonly optionService: OptionService
+    private readonly optionService: OptionService,
+    private readonly classroomService: ClassroomService
   ) {}
 
   async getConfig(userId: number, examId: number): Promise<ExamDto> {
@@ -256,6 +261,10 @@ export class ExamService {
   }
 
   async publish(userId: number, examId: number, publishExam: PublishExamDto): Promise<ExamDto> {
+    const queryRunner: QueryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
     try {
       const teacher = await this.teacherService.findOne({ userId });
       if (!teacher) {
@@ -267,6 +276,11 @@ export class ExamService {
         relations: ["examClasses", "examStudents"],
       });
 
+      if (!exam) {
+        throw new NotFoundException("Exam not found");
+      }
+
+      // Update exam properties
       const updatedExam = this.examRepository.create({
         ...exam,
         ...publishExam,
@@ -275,12 +289,73 @@ export class ExamService {
 
       console.log("updated exam: ", publishExam);
 
-      const savedExam = await this.examRepository.save(updatedExam);
+      // Handle assigned classes
+      if (publishExam.assignedClassIds.length > 0) {
+        const assignedClassIds = publishExam.assignedClassIds;
+        const assignedClass = await this.classroomService.findByIds(assignedClassIds);
+
+        if (assignedClass.length !== assignedClassIds.length) {
+          throw new NotFoundException("Classroom not found");
+        }
+
+        // Remove existing exam classes
+        if (exam.examClasses && exam.examClasses.length > 0) {
+          await queryRunner.manager.remove(exam.examClasses);
+        }
+
+        // Create new exam classes
+        const examClasses = assignedClass.map((classroom) => {
+          return queryRunner.manager.create(ExamClass, {
+            exam: exam,
+            classroom: classroom,
+          });
+        });
+
+        console.log("examClasses: ", examClasses);
+
+        await queryRunner.manager.save(examClasses);
+      }
+
+      // Handle assigned students (similar pattern)
+      if (publishExam.assignedStudentIds.length > 0) {
+        const assignedStudentIds = publishExam.assignedStudentIds;
+        const assignedStudent = await this.studentService.findByIds(assignedStudentIds);
+
+        if (assignedStudent.length !== assignedStudentIds.length) {
+          throw new NotFoundException("Student not found");
+        }
+
+        // Remove existing exam students
+        if (exam.examStudents && exam.examStudents.length > 0) {
+          await queryRunner.manager.remove(exam.examStudents);
+        }
+
+        // Get student classes for the assigned students
+        const studentClasses = await queryRunner.manager.find(StudentClass, {
+          where: { studentId: In(assignedStudentIds) },
+        });
+
+        // Create new exam students
+        const examStudents = studentClasses.map((studentClass) => {
+          return queryRunner.manager.create(ExamStudent, {
+            exam: exam,
+            studentClass: studentClass,
+          });
+        });
+
+        await queryRunner.manager.save(examStudents);
+      }
+
+      const savedExam = await queryRunner.manager.save(updatedExam);
+      await queryRunner.commitTransaction();
 
       return plainToInstance(ExamDto, savedExam);
     } catch (error) {
       console.log(error);
+      await queryRunner.rollbackTransaction();
       throw error;
+    } finally {
+      await queryRunner.release();
     }
   }
 

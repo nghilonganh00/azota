@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Classroom } from "./classroom.entity";
-import { FindManyOptions, Like, Repository } from "typeorm";
+import { FindManyOptions, In, Like, Repository } from "typeorm";
 import { TeacherService } from "../teacher/teacher.service";
 import { plainToInstance } from "class-transformer";
 import { ClassgroupsService } from "../classgroup/classgroup.service";
@@ -21,6 +21,10 @@ export class ClassroomService {
     private readonly classgroupService: ClassgroupsService,
     private readonly homeworkService: HomeworkService
   ) {}
+
+  async findByIds(ids: number[]): Promise<Classroom[]> {
+    return this.classroomRepository.find({ where: { id: In(ids) } });
+  }
 
   async findByPk(id: number): Promise<Classroom | null> {
     const classroom = await this.classroomRepository.findOneBy({ id });

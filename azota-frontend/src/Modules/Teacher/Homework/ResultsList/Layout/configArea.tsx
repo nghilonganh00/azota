@@ -5,6 +5,7 @@ import ConfigContent from "../Components/configContent";
 import ConfigFile from "../Components/configFile";
 import HomeworkAPI from "../../../../../API/homeworkAPI";
 import { Homework } from "../../../../../Globals/Interfaces/homework.interface";
+import { useNotification } from "../../../../../Globals/Context/NotificationContext";
 
 interface ConfigAreaProps {
   homework: Homework;
@@ -13,18 +14,19 @@ interface ConfigAreaProps {
 
 const ConfigArea: React.FC<ConfigAreaProps> = (props) => {
   const navigate = useNavigate();
+  const { addNotification } = useNotification();
   const { homework, setHomework } = props;
   const { id, hashId, title, startDate, endDate, createdAt, classroom } = homework;
 
   const handleCopy = () => {
     navigator.clipboard
-      .writeText(`http://localhost:3000/homework/${hashId}`)
+      .writeText(`${process.env.REACT_APP_FRONTEND_URL}/homework/${hashId}`)
       .then(() => {
-        alert("Link copied to clipboard");
+        addNotification("Link đã được sao chép vào clipboard", "SUCCESS");
       })
       .catch((error) => {
         console.error("Failed to copy link: ", error);
-        alert("Failed to copy link. Please try again");
+        addNotification("Không thể sao chép link. Vui lòng thử lại", "ERROR");
       });
   };
 
@@ -46,13 +48,13 @@ const ConfigArea: React.FC<ConfigAreaProps> = (props) => {
           <div className="text-sm font-semibold">{title}</div>
           <div className="flex items-center gap-2">
             <div
-              className="flex gap-2 rounded-md border border-blue-800 px-2 py-1.5 text-blue-800 hover:cursor-pointer hover:bg-blue-800 hover:text-white"
+              className="flex gap-2 rounded-md border border-blue-800 px-2 py-1.5 text-blue-800 hover:cursor-pointer hover:bg-blue-800 hover:text-white dark:text-blue-600"
               onClick={handleCopy}
             >
               <Copy className="size-4" />
               <div className="text-xs font-semibold">Copy link</div>
             </div>
-            <QrCode className="text-blue-800" />
+            <QrCode className="text-blue-800 dark:text-blue-600" />
           </div>
         </div>
 

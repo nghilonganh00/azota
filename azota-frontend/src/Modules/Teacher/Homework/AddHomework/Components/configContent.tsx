@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Editor as TinyMCEEditor } from "tinymce";
-import { Divide, Plus, X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { NewHomework } from "../libs/interfaces";
+import { useNotification } from "../../../../../Globals/Context/NotificationContext";
 
 interface ConfigContentProps {
   values: NewHomework;
@@ -10,7 +11,11 @@ interface ConfigContentProps {
   onChangeFile: (name: string, newValue: File[]) => void;
 }
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
 const ConfigContent: React.FC<ConfigContentProps> = (props) => {
+  const { addNotification } = useNotification();
+
   const { values, onChangeText, onChangeFile } = props;
 
   const editorRef = useRef<TinyMCEEditor | null>(null);
@@ -20,8 +25,31 @@ const ConfigContent: React.FC<ConfigContentProps> = (props) => {
 
     if (files) {
       console.log("files: ", files);
-      onChangeFile("homeworkFiles", [...values["homeworkFiles"], ...Array.from(files)]);
+
+      const validFiles: File[] = [];
+      const invalidFiles: string[] = [];
+
+      Array.from(files).forEach((file) => {
+        if (file.size <= MAX_FILE_SIZE) {
+          validFiles.push(file);
+        } else {
+          invalidFiles.push(file.name);
+        }
+      });
+
+      if (validFiles.length > 0) {
+        onChangeFile("homeworkFiles", [...values["homeworkFiles"], ...validFiles]);
+      }
+
+      if (invalidFiles.length > 0) {
+        addNotification(`Dung lượng file được không lớn hơn 5MB: ${invalidFiles.join(", ")}`, "ERROR");
+      }
     }
+  };
+
+  const handleRemoveFile = (index: number) => {
+    const newFiles = values["homeworkFiles"].filter((_, i) => i !== index);
+    onChangeFile("homeworkFiles", newFiles);
   };
 
   useEffect(() => {
@@ -43,7 +71,7 @@ const ConfigContent: React.FC<ConfigContentProps> = (props) => {
       </div>
 
       <div className="col-span-12">
-        <div className="py-2 text-xs text-gray-700">
+        <div className="py-2 text-xs text-gray-700 dark:text-gray-300">
           Chụp ảnh bài tập hoặc chọn file ảnh, pdf, word, excel, audio và video
         </div>
       </div>
@@ -51,9 +79,9 @@ const ConfigContent: React.FC<ConfigContentProps> = (props) => {
       <div className="col-span-12">
         <div className="space-y-2">
           {values["homeworkFiles"].map((file: File, index) => (
-            <div className="flex items-center gap-2" key={index}>
-              <X strokeWidth={1.5} className="size-4 text-gray-700" />
-              <div className="text-sm text-gray-800">{file.name}</div>
+            <div className="flex items-center gap-2 text-gray-800 dark:text-gray-300" key={index}>
+              <X strokeWidth={1.5} className="size-4 cursor-pointer" onClick={() => handleRemoveFile(index)} />
+              <div className="text-sm">{file.name}</div>
             </div>
           ))}
         </div>

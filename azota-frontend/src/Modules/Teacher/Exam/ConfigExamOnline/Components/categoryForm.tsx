@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Dropdown from "../../../../../Globals/Components/Dropdown/dropdown";
 import { Tab } from "../../../../../Globals/Interfaces/interface";
-import { Exam } from "../../../../../Globals/Interfaces/exam.interface";
 import GradeAPI from "../../../../../API/gradeAPI";
 import PurposeAPI from "../../../../../API/purposeAPI";
 import SubjectAPI from "../../../../../API/subjectAPI";
@@ -27,6 +26,7 @@ export const CategoryForm: React.FC<CategoryFromProps> = (props) => {
   useEffect(() => {
     const fetchGradePurposeData = async () => {
       const [gradeRes, purposeRes] = await Promise.all([GradeAPI.getAll(), PurposeAPI.getAll()]);
+      const [subjectRes] = await Promise.all([SubjectAPI.getByGradeId(gradeId)]);
 
       if (gradeRes?.status === 200) {
         const gradesData: Tab[] = gradeRes.data.map((grade: Grade) => ({ name: grade.name, value: grade.id }));
@@ -34,6 +34,17 @@ export const CategoryForm: React.FC<CategoryFromProps> = (props) => {
 
         const preSelectdGrade = gradesData.find((grade) => grade.value === gradeId) || null;
         setSelectedGrade(preSelectdGrade);
+      }
+
+      if (subjectRes?.status === 200) {
+        const subjectsData: Tab[] = subjectRes.data.map((subject: Subject) => ({
+          name: subject.subjectName,
+          value: subject.id,
+        }));
+        setSubjects(subjectsData);
+
+        const preSelectdSubject = subjectsData.find((subject) => subject.value === subjectId) || null;
+        setSelectedSubject(preSelectdSubject);
       }
 
       if (purposeRes?.status === 200) {

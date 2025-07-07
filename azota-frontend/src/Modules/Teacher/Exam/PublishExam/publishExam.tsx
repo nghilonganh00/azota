@@ -4,13 +4,14 @@ import { useParams } from "react-router";
 import ExamAPI from "../../../../API/examAPI";
 import { Exam } from "../../../../Globals/Interfaces/exam.interface";
 import { usePopup } from "../../../../Globals/Components/Popup/popup";
+import { Link } from "react-router-dom";
 
 const PublishExam = () => {
   const { hashId } = useParams();
   const { handleNotify, Popup } = usePopup();
 
   const [examConfig, setExamConfig] = useState<Exam>();
-  const examURL = `http://localhost:3000/exam/${hashId}`;
+  const examURL = `${process.env.REACT_APP_FRONTEND_URL}/exam/${hashId}`;
 
   const handleCopyHomeworkURL = (homeworkURL: string) => {
     navigator.clipboard.writeText(homeworkURL);
@@ -67,15 +68,21 @@ const PublishExam = () => {
         </div>
 
         <div className="flex items-center justify-center gap-2">
-          <div className="flex items-center gap-2 rounded-md px-3 py-2 text-blue-800 hover:cursor-pointer hover:bg-slate-300">
+          <Link
+            to={`/teacher/exam/exam-results-list/${examConfig?.id}`}
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-blue-800 hover:cursor-pointer hover:bg-slate-300"
+          >
             <FileText strokeWidth={1.5} className="size-4" />
             <div className="text-sm font-medium">Quản lý danh sách nộp bài tập</div>
-          </div>
+          </Link>
 
-          <div className="flex items-center gap-2 rounded-md px-3 py-2 text-blue-800 hover:cursor-pointer hover:bg-slate-300">
+          <Link
+            to={`/teacher/exam/management`}
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-blue-800 hover:cursor-pointer hover:bg-slate-300"
+          >
             <Folder strokeWidth={1.5} className="size-4" />
             <div className="text-sm font-medium">Về trang bài tập trong lớp</div>
-          </div>
+          </Link>
         </div>
       </div>
 

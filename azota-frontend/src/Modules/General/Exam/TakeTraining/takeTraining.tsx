@@ -5,11 +5,9 @@ import TakeExamAction from "./Layouts/takeExamAction";
 import TakeExamHeader from "./Layouts/takeExamHeader";
 import ExamAPI from "../../../../API/examAPI";
 import ExamResultAPI from "../../../../API/examResultAPI";
-import { Question } from "../../../Teacher/Exam/ExamReview/libs/interface";
-import { Exam, ExamAnswer, QuestionResult, ResultLog } from "./libs/interface";
-import { OctagonAlert } from "lucide-react";
+import { ExamAnswer, QuestionResult, ResultLog } from "./libs/interface";
 import CreateAnonymousAccount from "./Layouts/createAnonymousAccount";
-import { Option } from "../../../../Globals/Interfaces/exam.interface";
+import { Exam, Option, Question } from "../../../../Globals/Interfaces/exam.interface";
 
 const TakeTraining = () => {
   const { hashId } = useParams();
@@ -63,12 +61,12 @@ const TakeTraining = () => {
   };
 
   const handleNextQuestion = () => {
-    if (examingQuestionId + 1 === exam?.Questions.length) {
+    if (examingQuestionId + 1 === exam?.questionParts.length) {
       handleFinish();
       return;
     }
 
-    const nextQuestion = exam.Questions[examingQuestionId + 1];
+    const nextQuestion = exam.questionParts[examingQuestionId + 1].questions[0];
     setExamingQuestion(nextQuestion);
     setExamingQuestionId((prevId) => prevId + 1);
 
@@ -84,7 +82,7 @@ const TakeTraining = () => {
     if (!examingQuestion || !selectedOption) return;
 
     if (questionResult.firstTime) {
-      setResultLog((preValue) => ({
+      setResultLog((preValue: ResultLog) => ({
         ...preValue,
         [examingQuestion?.rawIndex]: selectedOption?.isCorrect,
       }));
@@ -116,12 +114,12 @@ const TakeTraining = () => {
 
         const examData: Exam = response.data;
         setExam(response.data);
-        const firstQuestion: Question = examData.Questions[0];
+        const firstQuestion: Question = examData.questionParts[0].questions[0];
         setExamingQuestion(firstQuestion);
 
-        if (firstQuestion.QuestionPart.id) {
-          setShowPartName(true);
-        }
+        // if (firstQuestion.questionPart?.title) {
+        //   setShowPartName(true);
+        // }
       }
     };
 

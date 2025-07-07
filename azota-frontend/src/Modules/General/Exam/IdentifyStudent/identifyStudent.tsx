@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { CreateAnonymousLayout } from "./layouts/createAnonymousLayout";
-import { Exam } from "../TakeTraining/libs/interface";
+import { Exam } from "../../../../Globals/Interfaces/exam.interface";
 import { useNavigate, useParams } from "react-router";
 import ExamAPI from "../../../../API/examAPI";
 import { NotLoggedInLayout } from "./layouts/notLoggedinLayout";
